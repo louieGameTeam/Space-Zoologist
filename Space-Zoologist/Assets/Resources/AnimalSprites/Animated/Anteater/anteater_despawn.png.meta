@@ -1,0 +1,1522 @@
+fileFormatVersion: 2
+guid: b7b08b2bf799f9a40ad8350789bbf6a9
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 50
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 0
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: anteater_despawn_0
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 807
+        width: 84
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a1c5bdcd6b0c32f49bdfd62b200a0a38
+      internalID: 1196056011
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_1
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 807
+        width: 84
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 51ff648c1e2cd2f4abb3b45530d742f7
+      internalID: -1247792767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_2
+      rect:
+        serializedVersion: 2
+        x: 280
+        y: 807
+        width: 84
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 83e9d8c6155ae09428c67a601eb52996
+      internalID: -3421206
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_3
+      rect:
+        serializedVersion: 2
+        x: 408
+        y: 807
+        width: 84
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb81680478f9bbc409835e8619a1fa05
+      internalID: -1480431736
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_4
+      rect:
+        serializedVersion: 2
+        x: 536
+        y: 807
+        width: 84
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03343a036e81f18469c6e2efb8b7b0ff
+      internalID: 959124195
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_5
+      rect:
+        serializedVersion: 2
+        x: 664
+        y: 807
+        width: 84
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e37a050d14faae44eb4db33a040c2259
+      internalID: 1166979713
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_6
+      rect:
+        serializedVersion: 2
+        x: 792
+        y: 807
+        width: 84
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b46bbe68ce7a13441b1aa8cd335e6c3e
+      internalID: 920459213
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_7
+      rect:
+        serializedVersion: 2
+        x: 920
+        y: 807
+        width: 84
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f1dbf2d21b89eb47a0f6582250e138b
+      internalID: 1660736599
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_8
+      rect:
+        serializedVersion: 2
+        x: 1048
+        y: 807
+        width: 84
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ca85e16600c2c34cb8ef81986b6481f
+      internalID: 1535622498
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_9
+      rect:
+        serializedVersion: 2
+        x: 1176
+        y: 807
+        width: 84
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e9641e0d1ac4ac4ab4741e080442b54
+      internalID: 2117684928
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_10
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 679
+        width: 84
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 893610dddffd4a64c84e38f9f01134ee
+      internalID: 1831861158
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_11
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 679
+        width: 84
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 68d5e25c54f87bc4db38de02852f85c3
+      internalID: -737330990
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_12
+      rect:
+        serializedVersion: 2
+        x: 280
+        y: 679
+        width: 84
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a554693db92af1a4b9673dc2fd1f88e7
+      internalID: -589837751
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_13
+      rect:
+        serializedVersion: 2
+        x: 408
+        y: 679
+        width: 84
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8e6e2d776959ba840a1bc2ab043e7999
+      internalID: -129147538
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_14
+      rect:
+        serializedVersion: 2
+        x: 536
+        y: 679
+        width: 84
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 134f1d99bc4191241ae135f75415e1cd
+      internalID: -1617207978
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_15
+      rect:
+        serializedVersion: 2
+        x: 664
+        y: 679
+        width: 84
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aa8eaeb99a0bf3a4da64fb978e51359a
+      internalID: -275824430
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_16
+      rect:
+        serializedVersion: 2
+        x: 792
+        y: 679
+        width: 84
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a44514fd4dae3b42bb7e9c60192cc2c
+      internalID: 1126697042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_17
+      rect:
+        serializedVersion: 2
+        x: 920
+        y: 679
+        width: 84
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 297b9c4851d7d784d907fea9e872c346
+      internalID: -30123752
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_18
+      rect:
+        serializedVersion: 2
+        x: 1048
+        y: 679
+        width: 84
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 643fb26a928cf9e4090cd3857d752c6d
+      internalID: 860230968
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_19
+      rect:
+        serializedVersion: 2
+        x: 1176
+        y: 679
+        width: 84
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 756050efd9feb9040931aa01a5fa39cd
+      internalID: -2107557940
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_20
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 551
+        width: 80
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee640e6717547a641b6f84a32a7cc388
+      internalID: 1577684256
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_21
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 551
+        width: 84
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 719cf010da1f62345bc836582ed63a81
+      internalID: -1599733027
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_22
+      rect:
+        serializedVersion: 2
+        x: 280
+        y: 551
+        width: 84
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 13dbdfc5da23c644ca8795136a1bed2f
+      internalID: 1852107818
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_23
+      rect:
+        serializedVersion: 2
+        x: 408
+        y: 551
+        width: 84
+        height: 38
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a60c1632e81b1b4ea53143d7c9989d7
+      internalID: -1247722482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_24
+      rect:
+        serializedVersion: 2
+        x: 535
+        y: 551
+        width: 85
+        height: 37
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 144d6f847d0ab9443b037343c1239faf
+      internalID: 1914949361
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_25
+      rect:
+        serializedVersion: 2
+        x: 662
+        y: 551
+        width: 86
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a7f09d128521dda42804b823be9caeab
+      internalID: -2143217525
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_26
+      rect:
+        serializedVersion: 2
+        x: 790
+        y: 551
+        width: 86
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4dd03e12ea03aa84382c10692ac2d47f
+      internalID: -769794225
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_27
+      rect:
+        serializedVersion: 2
+        x: 918
+        y: 551
+        width: 86
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 16d83df6f0e8d4949b3344bf958040fc
+      internalID: 720562878
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_28
+      rect:
+        serializedVersion: 2
+        x: 1046
+        y: 551
+        width: 86
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cef209333aa851843a4ed0730e6a0d52
+      internalID: 172943312
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_29
+      rect:
+        serializedVersion: 2
+        x: 1174
+        y: 551
+        width: 86
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7a51a7b7425ae3843903e1f1637e6803
+      internalID: -1107674762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_30
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 423
+        width: 85
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f29a378e5bd395e4097ef6ee5d6b65a0
+      internalID: -1922142301
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_31
+      rect:
+        serializedVersion: 2
+        x: 151
+        y: 423
+        width: 84
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bb5d0b5a46bcdc548bf403e21e7aef42
+      internalID: 1405591514
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_32
+      rect:
+        serializedVersion: 2
+        x: 279
+        y: 421
+        width: 83
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b98fa4103c827a49a3392a0f385b5fe
+      internalID: 910375122
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_33
+      rect:
+        serializedVersion: 2
+        x: 408
+        y: 418
+        width: 82
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 35b7f45753c2c8d47acb8b4591699ec3
+      internalID: -1591034752
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_34
+      rect:
+        serializedVersion: 2
+        x: 535
+        y: 415
+        width: 84
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e471968f75a60084cb1e6c5f56ab489e
+      internalID: -1973770440
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_35
+      rect:
+        serializedVersion: 2
+        x: 664
+        y: 413
+        width: 82
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: edb8040354031ff4b81ea86f0f0df201
+      internalID: -506746164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_36
+      rect:
+        serializedVersion: 2
+        x: 792
+        y: 411
+        width: 82
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a22c9029845f7c8429baa52181648928
+      internalID: 266049320
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_37
+      rect:
+        serializedVersion: 2
+        x: 920
+        y: 409
+        width: 81
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 48bab2ab9686b07408287d128f138424
+      internalID: -1791464803
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_38
+      rect:
+        serializedVersion: 2
+        x: 1049
+        y: 408
+        width: 79
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 482750fcb197dd24588b167dc2361780
+      internalID: -1918204542
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_39
+      rect:
+        serializedVersion: 2
+        x: 1177
+        y: 409
+        width: 79
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dce97b6f3fa808044bf82085579f13fb
+      internalID: 385841115
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_40
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 282
+        width: 78
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b7293b280f115c428b0042dc8a760cd
+      internalID: 505239936
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_41
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 283
+        width: 78
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0bb2c53a25ef6634d96b9ff15f5f5e33
+      internalID: -202466034
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_42
+      rect:
+        serializedVersion: 2
+        x: 282
+        y: 284
+        width: 78
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b0883d1c31d2f645ac9192d48fbbc6d
+      internalID: -855298911
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_43
+      rect:
+        serializedVersion: 2
+        x: 410
+        y: 285
+        width: 77
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cfe99d7d77e155b41827e75601f1c6a3
+      internalID: 401733494
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_44
+      rect:
+        serializedVersion: 2
+        x: 538
+        y: 287
+        width: 77
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 46521c83566dc23449e6d5c4cebe61fb
+      internalID: -1982213383
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_45
+      rect:
+        serializedVersion: 2
+        x: 666
+        y: 287
+        width: 77
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 913d60c1f2556f042b8c52a6b71fb42f
+      internalID: 1508786027
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_46
+      rect:
+        serializedVersion: 2
+        x: 794
+        y: 288
+        width: 77
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a1028ee00505ef4988b50e776105da4
+      internalID: -742968872
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_47
+      rect:
+        serializedVersion: 2
+        x: 923
+        y: 289
+        width: 76
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8960660622ebcea4e8acb41062ea2dbe
+      internalID: -1202316406
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_48
+      rect:
+        serializedVersion: 2
+        x: 1051
+        y: 290
+        width: 76
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cbbb9f88a74573c4d8543eea1313dfdf
+      internalID: 2079633382
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_49
+      rect:
+        serializedVersion: 2
+        x: 1179
+        y: 291
+        width: 76
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d6182e9c62d59e499a6cf395bfe46c1
+      internalID: 1110905758
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_50
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 164
+        width: 76
+        height: 23
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f4855fdea85782140afad62a18b79f07
+      internalID: 1696949584
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_51
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 165
+        width: 76
+        height: 23
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bda5294c098186f47a8e4249fdc981ea
+      internalID: -979925685
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_52
+      rect:
+        serializedVersion: 2
+        x: 283
+        y: 165
+        width: 76
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c65b92d726047fe4e88f634863a6e911
+      internalID: -117475234
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_53
+      rect:
+        serializedVersion: 2
+        x: 411
+        y: 166
+        width: 69
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 849a33a11ee49854cab9f654485eaabd
+      internalID: -2109599551
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_54
+      rect:
+        serializedVersion: 2
+        x: 539
+        y: 167
+        width: 66
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab272548091d943418e8ac0c51624d5e
+      internalID: -657843670
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_55
+      rect:
+        serializedVersion: 2
+        x: 674
+        y: 168
+        width: 51
+        height: 23
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 788576af16b37b743b7c069d7595b135
+      internalID: -214785638
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_56
+      rect:
+        serializedVersion: 2
+        x: 802
+        y: 169
+        width: 49
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 57527a995895661428dd3e3a20fcb86a
+      internalID: 870042540
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_57
+      rect:
+        serializedVersion: 2
+        x: 937
+        y: 170
+        width: 34
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 54ba60ad233d9bb40bec75edb765f88f
+      internalID: 629969536
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_58
+      rect:
+        serializedVersion: 2
+        x: 1065
+        y: 171
+        width: 34
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 40cf4446d98e83646ac766909a8e7e36
+      internalID: 2014323006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_59
+      rect:
+        serializedVersion: 2
+        x: 1193
+        y: 172
+        width: 15
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4deaadc0ef1446540a2d17746e896568
+      internalID: -1548583476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_60
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 44
+        width: 15
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f55233f221c61d04b82ea7f85804cc56
+      internalID: -1602416117
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_61
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 45
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 47bad3638b677844bb373c2cd7a582dd
+      internalID: 1066291338
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: anteater_despawn_62
+      rect:
+        serializedVersion: 2
+        x: 307
+        y: 52
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a58661c1ab14374ba0deef639dca876
+      internalID: -915344918
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      anteater_despawn_21: -1599733027
+      anteater_despawn_37: -1791464803
+      anteater_despawn_41: -202466034
+      anteater_despawn_18: 860230968
+      anteater_despawn_3: -1480431736
+      anteater_despawn_19: -2107557940
+      anteater_despawn_17: -30123752
+      anteater_despawn_27: 720562878
+      anteater_despawn_42: -855298911
+      anteater_despawn_58: 2014323006
+      anteater_despawn_57: 629969536
+      anteater_despawn_25: -2143217525
+      anteater_despawn_33: -1591034752
+      anteater_despawn_22: 1852107818
+      anteater_despawn_51: -979925685
+      anteater_despawn_43: 401733494
+      anteater_despawn_49: 1110905758
+      anteater_despawn_0: 1196056011
+      anteater_despawn_30: -1922142301
+      anteater_despawn_52: -117475234
+      anteater_despawn_44: -1982213383
+      anteater_despawn_9: 2117684928
+      anteater_despawn_35: -506746164
+      anteater_despawn_54: -657843670
+      anteater_despawn_1: -1247792767
+      anteater_despawn_46: -742968872
+      anteater_despawn_2: -3421206
+      anteater_despawn_26: -769794225
+      anteater_despawn_15: -275824430
+      anteater_despawn_8: 1535622498
+      anteater_despawn_39: 385841115
+      anteater_despawn_48: 2079633382
+      anteater_despawn_38: -1918204542
+      anteater_despawn_60: -1602416117
+      anteater_despawn_40: 505239936
+      anteater_despawn_61: 1066291338
+      anteater_despawn_50: 1696949584
+      anteater_despawn_29: -1107674762
+      anteater_despawn_5: 1166979713
+      anteater_despawn_34: -1973770440
+      anteater_despawn_36: 266049320
+      anteater_despawn_7: 1660736599
+      anteater_despawn_24: 1914949361
+      anteater_despawn_62: -915344918
+      anteater_despawn_6: 920459213
+      anteater_despawn_12: -589837751
+      anteater_despawn_20: 1577684256
+      anteater_despawn_10: 1831861158
+      anteater_despawn_32: 910375122
+      anteater_despawn_47: -1202316406
+      anteater_despawn_56: 870042540
+      anteater_despawn_53: -2109599551
+      anteater_despawn_45: 1508786027
+      anteater_despawn_59: -1548583476
+      anteater_despawn_23: -1247722482
+      anteater_despawn_13: -129147538
+      anteater_despawn_31: 1405591514
+      anteater_despawn_14: -1617207978
+      anteater_despawn_28: 172943312
+      anteater_despawn_55: -214785638
+      anteater_despawn_4: 959124195
+      anteater_despawn_16: 1126697042
+      anteater_despawn_11: -737330990
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

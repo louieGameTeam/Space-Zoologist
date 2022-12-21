@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 [System.Serializable]
 public class ReviewedResourceRequest
@@ -47,7 +48,7 @@ public class ReviewedResourceRequest
         {
             if (GameManager.Instance)
             {
-                Item itemObject = GameManager.Instance.LevelData.GetItemWithID(Request.ItemRequested).itemObject;
+                Item itemObject = ItemRegistry.Get(Request.ItemRequested).ShopItem;
                 return itemObject.Price * QuantityGranted;
             }
             else return 0f;
@@ -96,7 +97,7 @@ public class ReviewedResourceRequest
                 return review;
 
             // Get the item object with the given id
-            Item itemObject = GameManager.Instance.LevelData.GetItemWithID(request.ItemRequested).itemObject;
+            Item itemObject = ItemRegistry.Get(request.ItemRequested).ShopItem;
             // Compute the total price
             float totalPrice = itemObject.Price * request.QuantityRequested;
 
@@ -114,6 +115,25 @@ public class ReviewedResourceRequest
             // If there is not enough money for any item, don't grant any
             else review.QuantityGranted = 0;
         }
+
+        SummaryManager summaryManager = (SummaryManager)GameObject.FindObjectOfType(typeof(SummaryManager));
+        if(summaryManager != null)
+        { 
+            summaryManager.CurrentSummaryTrace.NumResourceRequests += 1;
+            if (review.CurrentStatus == Status.Granted || review.CurrentStatus == Status.PartiallyGranted)
+            {
+                summaryManager.CurrentSummaryTrace.NumResourceRequestsApproved += 1;
+            }
+            else if (review.CurrentStatus == Status.Denied)
+            {
+                summaryManager.CurrentSummaryTrace.NumResourceRequestsDenied += 1;
+            }
+        }
+        else
+        {
+            Debug.LogWarning("SummaryManager missing");
+        }
+        
 
         return review;
     }

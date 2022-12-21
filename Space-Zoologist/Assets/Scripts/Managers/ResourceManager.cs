@@ -10,19 +10,26 @@ public class ResourceManager : MonoBehaviour
 
     // a copy of the dictionary before draft
     Dictionary<ItemID, int> initialResources = new Dictionary<ItemID, int>();
-    private Dictionary<ItemID, StoreItemCell> itemDisplayInfo = new Dictionary<ItemID, StoreItemCell>();
+
+    // Events
+    /// <summary>
+    /// Params: ItemID, int: new quantity
+    /// </summary>
+    public System.Action<ItemID, int> OnRemainingResourcesChanged;
 
     public void Initialize()
     {
-        foreach (LevelData.ItemData item in GameManager.Instance.LevelData.itemQuantities)
+        // create entries for all the different item types 
+        foreach(var item in ItemRegistry.GetAllItems())
         {
-            if (!remainingResources.ContainsKey(item.itemObject.ID))
-            {
-                remainingResources.Add(item.itemObject.ID, item.initialAmount);
-                initialResources.Add(item.itemObject.ID, item.initialAmount);
-            }
-            remainingResources[item.itemObject.ID] = item.initialAmount;
+            remainingResources.TryAdd(item.ShopItem.ID, 0);
+            initialResources.TryAdd(item.ShopItem.ID, 0);
+        }
+        // fill in the entries with starting values
+        foreach (LevelData.ItemData item in GameManager.Instance.LevelData.ItemQuantities)
+        {
             initialResources[item.itemObject.ID] = item.initialAmount;
+            ChangeItemQuantity(item.itemObject.ID, item.initialAmount);
         }
     }
 
@@ -31,70 +38,57 @@ public class ResourceManager : MonoBehaviour
         return remainingResources.ContainsKey(itemID);
     }
 
-    public void setupItemSupplyTracker(StoreItemCell storeItem)
-    {
-        if (!itemDisplayInfo.ContainsKey(storeItem.item.ID))
-        {
-            itemDisplayInfo.Add(storeItem.item.ID, storeItem);
-            storeItem.RemainingAmount = remainingResources[storeItem.item.ID];
-        }
-    }
-
-    public void AddItem(ItemID itemID, int amount)
+    /// <summary>
+    /// Adjust the quantity of an item by some value
+    /// </summary>
+    /// <param name="itemID"></param>
+    /// <param name="changeAmount"></param>
+    /// <returns></returns>
+    public int ChangeItemQuantity(ItemID itemID, int changeAmount)
     {
         if (remainingResources.ContainsKey(itemID))
         {
-            // Debug.Log("Added " + amount + " to " + remainingResources[itemName] + " remaining " + itemName);
-            remainingResources[itemID] += amount;
-            updateItemDisplayInfo(itemID);
+            // make sure cant reduce below 0
+            if(changeAmount < 0)
+            {
+                changeAmount = Mathf.Min(remainingResources[itemID], changeAmount);
+            }
+            SetItemQuantity(itemID, remainingResources[itemID] + changeAmount);
+            return changeAmount;
         }
         else
         {
-            Debug.Log("ResourceManager: " + itemID + " does not exist!");
-        }
-    }
-    
-    public int SellItem(Item item, int amount)
-    {
-        return ReduceItem(item.ID, amount);
-    }
-
-    public void Placed(Item item, int amount)
-    {
-        ReduceItem(item.ID, amount);
-    }
-
-    public void Placed(AnimalSpecies species, int amount)
-    {
-        ReduceItem(species.ID, amount);
-    }
-
-    int ReduceItem(ItemID itemID, int amount)
-    {
-        if (remainingResources.ContainsKey(itemID))
-        {
-            int toReduce = Mathf.Min(remainingResources[itemID], amount);
-            remainingResources[itemID] -= toReduce; 
-            updateItemDisplayInfo(itemID);
-            return toReduce;
-        }
-        else
-        {
-            Debug.Log("ResourceManager: " + itemID + " does not exist!");
+            Debug.LogError("ResourceManager: " + itemID + " does not exist!");
             return -1;
         }
     }
 
-    private void updateItemDisplayInfo(ItemID itemID)
+    private void SetItemQuantity(ItemID itemID, int newAmount)
     {
-        itemDisplayInfo[itemID].RemainingAmount = remainingResources[itemID];
+        remainingResources[itemID] = newAmount;
+        OnRemainingResourcesChanged?.Invoke(itemID, newAmount);
     }
 
-    public int CheckRemainingResource(Item item)
+    public int SellItem(Item item, int amount)
     {
-        if (remainingResources.ContainsKey(item.ID))
+        return ChangeItemQuantity(item.ID, -amount);
+    }
+
+    public void Placed(Item item, int amount)
+    {
+        ChangeItemQuantity(item.ID, -amount);
+    }
+
+    public void Placed(AnimalSpecies species, int amount)
+    {
+        ChangeItemQuantity(species.ID, -amount);
+    }
+
+    public int CheckRemainingResource(ItemID ID)
+    {
+        if (remainingResources.ContainsKey(ID))
         {
-            return remainingResources[item.ID];
+            return remainingResources[ID];
         }
         else
         {
@@ -105,17 +99,12 @@ public class ResourceManager : MonoBehaviour
 
     public int CheckRemainingResource(AnimalSpecies species)
     {
-        if (remainingResources.ContainsKey(species.ID))
-        {
-            return remainingResources[species.ID];
-        }
-        else
-        {
-            // Debug.Log("ResourceManager: " + species.SpeciesName + " does not exist!");
-            return -1;
-        }
+        return CheckRemainingResource(species.ID);
     }
-
+    public int CheckRemainingResource(Item item)
+    {
+        return CheckRemainingResource(item.ID);
+    }
 
     public void Save()
     {
@@ -140,7 +129,7 @@ public class ResourceManager : MonoBehaviour
             {
                 to.Add(pair.Key, pair.Value);
             }
-            updateItemDisplayInfo(pair.Key);
+            OnRemainingResourcesChanged?.Invoke(pair.Key, pair.Value);
         }
     }
 }

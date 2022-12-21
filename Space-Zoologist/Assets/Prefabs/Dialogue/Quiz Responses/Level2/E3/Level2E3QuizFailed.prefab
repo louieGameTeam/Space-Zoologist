@@ -27,6 +27,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8571421998099922169}
   m_Father: {fileID: 0}
@@ -45,13 +46,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentIDCounter: 5
-  json: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":243.5,\"yPos\":22},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Interesting.
+  json: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":306,\"yPos\":22},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Interesting.
     Seems like some of the most critical theoretical concepts for our work haven\u2019t
-    quite rubbed off on you, yet.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":2,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":243.5,\"yPos\":122},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"I
-    have created a remedial enclosure where you can focus on mastering these concepts.\",\"parentUIDs\":[1,1],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":3,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":241.5,\"yPos\":223},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"Please
+    quite rubbed off on you, yet.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":2,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":306,\"yPos\":122},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"I
+    have created a remedial enclosure where you can focus on mastering these concepts.\",\"parentUIDs\":[1,1],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":3,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":304,\"yPos\":223},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"Please
     endeavor to either take more detailed notes, or use whatever method of information
-    retention works best for you this time.\",\"parentUIDs\":[2,2],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":4,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":243.5,\"yPos\":322},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"I
-    would hate for us to have to repeat these lessons yet again.\",\"parentUIDs\":[3,3],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0}]}"
+    retention works best for you this time.\",\"parentUIDs\":[2,2],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":4,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":306,\"yPos\":322},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"I
+    would hate for us to have to repeat these lessons yet again.\",\"parentUIDs\":[3,3],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false}]}"
   saveVersion: 103
   DefaultName: 
   DefaultSprite: {fileID: 0}
@@ -94,6 +95,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8571421997817666863}
   m_RootOrder: 0
@@ -115,7 +117,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: 90fff8d9d45b4634cb80c13f1618ec21, type: 3}
+  Icon: {fileID: 21300000, guid: fabf7af1c8cb79f45a1449c35f52a4a9, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &8571421998099922170
 MonoBehaviour:
@@ -134,7 +136,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: 90fff8d9d45b4634cb80c13f1618ec21, type: 3}
+  Icon: {fileID: 21300000, guid: fabf7af1c8cb79f45a1449c35f52a4a9, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &8571421998099922171
 MonoBehaviour:
@@ -153,7 +155,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: 90fff8d9d45b4634cb80c13f1618ec21, type: 3}
+  Icon: {fileID: 21300000, guid: fabf7af1c8cb79f45a1449c35f52a4a9, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &8571421998099922168
 MonoBehaviour:
@@ -172,5 +174,5 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: 90fff8d9d45b4634cb80c13f1618ec21, type: 3}
+  Icon: {fileID: 21300000, guid: fabf7af1c8cb79f45a1449c35f52a4a9, type: 3}
   Audio: {fileID: 0}

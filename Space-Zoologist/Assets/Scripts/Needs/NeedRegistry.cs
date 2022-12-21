@@ -51,27 +51,63 @@ public class NeedRegistry
     #endregion
 
     #region Find Methods
-    public bool TerrainIsTraversible(TileType tile)
-    {
-        return FindTraversibleTerrain().Contains(tile);
-    }
+
     public bool TerrainIsNeeded(TileType tile)
     {
         NeedData[] terrainNeeds = FindTerrainNeeds();
         int index = Array.FindIndex(terrainNeeds, need => need.ID.Data.Tile == tile);
         return index >= 0 && index < terrainNeeds.Length;
     }
-    public HashSet<TileType> FindTraversibleTerrain()
+    public HashSet<TileType> FindNeededTerrain()
     {
-        // Get all tile types on traversible terrain
+        // Get all tile types on traversable terrain
         IEnumerable<TileType> tileTypes = GetNeedsWithCategory(ItemRegistry.Category.Tile)
-            .Where(need => need.Needed)
-            .Where(need => !need.ID.IsWater || need.UseAsTerrainNeed)
+            .Where(IsNeededTileOnly)
             .Select(need => need.ID.Data.Tile)
             .Distinct();
 
         return new HashSet<TileType>(tileTypes);
     }
+
+    /// <summary>
+    /// Accessible terrain is either needed OR traversable only
+    /// </summary>
+    /// <returns></returns>
+    public HashSet<TileType> FindAccessibleTerrain()
+    {
+        IEnumerable<TileType> tileTypes = GetNeedsWithCategory(ItemRegistry.Category.Tile)
+            .Where(need => IsTraversableTileOnly(need) || IsNeededTileOnly(need))
+            .Select(need => need.ID.Data.Tile)
+            .Distinct();
+        
+        return new HashSet<TileType>(tileTypes);
+    }
+    
+    public HashSet<TileType> FindTraversableOnlyTerrain()
+    {
+        // Get all tile types on traversable terrain
+        IEnumerable<TileType> tileTypes = GetNeedsWithCategory(ItemRegistry.Category.Tile)
+            .Where(IsTraversableTileOnly)
+            .Select(need => need.ID.Data.Tile)
+            .Distinct();
+
+        return new HashSet<TileType>(tileTypes);
+    }
+
+    private bool IsNeededTileOnly(NeedData need)
+    {
+        bool isNeededLiquid = need.ID.IsWater && need.UseAsTerrainNeed && !need.TraversableOnly;
+        bool isNeededTerrain = !need.ID.IsWater && need.Needed && !need.TraversableOnly;
+        return isNeededLiquid || isNeededTerrain;
+    }
+    
+    private bool IsTraversableTileOnly(NeedData need)
+    {
+        bool isTraversableOnlyLiquid = need.ID.IsWater && need.UseAsTerrainNeed && need.TraversableOnly;
+        bool isTraversableOnlyTerrain = !need.ID.IsWater && need.TraversableOnly;
+        return isTraversableOnlyLiquid || isTraversableOnlyTerrain;
+    }
+
     public NeedData[] FindPredatorNeeds()
     {
         return GetNeedsWithCategory(ItemRegistry.Category.Species)
@@ -115,7 +151,7 @@ public class NeedRegistry
     {
         return GetNeedsWithCategory(ItemRegistry.Category.Tile)
             .Where(need => need.Needed)
-            .Where(need => !need.TraversibleOnly)
+            .Where(need => !need.TraversableOnly)
             .Where(need => !need.ID.IsWater || need.UseAsTerrainNeed)
             .OrderByDescending(need => need.Preferred)
             .ToArray();

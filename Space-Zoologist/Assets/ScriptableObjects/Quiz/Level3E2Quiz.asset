@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 523006253e9685d4585be9738485b4ff, type: 3}
+  m_Name: Level3E2Quiz
+  m_EditorClassIdentifier: 
+  importantCategories:
+  - item:
+      category: 0
+      index: 3
+    need: 7
+  fixedQuestions:
+  - question: In which of the following enclosures would the Strot potentially be
+      in danger of being preyed on?
+    category:
+      item:
+        category: 0
+        index: 3
+      need: 7
+    options:
+    - label: An enclosure with Zeigs and Lumoos
+      weight: 0
+    - label: An enclosure with Stroteaters and Zeigs
+      weight: 1
+    - label: 'Neither, Strots are not prey to any species '
+      weight: 0
+  - question: "Which of the following is a correct ordering of the Strot\u2019s preferred
+      food in order of most preferred to least preferred?\n"
+    category:
+      item:
+        category: 0
+        index: 3
+      need: 3
+    options:
+    - label: Glowcaps, Formites, Bacca berries
+      weight: 1
+    - label: Formites, Glowcaps, Bacca berries
+      weight: 0
+    - label: Glowcaps, Bacca berries, Formites
+      weight: 0
+  - question: "Barry observed that a Stroteater\u2019s water need wasn\u2019t being
+      satisfied despite them being next to a lake. He decided to add stagnant water
+      to change the water\u2019s purity values, but it didn\u2019t help. What might
+      you have done? Rank the following in order of best choice to worst choice:
+      A. Make the water source bigger B. Check research on Stroteater\u2019s water
+      needs. C. Test adding both salt water and stagnant water to see which works.\r\n"
+    category:
+      item:
+        category: 0
+        index: 2
+      need: 4
+    options:
+    - label: A, B, C
+      weight: 0
+    - label: 'B, C, A '
+      weight: 2
+    - label: C, B, A
+      weight: 0
+  randomQuestionPool:
+    questionsToPick: 0
+    questionPool: []
+  gradingRubric: {fileID: 11400000, guid: 452081780eb603242ad7429c61063876, type: 2}
+  exampleQuiz:
+    template: {fileID: 11400000}
+    answers: 000000000000000000000000
+    runtimeTemplate:
+      template: {fileID: 0}
+      questions: []

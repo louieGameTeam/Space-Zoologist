@@ -33,7 +33,8 @@ MonoBehaviour:
           encyclopedia: {fileID: 11400000, guid: 61aafb8d4cbe38049a7507065c6e13ab,
             type: 2}
         - noteLabels: {fileID: 11400000, guid: ac04ecac4d60fff4f8a19f25597cf2f1, type: 2}
-          encyclopedia: {fileID: 0}
+          encyclopedia: {fileID: 11400000, guid: ffe2db50f84f6074f9455b235de20b96,
+            type: 2}
       - entries:
         - noteLabels: {fileID: 11400000, guid: 2da04ddc0de25f146ada5ae4685907c7, type: 2}
           encyclopedia: {fileID: 11400000, guid: b45c0f43aa966de4aaa43fe1743f3ae9,
@@ -136,14 +137,14 @@ MonoBehaviour:
   testAndMetrics:
     scaffold: {fileID: 11400000, guid: 4288bb66b31c80a4993552b1c8d9a539, type: 2}
     initialTexts:
-    - 'when:
+    - 'When:
 
 
       Does this meet target specifications?:
 
 
       Related notes:'
-    - 'when:'
+    - 'When:'
   tabScaffold:
     enclosureScaffold: {fileID: 11400000, guid: 66d9016e45841d74bab71f1263aa49be,
       type: 2}

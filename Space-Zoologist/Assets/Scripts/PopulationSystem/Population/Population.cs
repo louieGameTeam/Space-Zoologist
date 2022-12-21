@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 /// <summary>
 /// A runtime instance of a population.
@@ -59,6 +60,24 @@ public class Population : MonoBehaviour
         this.PoolingSystem = this.GetComponent<PoolingSystem>();
         this.PoolingSystem.AddPooledObjects(5, this.AnimalPrefab);
         this.GrowthCalculator = new GrowthCalculator(this);
+        InitializeExistingAnimals();
+    }
+    
+    /// <summary>
+    /// Initialize existing animals. Always called after InitializeNewPopulation
+    /// </summary>
+    public void InitializeExistingAnimals()
+    {
+        foreach (GameObject animal in this.AnimalPopulation)
+        {
+            if (animal.activeSelf)
+            {
+                MovementData data = new MovementData();
+                animal.GetComponent<Animal>().Initialize(this, data);
+            }
+        }
+        this.prePopulationCount = this.Count;
+        this.PopulationBehaviorManager.Initialize();
     }
 
     /// <summary>
@@ -76,21 +95,27 @@ public class Population : MonoBehaviour
     {
         foreach(GameObject animal in this.AnimalPopulation)
         {
-            Animator animator = animal.GetComponent<Animator>();
-            Animator overlay = animal.transform.GetChild(0).GetComponent<Animator>();
-            if (animator.speed != 0)
-            {
-                this.animatorSpeed = animator.speed;
-            }
-            if (overlay.speed != 0)
-            {
-                this.overlaySpeed = overlay.speed;
-            }
-            animator.speed = 0;
-            overlay.speed = 0;
+            // Tentative change to not freeze animations
+            //PauseAnimatorComponent();
             animal.GetComponent<MovementController>().IsPaused = true;
             //animal.GetComponent<MovementController>().TryToCancelDestination();
         }
+    }
+
+    private void PauseAnimatorComponent(GameObject animal)
+    {
+        Animator animator = animal.GetComponent<Animator>();
+        Animator overlay = animal.transform.GetChild(0).GetComponent<Animator>();
+        if (animator.speed != 0)
+        {
+            this.animatorSpeed = animator.speed;
+        }
+        if (overlay.speed != 0)
+        {
+            this.overlaySpeed = overlay.speed;
+        }
+        animator.speed = 0;
+        overlay.speed = 0;
     }
 
     public void UnpauseAnimalsMovementController()
@@ -103,20 +128,6 @@ public class Population : MonoBehaviour
             overlay.speed = this.overlaySpeed;
             animal.GetComponent<MovementController>().IsPaused = false;
         }
-    }
-
-    public void InitializeExistingAnimals()
-    {
-        foreach (GameObject animal in this.AnimalPopulation)
-        {
-            if (animal.activeSelf)
-            {
-                MovementData data = new MovementData();
-                animal.GetComponent<Animal>().Initialize(this, data);
-            }
-        }
-        this.prePopulationCount = this.Count;
-        this.PopulationBehaviorManager.Initialize();
     }
 
     // Add one because UpdateGrowthConditions updates this value independently of HandleGrowth
@@ -141,12 +152,16 @@ public class Population : MonoBehaviour
             readyForGrowth = this.GrowthCalculator.ReadyForGrowth();
             if (readyForGrowth)
             {
+                bool didAdd = false;
                 //GrowthCalculator.populationIncreaseRate represents what percent of the population should be added on top of the existing population
                 float populationIncreaseAmount = this.Count * GrowthCalculator.ChangeRate;
                 for (int i = 0; i < populationIncreaseAmount; ++i)
                 {
-                    AddAnimal(FindValidPositionAroundCurrentAnimals());
+                    didAdd = true;
+                    AddAnimal(FindValidPositionAroundCurrentAnimals(), true);
                 }
+                if(didAdd)
+                    PlaySpawnAudio();
             }
         }
         else
@@ -154,14 +169,18 @@ public class Population : MonoBehaviour
             readyForGrowth = this.GrowthCalculator.ReadyForDecay();
             if (readyForGrowth)
             {
+                bool didRemove = false;
                 //GrowthCalculator.populationIncreaseRate represents what percent of the population should be removed from the existing population (as a negative number)
                 float populationDecreaseAmount = this.Count * this.GrowthCalculator.ChangeRate * -1;
                 for (int i = 0; i < populationDecreaseAmount; ++i)
                 {
                     if (this.AnimalPopulation.Count == 0)
                         break;
-                    this.RemoveAnimal(this.AnimalPopulation[0]);
+                    this.RemoveAnimal(this.AnimalPopulation[0], true);
+                    didRemove = true;
                 }
+                if(didRemove)
+                    PlayDespawnAudio();
             }
         }
 
@@ -195,20 +214,21 @@ public class Population : MonoBehaviour
         return finalPos;
     }
 
-    public void AddAnimal(Vector3 position)
+    public void AddAnimal(Vector3 position, bool triggerSpawnBehavior = false)
     {
         MovementData data = new MovementData();
+        data.CurrentDirection = Direction.left;
         GameObject newAnimal = this.PoolingSystem.GetGuaranteedPooledObject(this.AnimalPrefab);
         newAnimal.transform.position = position;
         newAnimal.GetComponent<Animal>().Initialize(this, data);
-        this.PopulationBehaviorManager.AddAnimal(newAnimal);
+        this.PopulationBehaviorManager.AddAnimal(newAnimal, triggerSpawnBehavior);
         this.AnimalPopulation.Add(newAnimal);
         // Invoke a population growth event
         EventManager.Instance.InvokeEvent(EventType.PopulationCountChange, (this, true));
     }
 
     // removes last animal in list and last behavior
-    public void RemoveAnimal(GameObject animal)
+    public void RemoveAnimal(GameObject animal, bool triggerDespawnBehavior = false)
     {
         if (this.Count == 0)
         {
@@ -218,10 +238,6 @@ public class Population : MonoBehaviour
         if (this.Count > 0)
         {
             Debug.Log("Animal removed");
-            this.PopulationBehaviorManager.RemoveAnimal(animal);
-            animal.SetActive(false);
-
-            this.PoolingSystem.ReturnObjectToPool(animal);
             this.AnimalPopulation.Remove(animal);
             if (this.Count == 0)
             {
@@ -232,8 +248,17 @@ public class Population : MonoBehaviour
                 // Invoke a population decline event
                 EventManager.Instance.InvokeEvent(EventType.PopulationCountChange, (this, false));
             }
+            // Despawn instead of remove, since the gameobject may persist to play despawn behaviors
+            this.PopulationBehaviorManager.SetDespawnCallback(DisableAnimalGameObject);
+            this.PopulationBehaviorManager.DespawnAnimal(animal, triggerDespawnBehavior);
             //Debug.Log ("Animal removed; new population count: " + Count);
         }
+    }
+    
+    public void DisableAnimalGameObject(GameObject animal)
+    {
+        animal.SetActive(false);
+        this.PoolingSystem.ReturnObjectToPool(animal);
     }
 
     /// <summary>
@@ -266,5 +291,17 @@ public class Population : MonoBehaviour
     {
         this.HasAccessibilityChanged = false;
         this.prePopulationCount = this.Count;
+    }
+
+    private void PlaySpawnAudio()
+    {
+        List<AudioClip> clips = species.AnimalShopItem.AudioClips;
+        var selectedClip = clips[UnityEngine.Random.Range(0, clips.Count)];
+        AudioManager.instance.PlayOneShot(selectedClip);
+    }
+
+    private void PlayDespawnAudio()
+    {
+        AudioManager.instance.PlayOneShot(SFXType.AnimalDespawn);
     }
 }

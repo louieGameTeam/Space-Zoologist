@@ -28,7 +28,7 @@ public class SaveData
     #region Private Editor Fields
     [SerializeField]
     [Tooltip("ID of the latest level that the player is qualified to attempt")]
-    private LevelID latestLevelQualified = new LevelID(1, 1);
+    private LevelID latestLevelQualified = new LevelID(0, 1);
     [SerializeField]
     [Tooltip("ID of the latest level that the player has finished the intro for")]
     private LevelID latestLevelIntroFinished = new LevelID(0, 0);
@@ -108,6 +108,7 @@ public class SaveData
         {
             using (FileStream file = File.OpenRead(filePath))
             {
+                //Debug.Log (Application.persistentDataPath);
                 SaveData data = (SaveData)formatter.Deserialize(file);
                 return data;
             }

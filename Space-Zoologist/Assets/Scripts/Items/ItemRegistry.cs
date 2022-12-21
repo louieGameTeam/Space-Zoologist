@@ -85,6 +85,17 @@ public class ItemRegistry : ScriptableObjectSingleton<ItemRegistry>
 
         return ids;
     }
+
+    public static List<ItemData> GetAllItems()
+    {
+        var val = new List<ItemData>();
+        foreach(var itemList in Instance.itemData.itemDataLists)
+        {
+            val.AddRange(itemList.Items);
+        }
+        return val;
+    }
+
     public static ItemID[] GetItemIDsWithCategory(Category category)
     {
         ItemID[] ids = new ItemID[CountItemsWithCategory(category)];

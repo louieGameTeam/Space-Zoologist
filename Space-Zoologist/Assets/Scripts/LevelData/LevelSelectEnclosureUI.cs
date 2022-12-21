@@ -8,7 +8,12 @@ using TMPro;
 public class LevelSelectEnclosureUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     #region Public Properties
-    public bool Interactable => LatestLevelQualified.LevelNumber > enclosure.Level.ID.LevelNumber;
+    //#if UNITY_EDITOR
+    //public bool Interactable => true;
+    //#else
+    public bool Interactable => LatestLevelQualified.LevelNumber >= enclosure.Level.ID.LevelNumber && 
+                                (LatestLevelQualified.LevelNumber == enclosure.Level.ID.LevelNumber ? LatestLevelQualified.EnclosureNumber >= enclosure.Level.ID.EnclosureNumber : true);
+    //#endif
     #endregion
 
     #region Private Properties
@@ -20,8 +25,6 @@ public class LevelSelectEnclosureUI : MonoBehaviour, IPointerEnterHandler, IPoin
             else return SaveData.LatestLevelQualified;
         }
     }
-    private LevelID CurrentID => LevelID.FromSceneName(enclosure.Level.SceneName);
-    private int Rating => SaveData.GetLevelRating(CurrentID);
     #endregion
 
     #region Private Editor Fields

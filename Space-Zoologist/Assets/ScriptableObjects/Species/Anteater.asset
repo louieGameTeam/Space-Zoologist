@@ -18,8 +18,8 @@ MonoBehaviour:
   maxFoodRequired: 8
   treesRequired: 0
   friendsRequired: {x: 0, y: 0}
-  waterTilesRequired: 0
-  growthRate: 4
+  waterTilesRequired: 2
+  growthRate: 3
   decayRate: 2
   moveCost: 0
   size: 2
@@ -198,7 +198,7 @@ MonoBehaviour:
           id:
             category: 2
             index: 1
-        - needed: 0
+        - needed: 1
           speciesNeedType: 0
           useAsTerrainNeed: 0
           traversibleOnly: 0
@@ -213,7 +213,7 @@ MonoBehaviour:
         - needed: 1
           speciesNeedType: 0
           useAsTerrainNeed: 0
-          traversibleOnly: 1
+          traversibleOnly: 0
           foodNeedType: 0
           preferred: 0
           useAsWaterNeed: 0
@@ -222,10 +222,10 @@ MonoBehaviour:
           id:
             category: 2
             index: 3
-        - needed: 1
+        - needed: 0
           speciesNeedType: 0
           useAsTerrainNeed: 0
-          traversibleOnly: 1
+          traversibleOnly: 0
           foodNeedType: 0
           preferred: 0
           useAsWaterNeed: 0
@@ -254,7 +254,7 @@ MonoBehaviour:
           preferred: 0
           useAsWaterNeed: 1
           minimum: 0.95
-          maximum: 0
+          maximum: 1
           id:
             category: 2
             index: 6

@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 523006253e9685d4585be9738485b4ff, type: 3}
+  m_Name: Level4E1Quiz
+  m_EditorClassIdentifier: 
+  importantCategories:
+  - item:
+      category: 0
+      index: 4
+    need: 3
+  fixedQuestions:
+  - question: "Choose which of the following options correctly portray a list of
+      a Flan\u2019s preferred food sources in order of least preferred to most preferred.\r\n"
+    category:
+      item:
+        category: 0
+        index: 4
+      need: 3
+    options:
+    - label: 'Glowcaps, Flanweed, Astral Maple fruit '
+      weight: 0
+    - label: 'Astral Maple fruit, Glowcaps, Flanweed '
+      weight: 1
+    - label: Flanweed, Astral Maple fruit, Glowcaps
+      weight: 0
+  - question: There are Strots in an enclosure containing Flan. In which of the following
+      enclosure designs would the Strots potentially be in danger?
+    category:
+      item:
+        category: 0
+        index: 3
+      need: 7
+    options:
+    - label: 'An enclosure where the Strots are on grass right next to a lake containing
+        the Flan. '
+      weight: 0
+    - label: An enclosure where the Strots are on sand next to a lake containing
+        Flan.
+      weight: 0
+    - label: An enclosure where the Strots are on swamp next to a lake containing
+        Flan.
+      weight: 2
+  - question: "If you were to design an \u201Cenclosure\u201D for humans, what should
+      you do after observing the current enclosure environment?"
+    category:
+      item:
+        category: 0
+        index: 5
+      need: 8
+    options:
+    - label: 'Research human needs '
+      weight: 0
+    - label: Experimenting with humans in the enclosure
+      weight: 0
+    - label: Make concepts of what the enclosure design should be
+      weight: 2
+  randomQuestionPool:
+    questionsToPick: 0
+    questionPool: []
+  gradingRubric: {fileID: 11400000, guid: 452081780eb603242ad7429c61063876, type: 2}
+  exampleQuiz:
+    template: {fileID: 11400000}
+    answers: 00000000
+    runtimeTemplate:
+      template: {fileID: 0}
+      questions: []

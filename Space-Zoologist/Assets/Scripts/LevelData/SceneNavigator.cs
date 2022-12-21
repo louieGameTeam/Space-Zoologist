@@ -12,9 +12,9 @@ public class SceneNavigator : ScriptableObject
     // Used by scripts
     public static void LoadScene (string levelName) {
         if (GameManager.Instance) {
-            Debug.Log ("Got a game manager");
+            //Debug.Log ("Got a game manager");
             GameManager.Instance.HandleExitLevel ();
-        } else Debug.Log ("Did not get a game manager");
+        }/* else Debug.Log ("Did not get a game manager");*/
 
         UpdateRecentlyLoadedLevel (levelName);
         LevelLoadEffectsHandler.Instance.StartCoroutine (LevelLoadEffectsHandler.SceneTransition (levelName));
@@ -26,10 +26,10 @@ public class SceneNavigator : ScriptableObject
     {
         if (GameManager.Instance)
         {
-            Debug.Log("Got a game manager");
+            //Debug.Log("Got a game manager");
             GameManager.Instance.HandleExitLevel();
         }
-        else Debug.Log("Did not get a game manager");
+        /*else Debug.Log("Did not get a game manager");*/
 
         UpdateRecentlyLoadedLevel(levelName);
         LevelLoadEffectsHandler.Instance.StartCoroutine (LevelLoadEffectsHandler.SceneTransition (levelName));
@@ -37,9 +37,9 @@ public class SceneNavigator : ScriptableObject
 
     public void RestartLevel () {
         if (GameManager.Instance) {
-            Debug.Log ("Got a game manager");
+            //Debug.Log ("Got a game manager");
             GameManager.Instance.HandleExitLevel ();
-        } else Debug.Log ("Did not get a game manager");
+        } /*else Debug.Log ("Did not get a game manager");*/
 
         LevelLoadEffectsHandler.Instance.StartCoroutine (LevelLoadEffectsHandler.SceneTransition (RecentlyLoadedLevel));
     }

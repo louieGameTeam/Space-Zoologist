@@ -27,6 +27,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9111926181164310369}
   m_Father: {fileID: 0}
@@ -45,16 +46,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentIDCounter: 14
-  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":453.5,\"yPos\":281},\"ID\":8,\"TMPFontGUID\":null,\"Text\":\"I
-    was born ready!\",\"parentUIDs\":[7,7],\"SpeechUID\":12},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":29.5,\"yPos\":282},\"ID\":10,\"TMPFontGUID\":null,\"Text\":\"Would
-    it change anything if I said no?\",\"parentUIDs\":[7,7],\"SpeechUID\":13}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":243.5,\"yPos\":22},\"ID\":0,\"TMPFontGUID\":null,\"Text\":\"Great
+  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":516,\"yPos\":281},\"ID\":8,\"TMPFontGUID\":null,\"Text\":\"I
+    was born ready!\",\"parentUIDs\":[7,7],\"SpeechUID\":12},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":92,\"yPos\":282},\"ID\":10,\"TMPFontGUID\":null,\"Text\":\"Would
+    it change anything if I said no?\",\"parentUIDs\":[7,7],\"SpeechUID\":13}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":306,\"yPos\":22},\"ID\":0,\"TMPFontGUID\":null,\"Text\":\"Great
     job, kid. Keep this up, and we\u2019re going to have to find something special
-    to do with you! \\r\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":7,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":235.5,\"yPos\":199},\"ID\":7,\"TMPFontGUID\":null,\"Text\":\"It\u2019s
+    to do with you! \\r\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":7,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":298,\"yPos\":199},\"ID\":7,\"TMPFontGUID\":null,\"Text\":\"It\u2019s
     time for another report-back. Are you ready? It\u2019ll just be a few questions
-    this time.\",\"parentUIDs\":[0,0],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[10,8],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":452.5,\"yPos\":359},\"ID\":12,\"TMPFontGUID\":null,\"Text\":\"That\u2019s
-    the spirit! Let\u2019s get into it, then.\\r\\n\",\"parentUIDs\":[8,8],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":26.5,\"yPos\":368},\"ID\":13,\"TMPFontGUID\":null,\"Text\":\"My
+    this time.\",\"parentUIDs\":[0,0],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[10,8],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":515,\"yPos\":359},\"ID\":12,\"TMPFontGUID\":null,\"Text\":\"That\u2019s
+    the spirit! Let\u2019s get into it, then.\\r\\n\",\"parentUIDs\":[8,8],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":89,\"yPos\":368},\"ID\":13,\"TMPFontGUID\":null,\"Text\":\"My
     guilt level, maybe\u2026 But management says we gotta grill the recruits, so
-    you\u2019re getting grilled whether you like it or not.\\r\\n\",\"parentUIDs\":[10,10],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0}]}"
+    you\u2019re getting grilled whether you like it or not.\\r\\n\",\"parentUIDs\":[10,10],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false}]}"
   saveVersion: 103
   DefaultName: Star
   DefaultSprite: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
@@ -107,6 +108,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8674448580309130467}
   m_RootOrder: 0
@@ -128,7 +130,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: 82d5126eed89849bda97e0110a6d732f, type: 3}
+  Icon: {fileID: 21300000, guid: bdf52160a0856f54b8af8ed579bd7a75, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &3664430829622366030
 MonoBehaviour:
@@ -204,7 +206,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
+  Icon: {fileID: 21300000, guid: 8c883f4201b912f4881839e372a91750, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &581765278716206016
 MonoBehaviour:
@@ -242,7 +244,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: b212920402016407db3f4179342248a7, type: 3}
+  Icon: {fileID: 21300000, guid: 7646c3955a414ac45b1dac5eaeb2bcfe, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &4961531373147506023
 MonoBehaviour:
@@ -261,7 +263,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: fd2e3a783ff2b4f98a723c083afbe0ba, type: 3}
+  Icon: {fileID: 21300000, guid: ec61f7fa5c422ee4e9cc90099b3ec209, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &897208665615401782
 MonoBehaviour:

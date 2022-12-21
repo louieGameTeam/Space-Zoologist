@@ -27,6 +27,7 @@ public class StoreSection : MonoBehaviour
     protected List<RectTransform> UIElements = default;
     protected TileDataController GridSystem = default;
     protected ResourceManager ResourceManager = default;
+    protected TilePlacementController tilePlacementController = default;
     protected Dictionary<Item, StoreItemCell> storeItems = new Dictionary<Item, StoreItemCell>();
     protected Item selectedItem = null;
     private Vector3Int previousLocation = default;
@@ -38,6 +39,9 @@ public class StoreSection : MonoBehaviour
         this.UIElements = UIElements;
         this.GridSystem = GameManager.Instance.m_tileDataController;
         this.ResourceManager = resourceManager;
+        this.tilePlacementController = GameManager.Instance.m_tilePlacementController;
+
+        resourceManager.OnRemainingResourcesChanged += UpdateDisplayValue;
     }
     public Item GetItemByID(ItemID id)
     {
@@ -53,6 +57,9 @@ public class StoreSection : MonoBehaviour
 
     public virtual void Update()
     {
+        if (selectedItem) {
+            HandleCursor ();
+        }
         if (cursorInput.IsOn)
         {
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(cursorInput.transform.position);
@@ -81,9 +88,9 @@ public class StoreSection : MonoBehaviour
         raycaster = GetComponentInParent<GraphicRaycaster>();
         // Add the items to the store section
         LevelData levelData = GameManager.Instance.LevelData;
-        foreach (LevelData.ItemData data in levelData.ItemQuantities)
+        foreach (ItemData itemData in ItemRegistry.GetAllItems())
         {
-            Item item = data.itemObject;
+            Item item = itemData.ShopItem;
             if (item)
             {
                 if (item.Type.Equals(itemType))
@@ -92,6 +99,7 @@ public class StoreSection : MonoBehaviour
                 }
             }
         }
+
     }
 
     /// <summary>
@@ -104,10 +112,21 @@ public class StoreSection : MonoBehaviour
         itemCell.Initialize(item, false, OnItemSelected);
         if (this.ResourceManager.hasLimitedSupply(item.ID))
         {
-            this.ResourceManager.setupItemSupplyTracker(itemCell);
             if (!storeItems.ContainsKey(item))
                 storeItems.Add(item, itemCell);
+            // try to get initial value
+            itemCell.RemainingAmount = ResourceManager.CheckRemainingResource(item);
         }
+    }
+
+    private void UpdateDisplayValue(ItemID item, int newQuantity)
+    {
+        foreach(var v in storeItems)
+        {
+            if (v.Key.ID == item)
+                v.Value.RemainingAmount = newQuantity;
+        }
+        //storeItems[ItemRegistry.Get(item).ShopItem].RemainingAmount = newQuantity;
     }
 
     public void AddItemQuantity(Item item, int count = 1)
@@ -118,7 +137,7 @@ public class StoreSection : MonoBehaviour
         }
         else
         {
-            this.ResourceManager.AddItem(item.ID, count);
+            this.ResourceManager.ChangeItemQuantity(item.ID, count);
             //storeItems[item].RemainingAmount += count;
         }
     }
@@ -180,7 +199,7 @@ public class StoreSection : MonoBehaviour
     }
 
     public void OnCursorItemClicked(PointerEventData eventData)
-    {
+    {/*
         if (!this.CanBuy(this.selectedItem))
         {
             OnItemSelectionCanceled();
@@ -189,7 +208,7 @@ public class StoreSection : MonoBehaviour
         if (eventData.button == PointerEventData.InputButton.Right)
         {
             OnItemSelectionCanceled();
-        }
+        }*/
     }
 
     public bool CanBuy(Item item)
@@ -199,6 +218,14 @@ public class StoreSection : MonoBehaviour
             return false;
         }
         return true;
+    }
+
+    public virtual void HandleCursor () {
+        if (Input.GetMouseButtonDown (1) || 
+            (Input.GetMouseButtonDown (0) && (!this.CanBuy (this.selectedItem) || !UIBlockerSettings.OperationIsAvailable ("Build")))) {
+            OnItemSelectionCanceled ();
+            return;
+        }
     }
 
     /// <summary>
@@ -216,11 +243,11 @@ public class StoreSection : MonoBehaviour
     /// <param name="eventData"></param>
     public virtual void OnCursorPointerUp(PointerEventData eventData)
     {
-        if (!this.CanBuy(this.selectedItem))
+        /*if (!this.CanBuy(this.selectedItem))
         {
             OnItemSelectionCanceled();
             return;
-        }
+        }*/
     }
 
     private void OnDisable()

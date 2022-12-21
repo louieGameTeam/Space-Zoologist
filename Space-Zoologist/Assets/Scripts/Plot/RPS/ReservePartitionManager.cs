@@ -30,8 +30,9 @@ public class ReservePartitionManager : MonoBehaviour
     // The long is a bit mask with the bit (IDth bit) representing a population
     public Dictionary<Vector3Int, long> AccessMap { get; private set; }
 
-    // Accessible area for each population
-    public Dictionary<Population, List<Vector3Int>> AccessibleArea { get; private set; }
+    // Accessible and preferred terrain area for each population
+    public Dictionary<Population, List<Vector3Int>> NeededArea { get; private set; }
+    public Dictionary<Population, List<Vector3Int>> TraversableOnlyArea { get; private set; }
 
     // Amount of shared space with each population <id, <id, shared tiles> >
     public Dictionary<int, long[]> SharedSpaces { get; private set; }
@@ -63,7 +64,10 @@ public class ReservePartitionManager : MonoBehaviour
         PopulationToID = new Dictionary<Population, int>();
         PopulationByID = new Dictionary<int, Population>();
         AccessMap = new Dictionary<Vector3Int, long>();
-        AccessibleArea = new Dictionary<Population, List<Vector3Int>>();
+        
+        NeededArea = new Dictionary<Population, List<Vector3Int>>();
+        TraversableOnlyArea = new Dictionary<Population, List<Vector3Int>>();
+        
         SharedSpaces = new Dictionary<int, long[]>();
         TypesOfTerrain = new Dictionary<Population, int[]>();
         populationAccessibleLiquidCompositions = new Dictionary<Population, List<float[]>>();
@@ -151,17 +155,27 @@ public class ReservePartitionManager : MonoBehaviour
         HashSet<Vector3Int> accessible = new HashSet<Vector3Int>();
         HashSet<Vector3Int> unaccessible = new HashSet<Vector3Int>();
         Vector3Int cur;
-        List<Vector3Int> newAccessibleLocations = new List<Vector3Int>();
+        
+        List<Vector3Int> newNeededLocations = new List<Vector3Int>();
+        List<Vector3Int> newTraversableOnlyLocations = new List<Vector3Int>();
+        
         List<Vector3Int> newLiquidLocations = new List<Vector3Int>();
         List<float[]> newLiquidCompositions = new List<float[]>();
         List<LiquidBody> newLiquidBodies = new List<LiquidBody>();
         // cache needs for performance to avoid repeating costly linq searches
         var treeNeeds = population.species.RequiredTreeNeeds;
+        var neededTerrain = population.species.NeededTerrain;
+        var traversableOnlyTerrain = population.species.TraversableOnlyTerrain;
         var accessibleTerrain = population.species.AccessibleTerrain;
-
-        if (!this.AccessibleArea.ContainsKey(population))
+        
+        if (!this.NeededArea.ContainsKey(population))
         {
-            this.AccessibleArea.Add(population, new List<Vector3Int>());
+            this.NeededArea.Add(population, new List<Vector3Int>());
+        }
+        
+        if (!this.TraversableOnlyArea.ContainsKey(population))
+        {
+            this.TraversableOnlyArea.Add(population, new List<Vector3Int>());
         }
 
         // Number of shared tiles
@@ -214,15 +228,41 @@ public class ReservePartitionManager : MonoBehaviour
                 newLiquidCompositions.Add(composition);
                 newLiquidLocations.Add(cur);
             }
-            bool isTileValid = tile != null && gridSystem.IsValidTileForAnimal(population.species,cur , treeNeeds, accessibleTerrain);
-            if (isTileValid)
+            
+            // Tile validity logic
+            
+            bool isTileNull = (tile == null);
+            bool isTileNeeded = !isTileNull && gridSystem.IsNeededTileForAnimal(
+                population.species,
+                cur,
+                treeNeeds,
+                accessibleTerrain,
+                neededTerrain);
+            
+            
+            bool isTileOnlyTraversable = !isTileNull && gridSystem.IsTraversableOnlyTileForAnimal(
+                population.species, 
+                cur , 
+                treeNeeds, 
+                traversableOnlyTerrain);
+            
+            if (isTileNeeded || isTileOnlyTraversable)
             {
                 // save the accessible location
                 accessible.Add(cur);
 
-                // save to accessible location
-                newAccessibleLocations.Add(cur);
+                // Save to needed locations
+                if (isTileNeeded)
+                {
+                    newNeededLocations.Add(cur);
+                }
                 
+                // Save to only traversable locations
+                if (isTileOnlyTraversable)
+                {
+                    newTraversableOnlyLocations.Add(cur);
+                }
+
                 TypesOfTerrain[population][(int)tile.type]++;
 
                 if (!AccessMap.ContainsKey(cur))
@@ -265,7 +305,8 @@ public class ReservePartitionManager : MonoBehaviour
         // Update space
         if (population.HasAccessibilityChanged)
         {
-            this.AccessibleArea[population] = newAccessibleLocations;
+            this.NeededArea[population] = newNeededLocations;
+            this.TraversableOnlyArea[population] = newTraversableOnlyLocations;
             this.populationAccessibleLiquidCompositions[population] = newLiquidCompositions;
             this.populationAccessibleLiquidLocations[population] = newLiquidLocations;
         }
@@ -332,7 +373,7 @@ public class ReservePartitionManager : MonoBehaviour
     /// <returns></returns>
     public List<Vector3Int> GetLocationsWithAccess(Population population)
     {
-        List<Vector3Int> list = new List<Vector3Int>();
+        var list = new List<Vector3Int>();
         foreach (KeyValuePair<Vector3Int, long> position in AccessMap)
         {
             if (CanAccess(population, position.Key))
@@ -341,6 +382,19 @@ public class ReservePartitionManager : MonoBehaviour
             }
         }
         return list;
+    }
+    
+    public HashSet<Vector3Int> GetLocationsSetWithAccess(Population population)
+    {
+        var set = new HashSet<Vector3Int>();
+        foreach (KeyValuePair<Vector3Int, long> position in AccessMap)
+        {
+            if (CanAccess(population, position.Key))
+            {
+                set.Add(position.Key);
+            }
+        }
+        return set;
     }
 
     /// <summary>
@@ -381,15 +435,13 @@ public class ReservePartitionManager : MonoBehaviour
     /// <returns>True is two population's accessible area overlaps, false otherwise</returns>
     public bool CanAccessPopulation(Population populationA, Population populationB)
     {
-        List<Vector3Int> AccessibleArea_A = GetLocationsWithAccess(populationA);
-        List<Vector3Int> AccessibleArea_B = GetLocationsWithAccess(populationB);
+        var accessibleAreaA = GetLocationsSetWithAccess(populationA);
+        var accessibleAreaB = GetLocationsSetWithAccess(populationB);
 
-        foreach (Vector3Int cellPos in AccessibleArea_A)
+        foreach (var location in accessibleAreaA)
         {
-            if (AccessibleArea_B.Contains(cellPos))
-            {
+            if (accessibleAreaB.Contains(location))
                 return true;
-            }
         }
 
         return false;
@@ -404,18 +456,23 @@ public class ReservePartitionManager : MonoBehaviour
     /// <returns>True is two population's accessible area overlaps, false otherwise</returns>
     public int NumOverlapTiles(Population populationA, Population populationB)
     {
-        List<Vector3Int> AccessibleArea_A = GetLocationsWithAccess(populationA);
-        List<Vector3Int> AccessibleArea_B = GetLocationsWithAccess(populationB);
-        int numOverlapTiles = 0;
-        foreach (Vector3Int cellPos in AccessibleArea_A)
+        var accessibleAreaA = GetLocationsSetWithAccess(populationA);
+        var accessibleAreaB = GetLocationsSetWithAccess(populationB);
+        accessibleAreaA.IntersectWith(accessibleAreaB);
+
+        return accessibleAreaA.Count;
+    }
+
+    public int NumOverlapTiles(HashSet<Vector3Int> accessA, HashSet<Vector3Int> accessB)
+    {
+        int count = 0;
+        foreach (var location in accessA)
         {
-            if (AccessibleArea_B.Contains(cellPos))
-            {
-                numOverlapTiles++;
-            }
+            if (accessB.Contains(location))
+                count++;
         }
 
-        return numOverlapTiles;
+        return count;
     }
 
     /// <summary>
@@ -477,12 +534,13 @@ public class ReservePartitionManager : MonoBehaviour
             throw new ArgumentNullException(
                 "Cannot get the accessible food sources for population 'null'");
 
-        if (!AccessibleArea.ContainsKey(population))
+        if (!NeededArea.ContainsKey(population) && !TraversableOnlyArea.ContainsKey(population))
             throw new ArgumentException(
                 $"Population '{population}' has no list of accessible area associated with it");
 
-        // Get the area that this population can access
-        HashSet<Vector3Int> area = new HashSet<Vector3Int>(AccessibleArea[population]);
+        // Get the area that this population can access, both needed and traversable only
+        HashSet<Vector3Int> area = new HashSet<Vector3Int>(NeededArea[population]);
+        area.UnionWith(TraversableOnlyArea[population]);
 
         // Local function checks if this food source has any cell position
         // in the set of positions that the population can access
@@ -582,7 +640,7 @@ public class ReservePartitionManager : MonoBehaviour
         Dictionary<Vector3Int, List<Population>> result = new Dictionary<Vector3Int, List<Population>>();
 
         // Go through each entry in the accessible area
-        foreach (KeyValuePair<Population, List<Vector3Int>> kvp in AccessibleArea)
+        foreach (KeyValuePair<Population, List<Vector3Int>> kvp in NeededArea)
         {
             // Go through each cell position in the list
             foreach (Vector3Int cell in kvp.Value)

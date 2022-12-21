@@ -1,16 +1,8 @@
 using System;
-using System.Linq;
-using System.Collections;
 using System.Collections.Generic;
-
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-
-using DialogueEditor;
-
-using TMPro;
-using DG.Tweening.Core.Easing;
-using Org.BouncyCastle.Asn1.Ocsp;
 
 /// <summary>
 /// Manager of miscellaneous events that occur during tutorials in the dialogue
@@ -103,6 +95,54 @@ public class TutorialPrompter : MonoBehaviour
     public void HighlightAnimalDropdownNoFreeze (string pickerNameFilter) {
         HighlightingScheduler.SetHighlights (HighlightItemPickerCategory (NotebookTab.Research, ItemRegistry.Category.Species, pickerNameFilter));
     }
+    public void HighlightDropdownNoFreeze (string pickerNameFilter) {
+        HighlightingScheduler.SetHighlights (HighlightDropdownUtility (GetDropdown (NotebookTab.Research, pickerNameFilter)));
+    }
+    // TODO: Fix this, it's just technical debt :P
+    public void HighlightTestAndMetricsDropdownNoFreeze (string pickerNameFilter) {
+        Transform entryEditor = GetEntryEditor (NotebookTab.TestAndMetrics).transform;
+        HighlightingScheduler.SetHighlights (new ConditionalHighlight () {
+            predicate = () => true,
+            target = () => entryEditor.transform.GetChild (0).GetComponent<RectTransform> ()
+        });
+    }
+    // Ick more tech debt
+    public void HighlightConceptsDropdownNoFreeze (string pickerNameFilter) {
+        RectTransform entryEditor = GetDropdown (NotebookTab.Concepts, pickerNameFilter).GetComponent<RectTransform> ();
+        HighlightingScheduler.SetHighlights (new ConditionalHighlight () {
+            predicate = () => true,
+            target = () => entryEditor
+        });
+    }
+    // More technical debt
+    public void HighlightTestAndMetricContentNoFreeze() {
+        Transform entryEditor = GetEntryEditor (NotebookTab.TestAndMetrics).transform;
+        HighlightingScheduler.SetHighlights (new ConditionalHighlight () {
+            predicate = () => true,
+            target = () => entryEditor.transform.GetChild (1).GetComponent<RectTransform> ()
+        });
+    }
+    // Even more
+    public void HighlightConceptsToggle (string toggleNameFilter) {
+        HighlightingScheduler.SetHighlights (new ConditionalHighlight () {
+            predicate = () => true,
+            target = () => GetToggle (NotebookTab.Concepts, toggleNameFilter).GetComponent<RectTransform> ()
+        }); 
+    }
+    // MOre
+    public void HighlightConceptsInputField (string fieldNameFilter) {
+        HighlightingScheduler.SetHighlights (new ConditionalHighlight () {
+            predicate = () => true,
+            target = () => GetInputField (NotebookTab.Concepts, fieldNameFilter).GetComponent<RectTransform> ()
+        }); 
+    }
+    // eVen MorE
+    public void HighlightConceptsButton (string fieldNameFilter) {
+        HighlightingScheduler.SetHighlights (new ConditionalHighlight () {
+            predicate = () => true,
+            target = () => GetButton (NotebookTab.Concepts, fieldNameFilter).GetComponent<RectTransform> ()
+        });
+    }
     public void FreezeUntilGoatTerrainHighlightAdd()
     {
         FreezeUntilHighlightPresent(
@@ -194,9 +234,9 @@ public class TutorialPrompter : MonoBehaviour
     public void FreezeUntilWaterIsInspected () {
         FreezingScheduler.FreezeUntilConditionIsMet (() => WaterIsInspected ());
     }
-    public void FreezeUntilDirtRequested(int quantity)
+    public void FreezeUntilSpaceMapleRequested(int quantity)
     {
-        FreezeUntilResourceRequestSubmitted(new ItemID(ItemRegistry.Category.Tile, 0), quantity);
+        FreezeUntilResourceRequestSubmitted(new ItemID(ItemRegistry.Category.Food, 0), quantity);
     }
     public void FreezeUntilGoatPlacedMaplePlacedAndDaysAdvanced()
     {
@@ -244,6 +284,24 @@ public class TutorialPrompter : MonoBehaviour
             {
                 predicate = () => canvas.IsExpanded != expanded,
                 target = () => canvas.FoldoutToggle.transform as RectTransform
+            });
+    }
+    public void HighlightDropdownConceptsTutorial()
+    {
+        // Doesn't freeze
+        // Grab a bunch of references to various scripts in the Notebook
+        NotebookUI notebook = GameManager.Instance.NotebookUI;
+        ConceptsUI concepts = notebook.GetComponentInChildren<ConceptsUI>(true);
+        ResourceRequestEditor requestEditor = notebook.ResourceRequestEditor;
+        ReviewedResourceRequestDisplay reviewDisplay = notebook.GetComponentInChildren<ReviewedResourceRequestDisplay>(true);
+        ItemDropdown itemReqDropdown = requestEditor.ItemRequestedDropdown;
+        RectTransform itemDropdownTransform = itemReqDropdown.GetComponent<RectTransform>();
+
+        HighlightingScheduler.SetHighlights(
+            new ConditionalHighlight()
+            {
+                predicate = () => !itemReqDropdown.Dropdown.IsExpanded,
+                target = () => itemDropdownTransform
             });
     }
     public void ClearHighlights()
@@ -349,16 +407,35 @@ public class TutorialPrompter : MonoBehaviour
     }
     private void FreezeUntilResourceRequestSubmitted(ItemID requestedItem, int requestQuantity)
     {
-        ConditionalHighlight[] resourceRequestDropdownHighlights = HighlightResourceRequestDropdown(requestedItem, requestQuantity);
+        //ConditionalHighlight[] resourceRequestDropdownHighlights = HighlightResourceRequestDropdown(requestedItem, requestQuantity);
+        // Grab a bunch of references to various scripts in the Notebook
+        NotebookUI notebook = GameManager.Instance.NotebookUI;
+        ConceptsUI concepts = notebook.GetComponentInChildren<ConceptsUI>(true);
+        ResourceRequestEditor requestEditor = notebook.ResourceRequestEditor;
+        ReviewedResourceRequestDisplay reviewDisplay = notebook.GetComponentInChildren<ReviewedResourceRequestDisplay>(true);
+        TMP_InputField quantityInput = requestEditor.QuantityInput;
+        ItemDropdown itemReqDropdown = requestEditor.ItemRequestedDropdown;
 
         // Freeze conversation until correct review was confirmed
         FreezingScheduler.FreezeUntilConditionIsMet(() => ResourceRequestWasSubmitted(requestedItem, requestQuantity), HighlightingScheduler.ClearHighlights);
         HighlightingScheduler.SetHighlights(HighlightNotebookButton(),
             HighlightNotebookTabButton(NotebookTab.Concepts),
-            resourceRequestDropdownHighlights[0],
-            resourceRequestDropdownHighlights[1],
-            resourceRequestDropdownHighlights[2],
-            resourceRequestDropdownHighlights[3]
+            new ConditionalHighlight()
+            {
+                predicate = () => !itemReqDropdown.Dropdown.IsExpanded && quantityInput.text != requestQuantity.ToString(),
+                target = () => quantityInput.transform as RectTransform
+            },
+            // Highlight the request button only after the correct quantity is entered
+            new ConditionalHighlight()
+            {
+                predicate = () => quantityInput.text == requestQuantity.ToString() && !reviewDisplay.gameObject.activeInHierarchy,
+                target = () => concepts.RequestButton.transform as RectTransform
+            }
+            // COMMENTED OUT CODE IS RELEVANT TO HIGHLIGHTING RESOURCES THAT ARE REQUESTED THAT AREN'T CURRENTLY VISIBLE IN THE DROPDOWN
+            //resourceRequestDropdownHighlights[0],
+            //resourceRequestDropdownHighlights[1],
+            //resourceRequestDropdownHighlights[2],
+            //resourceRequestDropdownHighlights[3]
             // HighlightInputField(quantityInput, requestQuantity.ToString()),
             //new ConditionalHighlight()
             //{
@@ -536,6 +613,38 @@ public class TutorialPrompter : MonoBehaviour
         // Find a picker whose name contains the filter
         return Array.Find (selectors, s => s.name.IndexOf (nameFilter, StringComparison.OrdinalIgnoreCase) >= 0);
     }
+    // TODO: Fix, it's technical debt-y
+    private TestAndMetricsEntryEditor GetEntryEditor (NotebookTab targetTab) {
+        NotebookUI notebook = GameManager.Instance.NotebookUI;
+        // Get all pickers in the given tab
+        TestAndMetricsEntryEditor [] editors = notebook.TabPicker.GetTabRoot (targetTab).GetComponentsInChildren<TestAndMetricsEntryEditor> (true);
+        // Find a picker whose name contains the filter
+        return editors [0];
+    }
+    // Also fix
+    private TMP_InputField GetInputField (NotebookTab targetTab, string nameFilter) {
+        NotebookUI notebook = GameManager.Instance.NotebookUI;
+        // Get all pickers in the given tab
+        TMP_InputField [] fields = notebook.TabPicker.GetTabRoot (targetTab).GetComponentsInChildren<TMP_InputField> (true);
+        // Find a picker whose name contains the filter
+        return Array.Find (fields, f => f.name.IndexOf (nameFilter, StringComparison.OrdinalIgnoreCase) >= 0);
+    }
+    // Nasty, fix
+    private Button GetButton (NotebookTab targetTab, string nameFilter) {
+        NotebookUI notebook = GameManager.Instance.NotebookUI;
+        // Get all pickers in the given tab
+        Button [] fields = notebook.TabPicker.GetTabRoot (targetTab).GetComponentsInChildren<Button> (true);
+        // Find a picker whose name contains the filter
+        return Array.Find (fields, f => f.name.IndexOf (nameFilter, StringComparison.OrdinalIgnoreCase) >= 0);
+    }
+    // Fix fix fix
+    private Toggle GetToggle (NotebookTab targetTab, string nameFilter) {
+        NotebookUI notebook = GameManager.Instance.NotebookUI;
+        // Get all pickers in the given tab
+        Toggle [] toggles = notebook.TabPicker.GetTabRoot (targetTab).GetComponentsInChildren<Toggle> (true);
+        // Find a picker whose name contains the filter
+        return Array.Find (toggles, t => t.name.IndexOf (nameFilter, StringComparison.OrdinalIgnoreCase) >= 0);
+    }
     // Highlights a dropdown category without highlighting items in the dropdown
     private ConditionalHighlight HighlightItemPickerCategory (NotebookTab targetTab, ItemRegistry.Category itemCategory, string nameFilter) {
         // Get the item dropdown for this category
@@ -706,6 +815,14 @@ public class TutorialPrompter : MonoBehaviour
                 predicate = () => dropdown.IsExpanded && selectedItem.Invoke () != targetItemIndex,
                 target = () => DropdownItemGetter()
             },
+        };
+    }
+    private ConditionalHighlight HighlightDropdownUtility (TMP_Dropdown dropdown) {
+        RectTransform itemDropdownTransform = dropdown.GetComponent<RectTransform> ();
+
+        return new ConditionalHighlight () {
+            predicate = () => true,
+            target = () => itemDropdownTransform
         };
     }
     private ConditionalHighlight HighlightEraseButton()

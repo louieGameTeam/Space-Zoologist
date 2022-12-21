@@ -9,7 +9,7 @@ public class UniversalAnimatorPattern : BehaviorPattern
     protected Dictionary<GameObject, float> animalToTimeData = new Dictionary<GameObject, float>();
     [SerializeField] protected bool OverlayAnimation;
 
-    protected override void EnterPattern(GameObject animal, AnimalData animalData)
+    protected override void EnterPattern(GameObject animal, AnimalCallbackData animalCallbackData)
     {
         animalToAnimatorData.Add(animal, new AnimatorData());
         if (OverlayAnimation)
@@ -55,7 +55,7 @@ public class UniversalAnimatorPattern : BehaviorPattern
         }
     }
 
-    protected override bool IsPatternFinishedAfterUpdate(GameObject animal, AnimalData animalData)
+    protected override bool IsPatternFinishedAfterUpdate(GameObject animal, AnimalCallbackData animalCallbackData)
     {
         //Animation clip duration timing
         animalToTimeData[animal] -= Time.deltaTime;

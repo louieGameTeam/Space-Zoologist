@@ -99,6 +99,7 @@ public class Login : MonoBehaviour
             }
 
             yield return null;
+            request.Dispose();
         }
     }
 
@@ -170,6 +171,7 @@ public class Login : MonoBehaviour
             ActivateButtons(true);
 
             yield return null;
+            request.Dispose();
         }
     }
 

@@ -15,7 +15,6 @@ public class StoreItemCell : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     [SerializeField] Button SellButton = default;
     [SerializeField] GameObject PriceRoot = default; // TODO: This seems deprecated, gut it
     [SerializeField] TextMeshProUGUI PriceText = default;
-    public int RemainingAmount = -1;
     [SerializeField] Color RemainingAmountTextDefaultColor = Color.white;
     [SerializeField] Color RemainingAmountTextHighlightColor = Color.green;
     [SerializeField] Color RemainingAmountTextEmptyColor = Color.red;
@@ -24,6 +23,17 @@ public class StoreItemCell : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     public event ItemSelectedHandler onSelected;
 
     private string levelName;
+
+    private int remainingAmount = 0;
+    public int RemainingAmount
+    {
+        get { return remainingAmount; }
+        set
+        {
+            remainingAmount = value;
+            Refresh();
+        }
+    }
 
     #region Public Methods
     public void Initialize(Item item, bool displayPrice, ItemSelectedHandler itemSelectedHandler)
@@ -41,42 +51,42 @@ public class StoreItemCell : MonoBehaviour, IPointerClickHandler, IPointerEnterH
 
         if (!GameManager.Instance) { return; }
 
-        // Disable sell button in tutorial
+        // Disable request button in tutorial or if item has price
         levelName = GameManager.Instance.LevelData.Level.Name;
         if (levelName != "Tutorial") {
-            // Sell button is disabled by default
-            // SellButton.gameObject.SetActive (!displayPrice);
             RequestButton.gameObject.SetActive (!displayPrice);
-        }
 
-        RequestButton.onClick.AddListener(() =>
-        {
-            if (!GameManager.Instance) { return; }
-
-            // Reference the notebook ui
-            NotebookUI notebookUI = GameManager.Instance.NotebookUI;
-            // Tab picker reference
-            NotebookTabPicker tabPicker = notebookUI.TabPicker;
-
-            // Create the bookmark to navigate to
-            Bookmark bookmark = new Bookmark(string.Empty, new BookmarkData(tabPicker.name, NotebookTab.Concepts));
-            // Create a request to prefill in the notebook
-            ResourceRequest request = new ResourceRequest()
+            RequestButton.onClick.AddListener (() =>
             {
-                QuantityRequested = 1,
-                ItemRequested = item.ID
-            };
+                if (!GameManager.Instance) { return; }
 
-            notebookUI.NavigateToBookmark(bookmark);
-            notebookUI.FillResourceRequest(request);
-        });
+                // Reference the notebook ui
+                NotebookUI notebookUI = GameManager.Instance.NotebookUI;
+                // Tab picker reference
+                NotebookTabPicker tabPicker = notebookUI.TabPicker;
 
-        SellButton.onClick.AddListener(() =>
-        {
-            if (!GameManager.Instance) { return; }
-            // sell
-            GameManager.Instance.m_menuManager.TrySellItem(item,1);
-        });
+                // Create the bookmark to navigate to
+                Bookmark bookmark = new Bookmark (string.Empty, new BookmarkData (tabPicker.name, NotebookTab.Concepts));
+                // Create a request to prefill in the notebook
+                ResourceRequest request = new ResourceRequest () {
+                    QuantityRequested = 1,
+                    ItemRequested = item.ID
+                };
+
+                notebookUI.NavigateToBookmark (bookmark);
+                notebookUI.FillResourceRequest (request);
+            });
+
+            /*
+            SellButton.onClick.AddListener(() =>
+            {
+                if (!GameManager.Instance) { return; }
+                // sell
+                GameManager.Instance.m_menuManager.TrySellItem(item,1);
+            });*/
+            
+        }
+        Refresh();
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -111,14 +121,6 @@ public class StoreItemCell : MonoBehaviour, IPointerClickHandler, IPointerEnterH
         } else {
             RemainingAmountText.color = RemainingAmountTextEmptyColor;
         }
-    }
-    #endregion
-
-    #region Monobehavior Methods
-    // whyyyy is this happening on update ew ew no
-    // TODO: make this happen every time something is placed or purchased
-    public void Update () {
-        Refresh ();
     }
     #endregion
 }

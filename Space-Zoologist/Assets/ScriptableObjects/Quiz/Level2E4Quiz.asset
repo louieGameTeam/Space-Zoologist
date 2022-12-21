@@ -18,8 +18,7 @@ MonoBehaviour:
       index: 1
     need: 0
   fixedQuestions:
-  - question: First, on what manner of terrain do Eligans Impar prefer to spend their
-      time?
+  - question: First, on what manner of terrain do Lumoos prefer to spend their time?
     category:
       item:
         category: 0
@@ -34,21 +33,21 @@ MonoBehaviour:
       weight: 0
     - label: Grass
       weight: 2
-  - question: Which of the following is a food which the Eligans Impar and Caprax
-      Zeigrun compete over.
+  - question: Which of the following is a food which the Lumoos and Zeigs compete
+      over.
     category:
       item:
         category: 0
         index: 1
       need: 7
     options:
-    - label: Coruscent Laminar
+    - label: Flanweed
       weight: 0
-    - label: Vaccinum Spatium Bacca
+    - label: Bacca Berry Bushes
       weight: 1
-    - label: Formica Collis
+    - label: Formite Hives
       weight: 0
-    - label: Candentis Acernis Aurum
+    - label: Gilded Astral Maples
       weight: 1
   - question: Which of the following species dominates when the two compete for food?
     category:
@@ -57,17 +56,32 @@ MonoBehaviour:
         index: 1
       need: 7
     options:
-    - label: Caprax Zeigrun
+    - label: Zeigs
       weight: 0
-    - label: 'Eligans Impar '
+    - label: Lumoos
       weight: 1
+  - question: 'When Barry was designing an enclosure, he read up on the needs of
+      the animals in the enclosure, came up with changes to be made, experimented
+      with those changes, and wrote down what happened. What step did he forget? '
+    category:
+      item:
+        category: 2
+        index: 3
+      need: 6
+    options:
+    - label: Barry forgot to Observe
+      weight: 1
+    - label: Barry forgot to research
+      weight: 0
+    - label: Barry forgot to write down Metrics
+      weight: 0
   randomQuestionPool:
     questionsToPick: 0
     questionPool: []
   gradingRubric: {fileID: 11400000, guid: 452081780eb603242ad7429c61063876, type: 2}
   exampleQuiz:
     template: {fileID: 11400000}
-    answers: 000000000000000000000000
+    answers: 01000000010000000100000000000000
     runtimeTemplate:
       template: {fileID: 0}
       questions: []

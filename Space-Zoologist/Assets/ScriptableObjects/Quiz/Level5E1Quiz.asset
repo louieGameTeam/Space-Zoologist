@@ -1,0 +1,115 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 523006253e9685d4585be9738485b4ff, type: 3}
+  m_Name: Level5E1Quiz
+  m_EditorClassIdentifier: 
+  importantCategories:
+  - item:
+      category: 0
+      index: 5
+    need: 7
+  fixedQuestions:
+  - question: Based solely on water needs, which of the following species enclosures
+      would be most likely best suited for a Mimi population?
+    category:
+      item:
+        category: 0
+        index: 5
+      need: 4
+    options:
+    - label: A Zeig enclosure
+      weight: 0
+    - label: A Lumoo enclosure
+      weight: 2
+    - label: A Strot enclosure
+      weight: 1
+    - label: A Flan enclosure
+      weight: 0
+  - question: "Based solely on the food sources present in the enclosure, which of
+      the following species\u2019 enclosures would likely be best suited for a Mimi
+      population?"
+    category:
+      item:
+        category: 0
+        index: 5
+      need: 3
+    options:
+    - label: 'A Stroteater enclosure '
+      weight: 1
+    - label: A Strot enclosure
+      weight: 0
+    - label: A Zeig enclosure
+      weight: 2
+    - label: A Flan enclosure
+      weight: 0
+  - question: Given that there is at least one population for every type of species
+      present in the enclosure and all their needs are being satisfied, if the Mimi
+      population started to decline what would be the most likely reason? Answer
+      under the assumption that there is only one Mimi in the current population.
+    category:
+      item:
+        category: 0
+        index: 5
+      need: 7
+    options:
+    - label: "There are not enough of each species present to support the Mimi population\u2019s
+        needs."
+      weight: 0
+    - label: "The Mimi population\u2019s water needs aren\u2019t being satisfied."
+      weight: 1
+    - label: "The Mimi population\u2019s terrain need isn\u2019t being satisfied."
+      weight: 0
+  - question: "Let\u2019s say you have to choose between two enclosures for a population
+      of Mimi. Enclosure A contains a high amount of Astral Maple trees and one of
+      every species population along with satisfiable water. Enclosure B contains
+      a bit of every type of food source but is missing one type of species compared
+      to enclosure A. Enclosure B also has satisfiable water. What do you predict
+      will happen to the Mimi population in each enclosure over time assuming the
+      population starts with only one Mimi?"
+    category:
+      item:
+        category: 0
+        index: 5
+      need: 7
+    options:
+    - label: In enclosure A the population will increase at first, then rapidly decrease.
+        In enclosure B the population will decrease immediately.
+      weight: 1
+    - label: In enclosure B the population will continue to increase whereas in enclosure
+        B it will increase then decrease.
+      weight: 0
+    - label: 'The population will decrease in both enclosures immediately. '
+      weight: 0
+  - question: Which of the following is the correct order of the design steps on
+      the first page of the command center?
+    category:
+      item:
+        category: 0
+        index: 5
+      need: 1
+    options:
+    - label: Research, Observe, Concepts, Test and Metrics
+      weight: 1
+    - label: Observe, Research, Test, Concepts and Metrics
+      weight: 0
+    - label: Concepts, Test, Observe, Metrics and Research
+      weight: 0
+  randomQuestionPool:
+    questionsToPick: 0
+    questionPool: []
+  gradingRubric: {fileID: 11400000, guid: 452081780eb603242ad7429c61063876, type: 2}
+  exampleQuiz:
+    template: {fileID: 11400000}
+    answers: 000000000000000000000000
+    runtimeTemplate:
+      template: {fileID: 0}
+      questions: []

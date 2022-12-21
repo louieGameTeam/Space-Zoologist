@@ -1,0 +1,89 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 523006253e9685d4585be9738485b4ff, type: 3}
+  m_Name: Level4E4Quiz
+  m_EditorClassIdentifier: 
+  importantCategories:
+  - item:
+      category: 0
+      index: 1
+    need: 0
+  fixedQuestions:
+  - question: "When Juno was designing an enclosure she realized the Lumoo\u2019s
+      terrain needs were only partially satisfied, so she went ahead and placed more
+      of the terrain that was already present. In which of the following situations
+      would what Juno did make the most sense?"
+    category:
+      item:
+        category: 0
+        index: 1
+      need: 0
+    options:
+    - label: If the newly added terrain was used to replace existing terrain that
+        was not the same as the terrain being placed.
+      weight: 0
+    - label: If the newly placed terrain was used to make a path into another area
+        cut off from the Lumoos by water.
+      weight: 1
+    - label: If the newly placed terrain was used to expand the available terrain
+        by replacing water.
+      weight: 0
+  - question: "Let\u2019s say Juno designed an enclosure for a population of Flan.
+      The enclosure contains plenty of appropriate purity water, an abundance of
+      Bacca berry bushes, and mostly rocky terrain broken up by bits of swamp. Put
+      the following choices in order of which will be most likely to negatively impact
+      the population first according to the described enclosure: A. There not enough
+      food B. There not enough comfortable terrain C. The purity of the water not
+      being high enough."
+    category:
+      item:
+        category: 0
+        index: 4
+      need: 0
+    options:
+    - label: A, B, C
+      weight: 1
+    - label: B, C, A
+      weight: 0
+    - label: C, B, A
+      weight: 0
+  - question: A researcher from another sector on Natura Serva is experiencing trouble
+      maintaining a species from Planet DB, known as Meuhs.The literature on Meuhs
+      is sparse, but the previous researcher can tell you that they prefer to eat
+      Astral Maples and do best with freshwater. Which of the following would be
+      the best test to conduct first in an effort to fill out the basics of the Meuh
+      encyclopedia.
+    category:
+      item:
+        category: 0
+        index: 5
+      need: 8
+    options:
+    - label: Test putting the Meuhs in an enclosure with Flans to see if the Muehs
+        will eat them.
+      weight: 0
+    - label: 'Test placing the Meuhs in separate enclosures each with one different
+        type of terrain, keeping the Astral Maples and fresh water sources consistent '
+      weight: 2
+    - label: Test putting the Meuhs in one enclosure with various types of terrain
+        present along with Astral Maples and fresh water.
+      weight: 1
+  randomQuestionPool:
+    questionsToPick: 0
+    questionPool: []
+  gradingRubric: {fileID: 11400000, guid: 452081780eb603242ad7429c61063876, type: 2}
+  exampleQuiz:
+    template: {fileID: 11400000}
+    answers: 00000000
+    runtimeTemplate:
+      template: {fileID: 0}
+      questions: []

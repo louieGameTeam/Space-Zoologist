@@ -11,7 +11,7 @@ public enum Direction { up = 0, down = 1, left = 2, right = 3, upRight = 4, upLe
 public class MovementData
 {
     public Movement MovementStatus = Movement.idle;
-    public Direction CurrentDirection = Direction.down;
+    public Direction CurrentDirection = Direction.left;
     [SerializeField] private Dictionary<string, float> TagsToMultiplicationSpeedModifiers = new Dictionary<string, float>();
     [SerializeField] private Dictionary<string, float> TagsToAdditionSpeedModifiers = new Dictionary<string, float>();
     [SerializeField] public float BaseSpeed = 3f; // The base speed before applying all the modifiers, usually does not change in runtime

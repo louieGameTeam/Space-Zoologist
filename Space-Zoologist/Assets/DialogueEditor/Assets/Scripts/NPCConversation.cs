@@ -496,6 +496,11 @@ namespace DialogueEditor
         public string Name;
 
         /// <summary>
+        /// The name of the NPC's expression
+        /// </summary>
+        [DataMember] public string Expression;
+
+        /// <summary>
         /// The selectable options of this Speech.
         /// </summary>
         public List<EditableOptionNode> Options;

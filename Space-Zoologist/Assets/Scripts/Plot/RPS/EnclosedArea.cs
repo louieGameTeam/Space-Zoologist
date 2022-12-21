@@ -57,6 +57,8 @@ public class EnclosedArea
 
     public void AddCoordinate(Coordinate coordinate, int tileType, EnclosedArea prevArea = null)
     {
+        if (tileType < 0 || tileType > (int)TileType.TypesOfTiles)
+            return;
         if (GameManager.Instance.m_tileDataController.IsCellinGrid(coordinate.x, coordinate.y))
         {
             TileData tileData = GameManager.Instance.m_tileDataController.GetTileData(new UnityEngine.Vector3Int(coordinate.x, coordinate.y, 0));

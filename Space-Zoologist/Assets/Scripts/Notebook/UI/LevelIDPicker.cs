@@ -14,7 +14,7 @@ public class LevelIDPicker : NotebookUIChild
     #endregion
 
     #region Constants
-    private const string levelPrefix = "Level ";
+    private const string levelPrefix = "Sector ";
     private const string enclosurePrefix = "Enclosure ";
     #endregion
 

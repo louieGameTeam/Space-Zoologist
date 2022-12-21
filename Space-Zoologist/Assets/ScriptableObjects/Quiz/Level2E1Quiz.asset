@@ -18,8 +18,8 @@ MonoBehaviour:
       index: 1
     need: 3
   fixedQuestions:
-  - question: First, how many tiles of water does each Eligans Impar require in order
-      to meet its liquid requirements?
+  - question: First, how many tiles of water does each Lumoo require in order to
+      meet its liquid requirements?
     category:
       item:
         category: 0
@@ -36,37 +36,37 @@ MonoBehaviour:
       weight: 0
     - label: 5
       weight: 0
-  - question: Which food sources will Eligans Impar always avoid?
+  - question: Which food sources will Lumoos always avoid?
     category:
       item:
         category: 0
         index: 1
       need: 3
     options:
-    - label: Boletus Anceps
+    - label: Glowcaps
       weight: 1
-    - label: Candentis Acernis Aurum
+    - label: Gilded Astral Maples
       weight: 0
-    - label: Formica Collis
+    - label: Formite Hives
       weight: 1
-    - label: Vaccinum Spatium Bacca
+    - label: Bacca Berry Bushes
       weight: 0
-    - label: Candentis Acernis
+    - label: Astral Maples
       weight: 0
-  - question: "What are the Eligans Impar\u2019s preferred food sources?"
+  - question: What are the Lumoo's preferred food sources?
     category:
       item:
         category: 0
         index: 1
       need: 3
     options:
-    - label: Candentis Acernis
+    - label: Astral Maples
       weight: 1
-    - label: Vaccinum Spatium Bacca
+    - label: Bacca Berry Bushes
       weight: 0
-    - label: Boletus Anceps
+    - label: Glowcaps
       weight: 0
-    - label: Candentis Acernis Aurum
+    - label: Gilded Astral Maples
       weight: 2
   - question: At what salinity will Eligans Impar begin to avoid a given body of
       water?

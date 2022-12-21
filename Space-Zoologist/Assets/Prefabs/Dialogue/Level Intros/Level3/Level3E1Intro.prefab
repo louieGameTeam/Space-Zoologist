@@ -27,6 +27,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -405.79727, y: -178.27325, z: 3258.1558}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 492502005737519771}
   m_Father: {fileID: 0}
@@ -44,23 +45,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83189876d4d389f43b7dd2e925aa112e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentIDCounter: 41
-  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":239,\"yPos\":14},\"ID\":9,\"TMPFontGUID\":null,\"Text\":\"Thalassius
-    Succo\",\"parentUIDs\":[7,7],\"SpeechUID\":10},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":536,\"yPos\":9},\"ID\":11,\"TMPFontGUID\":null,\"Text\":\"Humidum
-    Limax\",\"parentUIDs\":[10,7,7],\"SpeechUID\":40},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":285.5,\"yPos\":-435},\"ID\":35,\"TMPFontGUID\":null,\"Text\":\"Q-quiz?!\",\"parentUIDs\":[4,4],\"SpeechUID\":38},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":518.5,\"yPos\":-431},\"ID\":37,\"TMPFontGUID\":null,\"Text\":\"Got
-    it, boss.\",\"parentUIDs\":[4,4],\"SpeechUID\":6}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":408,\"yPos\":-804},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Hey
-    again. Congrats on not messing up the previous enclosures.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":3,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":403,\"yPos\":-647},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"This
+  CurrentIDCounter: 42
+  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":120.5,\"yPos\":429},\"ID\":9,\"TMPFontGUID\":null,\"Text\":\"Strot\",\"parentUIDs\":[7,7],\"SpeechUID\":10},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":417.5,\"yPos\":424},\"ID\":11,\"TMPFontGUID\":null,\"Text\":\"Flan\",\"parentUIDs\":[10,7,7],\"SpeechUID\":40},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":167,\"yPos\":-20},\"ID\":35,\"TMPFontGUID\":null,\"Text\":\"Q-quiz?!\",\"parentUIDs\":[4,4],\"SpeechUID\":38},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":400,\"yPos\":-16},\"ID\":37,\"TMPFontGUID\":null,\"Text\":\"Got
+    it, boss.\",\"parentUIDs\":[4,4],\"SpeechUID\":6}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":273.5,\"yPos\":-533},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Hey
+    again. Congrats on not messing up the previous enclosures.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":3,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":280.5,\"yPos\":-402.000061},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"This
     time, you\u2019ll be working with Eligans Impar, Thalassius Succo, and Ligurio
-    Vermis.\",\"parentUIDs\":[1,1],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":4,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":400,\"yPos\":-538},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"Go
-    over your research in the notebook before I quiz you.\",\"parentUIDs\":[3,3],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[35,37],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":true},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":408,\"yPos\":-304},\"ID\":6,\"TMPFontGUID\":null,\"Text\":\"Alright,let\u2019s
-    begin.\",\"parentUIDs\":[4,37,38,38,37],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":7,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":408,\"yPos\":-206},\"ID\":7,\"TMPFontGUID\":null,\"Text\":\"Ligurio
-    Vermis is a predator to what species?\",\"parentUIDs\":[6,40,6,40],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[9,11],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":233,\"yPos\":110},\"ID\":10,\"TMPFontGUID\":null,\"Text\":\"Yeah,
-    that's right.\",\"parentUIDs\":[9,9],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":12,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":408,\"yPos\":294},\"ID\":12,\"TMPFontGUID\":null,\"Text\":\"You\u2019ve
-    got 30 days to increase Eligans Impar\u2019s population to 10, Ligurio Vermis\u2019
-    population to 16, and Thalassius Succo\u2019s population to 24.\",\"parentUIDs\":[10,11,10],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":165.5,\"yPos\":-367},\"ID\":38,\"TMPFontGUID\":null,\"Text\":\"I
+    Vermis.\",\"parentUIDs\":[1,1],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":41,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":288.5,\"yPos\":-121},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"Go
+    over your research in the notebook before I quiz you.\",\"parentUIDs\":[3,41,41],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[35,37],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":true},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":289.5,\"yPos\":111},\"ID\":6,\"TMPFontGUID\":null,\"Text\":\"Alright,let\u2019s
+    begin.\",\"parentUIDs\":[4,37,38,38,37],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":7,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":289.5,\"yPos\":209},\"ID\":7,\"TMPFontGUID\":null,\"Text\":\"The
+    Stroteater is a predator to what species?\",\"parentUIDs\":[6,40,6,40],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[9,11],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":114.5,\"yPos\":525},\"ID\":10,\"TMPFontGUID\":null,\"Text\":\"Yeah,
+    that's right.\",\"parentUIDs\":[9,9],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":12,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":289.5,\"yPos\":709},\"ID\":12,\"TMPFontGUID\":null,\"Text\":\"You\u2019ve
+    got 30 days to increase the Lumoos' population to 10, the Stroteaters\u2019 population
+    to 16, and the Strots' population to 24.\",\"parentUIDs\":[10,11,10],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":47,\"yPos\":48},\"ID\":38,\"TMPFontGUID\":null,\"Text\":\"I
     can\u2019t just let you play with species for fun. You have to know what you\u2019re
-    doing...\",\"parentUIDs\":[35,35],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":6,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":485,\"yPos\":98},\"ID\":40,\"TMPFontGUID\":null,\"Text\":\"I
-    told you to read, didn't I?! This is serious!\",\"parentUIDs\":[11,11],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":7,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false}]}"
+    doing...\",\"parentUIDs\":[35,35],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":6,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":366.5,\"yPos\":513},\"ID\":40,\"TMPFontGUID\":null,\"Text\":\"I
+    told you to read, didn't I?! This is serious!\",\"parentUIDs\":[11,11],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":7,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":280.5,\"yPos\":-294},\"ID\":41,\"TMPFontGUID\":null,\"Text\":\"Otherwise
+    known as the Lumoo, Strot and Stroteater.\",\"parentUIDs\":[3,3],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":4,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false}]}"
   saveVersion: 103
   DefaultName: 
   DefaultSprite: {fileID: 0}
@@ -92,6 +92,7 @@ MonoBehaviour:
   - {fileID: 492502005737519789}
   - {fileID: 492502005737519791}
   - {fileID: -1756006756689419574}
+  - {fileID: 1396005548554400495}
   Event:
     m_PersistentCalls:
       m_Calls: []
@@ -130,6 +131,7 @@ GameObject:
   - component: {fileID: 492502005737519789}
   - component: {fileID: 492502005737519791}
   - component: {fileID: -1756006756689419574}
+  - component: {fileID: 1396005548554400495}
   m_Layer: 0
   m_Name: ConversationEventInfo
   m_TagString: Untagged
@@ -147,6 +149,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 492502004931850184}
   m_RootOrder: 0
@@ -168,7 +171,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: 90fff8d9d45b4634cb80c13f1618ec21, type: 3}
+  Icon: {fileID: 21300000, guid: fabf7af1c8cb79f45a1449c35f52a4a9, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &492502005737519802
 MonoBehaviour:
@@ -187,7 +190,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: 90fff8d9d45b4634cb80c13f1618ec21, type: 3}
+  Icon: {fileID: 21300000, guid: fabf7af1c8cb79f45a1449c35f52a4a9, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &492502005737519781
 MonoBehaviour:
@@ -206,7 +209,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: 90fff8d9d45b4634cb80c13f1618ec21, type: 3}
+  Icon: {fileID: 21300000, guid: fabf7af1c8cb79f45a1449c35f52a4a9, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &492502005737519780
 MonoBehaviour:
@@ -225,7 +228,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: 90fff8d9d45b4634cb80c13f1618ec21, type: 3}
+  Icon: {fileID: 21300000, guid: fabf7af1c8cb79f45a1449c35f52a4a9, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &492502005737519783
 MonoBehaviour:
@@ -244,7 +247,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: 90fff8d9d45b4634cb80c13f1618ec21, type: 3}
+  Icon: {fileID: 21300000, guid: fabf7af1c8cb79f45a1449c35f52a4a9, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &492502005737519777
 MonoBehaviour:
@@ -263,7 +266,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: 90fff8d9d45b4634cb80c13f1618ec21, type: 3}
+  Icon: {fileID: 21300000, guid: fabf7af1c8cb79f45a1449c35f52a4a9, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &492502005737519776
 MonoBehaviour:
@@ -282,7 +285,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: 90fff8d9d45b4634cb80c13f1618ec21, type: 3}
+  Icon: {fileID: 21300000, guid: fabf7af1c8cb79f45a1449c35f52a4a9, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &492502005737519786
 MonoBehaviour:
@@ -586,7 +589,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: 90fff8d9d45b4634cb80c13f1618ec21, type: 3}
+  Icon: {fileID: 21300000, guid: fabf7af1c8cb79f45a1449c35f52a4a9, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &492502005737519789
 MonoBehaviour:
@@ -624,7 +627,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: 90fff8d9d45b4634cb80c13f1618ec21, type: 3}
+  Icon: {fileID: 21300000, guid: fabf7af1c8cb79f45a1449c35f52a4a9, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &-1756006756689419574
 MonoBehaviour:
@@ -639,6 +642,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NodeID: 37
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 0}
+  Audio: {fileID: 0}
+--- !u!114 &1396005548554400495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 492502005737519770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 41
   Event:
     m_PersistentCalls:
       m_Calls: []

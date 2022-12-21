@@ -312,6 +312,9 @@ public class QuizConversation : MonoBehaviour
             .GetEntryWithLatestAttempt(LevelID.Current())
             .reviews;
 
+        // EXTRA QUESTIONS TEMPORARILY DISABLED
+        currentQuiz = new QuizInstance(template);
+        return;
         // If there are reviewed requests then create a quiz with additional questions
         if (reviewsList.Reviews.Count > 0)
         {

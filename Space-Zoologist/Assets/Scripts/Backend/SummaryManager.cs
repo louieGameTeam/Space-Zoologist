@@ -19,11 +19,20 @@ public class SummaryManager : MonoBehaviour
     // Boolean values indicating status of notebook tabs.
     private bool researchOpen = false;
     private bool observationOpen = false;
+    private bool conceptsOpen = false;
+    private bool testAndMetricsOpen = false;
+    private bool reportsOpen = false;
     // Keep track of certain objects in scene globally.
     private LevelDataReference levelData;
     private NotebookTabPicker picker;
     private float timer;
     #endregion
+
+    public SummaryTrace CurrentSummaryTrace
+    {
+        get { return currentSummaryTrace; }
+        set { currentSummaryTrace = value; }
+    }
 
     // On Awake, check the status of the instance. If the instance is null, replace it with the current SummaryManager.
     // Else, destroy the gameObject this script is attached to. There can only be one.
@@ -39,8 +48,6 @@ public class SummaryManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
-        SetUpCurrentSummaryTrace(GetPlayerID());
     }
 
     // Enable and disable functions to allocate delegates.
@@ -65,15 +72,15 @@ public class SummaryManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timer += Time.deltaTime;
-        if (timer >= 60) {
-            timer = 0;
-            SaveSummaryTrace();
-        }
-
-        // Begin tracking total play time.
         if (currentSummaryTrace != null)
         {
+            // Every 60s, save the summary trace
+            timer += Time.deltaTime;
+            if (timer >= 60) {
+                timer = 0;
+                SaveSummaryTrace();
+            }
+            // Begin tracking total play time.
             currentSummaryTrace.TotalPlayTime += Time.deltaTime;
             // Track time in levels. CurrentLevel is determined by OnSceneLoaded and CheckLevelAndSet functions.
             if (currentLevel == 0) {
@@ -81,15 +88,51 @@ public class SummaryManager : MonoBehaviour
             } else if (currentLevel == 1)
             {
                 currentSummaryTrace.Level1Time += Time.deltaTime;
+                if (currentSet == 1) {
+                    currentSummaryTrace.L1Enclosure1Time += Time.deltaTime;
+                } else if (currentSet == 2) {
+                    currentSummaryTrace.L1Enclosure2Time += Time.deltaTime;
+                } else if (currentSet == 3) {
+                    currentSummaryTrace.L1Enclosure3Time += Time.deltaTime;
+                } else if (currentSet == 4) {
+                    currentSummaryTrace.L1Enclosure4Time += Time.deltaTime;
+                }
             } else if (currentLevel == 2)
             {
                 currentSummaryTrace.Level2Time += Time.deltaTime;
+                if (currentSet == 1) {
+                    currentSummaryTrace.L2Enclosure1Time += Time.deltaTime;
+                } else if (currentSet == 2) {
+                    currentSummaryTrace.L2Enclosure2Time += Time.deltaTime;
+                } else if (currentSet == 3) {
+                    currentSummaryTrace.L2Enclosure3Time += Time.deltaTime;
+                } else if (currentSet == 4) {
+                    currentSummaryTrace.L2Enclosure4Time += Time.deltaTime;
+                }
             } else if (currentLevel == 3)
             {
                 currentSummaryTrace.Level3Time += Time.deltaTime;
+                if (currentSet == 1) {
+                    currentSummaryTrace.L3Enclosure1Time += Time.deltaTime;
+                } else if (currentSet == 2) {
+                    currentSummaryTrace.L3Enclosure2Time += Time.deltaTime;
+                } else if (currentSet == 3) {
+                    currentSummaryTrace.L3Enclosure3Time += Time.deltaTime;
+                } else if (currentSet == 4) {
+                    currentSummaryTrace.L3Enclosure4Time += Time.deltaTime;
+                }
             } else if (currentLevel == 4)
             {
                 currentSummaryTrace.Level4Time += Time.deltaTime;
+                if (currentSet == 1) {
+                    currentSummaryTrace.L4Enclosure1Time += Time.deltaTime;
+                } else if (currentSet == 2) {
+                    currentSummaryTrace.L4Enclosure2Time += Time.deltaTime;
+                } else if (currentSet == 3) {
+                    currentSummaryTrace.L4Enclosure3Time += Time.deltaTime;
+                } else if (currentSet == 4) {
+                    currentSummaryTrace.L4Enclosure4Time += Time.deltaTime;
+                }
             } else if (currentLevel == 5)
             {
                 currentSummaryTrace.Level5Time += Time.deltaTime;
@@ -103,6 +146,18 @@ public class SummaryManager : MonoBehaviour
             if (observationOpen)
             {
                 currentSummaryTrace.TimeObservationToolOpen += Time.deltaTime;
+            }
+            if (conceptsOpen)
+            {
+                currentSummaryTrace.TimeConceptsTabOpen += Time.deltaTime;
+            }
+            if (testAndMetricsOpen)
+            {
+                currentSummaryTrace.TimeTestAndMetricsTabOpen += Time.deltaTime;
+            }
+            if (reportsOpen)
+            {
+                currentSummaryTrace.TimeReportsTabOpen += Time.deltaTime;
             }
         }
 
@@ -138,19 +193,31 @@ public class SummaryManager : MonoBehaviour
     {
         var encryption = GetComponent<Encryption>();
         var encryptedId = encryption.Encrypt(id);
+        var encryptedName = encryption.Encrypt(id);
 
         // Check if current user has summary trace data in DB.
         StartCoroutine(GetSummaryTrace.TryGetSummaryTrace(encryptedId, (value) => {
-            SummaryTraceResponse response = value;
-            // If the trace was found for the user, set its data field to be the current summary trace.
-            if (response.code == 0)
+            if (value != null) 
             {
-                currentSummaryTrace = JsonUtility.FromJson<SummaryTrace>(response.data);
-            // If no trace for the current user is found, create a new summary trace to work from.
-            } else if (response.code == 2)
+                SummaryTraceResponse response = value;
+                // If the trace was found for the user, set its data field to be the current summary trace.
+                if (response.code == 0)
+                {
+                    currentSummaryTrace = JsonUtility.FromJson<SummaryTrace>(response.data);
+                // If no trace for the current user is found, create a new summary trace to work from.
+                } else if (response.code == 2)
+                {
+                    currentSummaryTrace = new SummaryTrace();
+                    currentSummaryTrace.PlayerID = encryptedId;
+                    currentSummaryTrace.PlayerName = encryptedName;
+                    currentSummaryTrace.DateStarted = DateTime.Now.ToString();
+                }
+            } else
             {
                 currentSummaryTrace = new SummaryTrace();
                 currentSummaryTrace.PlayerID = encryptedId;
+                currentSummaryTrace.PlayerName = encryptedName;
+                currentSummaryTrace.DateStarted = DateTime.Now.ToString();
             }
         }));
     }
@@ -238,31 +305,98 @@ public class SummaryManager : MonoBehaviour
     // leaves level 5 out of completion.
     private void CheckAndModifyProgression(int currentLevel, SummaryTrace trace)
     {
-        SaveSummaryTrace();
         if (currentLevel == 0)
         {
             trace.TutorialComplete = true;
         }
         if (currentLevel == 1)
         {
-            trace.Level1Complete = true;
+            if (currentSet == 1)
+            {
+                trace.L1Enclosure1Complete = true;
+                trace.L1Enclosure1DateCompleted = DateTime.Now.ToString();
+            } else if (currentSet == 2)
+            {
+                trace.L1Enclosure2Complete = true;
+                trace.L1Enclosure2DateCompleted = DateTime.Now.ToString();
+            } else if (currentSet == 3)
+            {
+                trace.L1Enclosure3Complete = true;
+                trace.L1Enclosure3DateCompleted = DateTime.Now.ToString();
+            } else if (currentSet == 4)
+            {
+                trace.L1Enclosure4Complete = true;
+                trace.L1Enclosure4DateCompleted = DateTime.Now.ToString();
+                trace.Level1Complete = true;
+            }
         }
         if (currentLevel == 2)
         {
-            trace.Level2Complete = true;
+            if (currentSet == 1)
+            {
+                trace.L2Enclosure1Complete = true;
+                trace.L2Enclosure1DateCompleted = DateTime.Now.ToString();
+            } else if (currentSet == 2)
+            {
+                trace.L2Enclosure2Complete = true;
+                trace.L2Enclosure2DateCompleted = DateTime.Now.ToString();
+            } else if (currentSet == 3)
+            {
+                trace.L2Enclosure3Complete = true;
+                trace.L2Enclosure3DateCompleted = DateTime.Now.ToString();
+            } else if (currentSet == 4)
+            {
+                trace.L2Enclosure4Complete = true;
+                trace.L2Enclosure4DateCompleted = DateTime.Now.ToString();
+                trace.Level2Complete = true;
+            }
         }
         if (currentLevel == 3)
         {
-            trace.Level3Complete = true;
+            if (currentSet == 1)
+            {
+                trace.L3Enclosure1Complete = true;
+                trace.L3Enclosure1DateCompleted = DateTime.Now.ToString();
+            } else if (currentSet == 2)
+            {
+                trace.L3Enclosure2Complete = true;
+                trace.L3Enclosure2DateCompleted = DateTime.Now.ToString();
+            } else if (currentSet == 3)
+            {
+                trace.L3Enclosure3Complete = true;
+                trace.L3Enclosure3DateCompleted = DateTime.Now.ToString();
+            } else if (currentSet == 4)
+            {
+                trace.L3Enclosure4Complete = true;
+                trace.L3Enclosure4DateCompleted = DateTime.Now.ToString();
+                trace.Level3Complete = true;
+            }
         }
         if (currentLevel == 4)
         {
-            trace.Level4Complete = true;
+            if (currentSet == 1)
+            {
+                trace.L4Enclosure1Complete = true;
+                trace.L4Enclosure1DateCompleted = DateTime.Now.ToString();
+            } else if (currentSet == 2)
+            {
+                trace.L4Enclosure2Complete = true;
+                trace.L4Enclosure2DateCompleted = DateTime.Now.ToString();
+            } else if (currentSet == 3)
+            {
+                trace.L4Enclosure3Complete = true;
+                trace.L4Enclosure3DateCompleted = DateTime.Now.ToString();
+            } else if (currentSet == 4)
+            {
+                trace.L4Enclosure4Complete = true;
+                trace.Level4Complete = true;
+            }
         }
         if (currentLevel == 5)
         {
             trace.Level5Complete = true;
         }
+        SaveSummaryTrace(); 
     }
 
     // A function that executes upon opening the journal.
@@ -277,37 +411,136 @@ public class SummaryManager : MonoBehaviour
     private void OnJournalClosed()
     {
         picker = null;
-        EventManager.Instance.UnsubscribeToEvent(EventType.OnTabChanged, (Action)null);
-        EventManager.Instance.UnsubscribeToEvent(EventType.OnBookmarkAdded, (Action)null);
+        //EventManager.Instance.UnsubscribeToEvent(EventType.OnTabChanged, (Action)null);
+        //EventManager.Instance.UnsubscribeToEvent(EventType.OnBookmarkAdded, (Action)null);
+
+        EventManager.Instance.UnsubscribeToEvent(EventType.OnTabChanged, OnTabChanged);
+        EventManager.Instance.UnsubscribeToEvent(EventType.OnBookmarkAdded, OnBookmarkAdded);
     }
 
     // A function that processes notebook tab change events.
     private void OnTabChanged()
     {
         // Handle research tab.
-        if (picker.CurrentTab == NotebookTab.Research)
-        {
-            Debug.Log("Research tab was opened.");
-            researchOpen = true;
-            currentSummaryTrace.NumResearchTabOpen += 1;
-            EventManager.Instance.SubscribeToEvent(EventType.OnArticleChanged, OnArticleChanged);
-        } else if (picker.CurrentTab != NotebookTab.Research)
-        {
-            Debug.Log("Research tab was closed.");
-            researchOpen = false;
-            EventManager.Instance.UnsubscribeToEvent(EventType.OnArticleChanged, (Action)null);
-        }
+        //if (picker.CurrentTab == NotebookTab.Research)
+        //{
+        //    Debug.Log("Research tab was opened.");
+        //    researchOpen = true;
+        //    currentSummaryTrace.NumResearchTabOpen += 1;
+        //    EventManager.Instance.SubscribeToEvent(EventType.OnArticleChanged, OnArticleChanged);
+        //} else if (picker.CurrentTab != NotebookTab.Research)
+        //{
+        //    Debug.Log("Research tab was closed.");
+        //    researchOpen = false;
+        //    //EventManager.Instance.UnsubscribeToEvent(EventType.OnArticleChanged, (Action)null);
+        //    EventManager.Instance.UnsubscribeToEvent(EventType.OnArticleChanged, OnArticleChanged);
+        //}
 
         // Handle observation tab.
-        if (picker.CurrentTab == NotebookTab.Observe)
+        //if (picker.CurrentTab == NotebookTab.Observe)
+        //{
+        //    Debug.Log("Observation tab was opened.");
+        //    observationOpen = true;
+        //    currentSummaryTrace.NumObservationToolOpen += 1;
+        //} else if (picker.CurrentTab != NotebookTab.Observe)
+        //{
+        //    Debug.Log("Observation tab was closed.");
+        //    observationOpen = false;
+        //}
+
+        // Handle research tab
+        if (picker.CurrentTab == NotebookTab.Research)
         {
-            Debug.Log("Observation tab was opened.");
-            observationOpen = true;
-            currentSummaryTrace.NumObservationToolOpen += 1;
-        } else if (picker.CurrentTab != NotebookTab.Research)
+            ResearchTabOpened();
+
+            // If another tab was open, run its relevant closing function
+            if (observationOpen)
+                ObservationTabClosed();
+            else if (conceptsOpen)
+                ConceptsTabClosed();
+            else if (testAndMetricsOpen)
+                TestAndMetricsTabClosed();
+            else if (reportsOpen)
+                ReportsTabClosed();
+        }
+
+        // Handle observation tab
+        else if (picker.CurrentTab == NotebookTab.Observe)
         {
-            Debug.Log("Observation tab was closed.");
-            observationOpen = false;
+            ObservationTabOpened();
+
+            // If another tab was open, run its relevant closing function
+            if (researchOpen)
+                ResearchTabClosed();
+            else if (conceptsOpen)
+                ConceptsTabClosed();
+            else if (testAndMetricsOpen)
+                TestAndMetricsTabClosed();
+            else if (reportsOpen)
+                ReportsTabClosed();
+        }
+
+        else if (picker.CurrentTab == NotebookTab.Concepts)
+        {
+            ConceptsTabOpened();
+
+            // If another tab was open, run its relevant closing function
+            if (researchOpen)
+                ResearchTabClosed();
+            else if (observationOpen)
+                ObservationTabClosed();
+            else if (testAndMetricsOpen)
+                TestAndMetricsTabClosed();
+            else if (reportsOpen)
+                ReportsTabClosed();
+        }
+
+        else if (picker.CurrentTab == NotebookTab.TestAndMetrics)
+        {
+            TestAndMetricsTabOpened();
+
+            // If another tab was open, run its relevant closing function
+            if (researchOpen)
+                ResearchTabClosed();
+            else if (observationOpen)
+                ObservationTabClosed();
+            else if (conceptsOpen)
+                ConceptsTabClosed();
+            else if (reportsOpen)
+                ReportsTabClosed();
+        }
+
+        else if (picker.CurrentTab == NotebookTab.Reports)
+        {
+            ReportsTabOpened();
+
+            // If another tab was open, run its relevant closing function
+            if (researchOpen)
+                ResearchTabClosed();
+            else if (observationOpen)
+                ObservationTabClosed();
+            else if (conceptsOpen)
+                ConceptsTabClosed();
+            else if (testAndMetricsOpen)
+                TestAndMetricsTabClosed();
+        }
+
+        // Handle generic tab switch behaviors
+        else
+        {
+            // If research tab was open, run its relevant closing function
+            if (researchOpen)
+                ResearchTabClosed();
+
+            // If observation tab was open, run its relevant closing function
+            else if (observationOpen)
+                ObservationTabClosed();
+            else if (conceptsOpen)
+                ConceptsTabClosed();
+            else if (testAndMetricsOpen)
+                TestAndMetricsTabClosed();
+            else if (reportsOpen)
+                ReportsTabClosed();
         }
     }
 
@@ -383,8 +616,88 @@ public class SummaryManager : MonoBehaviour
     private void SaveSummaryTrace()
     {
         Debug.Log("Sending summary trace to DB.");
-        Debug.Log("Player ID POST: " + currentSummaryTrace.PlayerID);
-        string json = ConvertSummaryTraceToJSON(currentSummaryTrace);
-        StartCoroutine(SubmitSummaryTrace.TrySubmitSummaryTrace(json));
+        if (!string.IsNullOrEmpty(currentSummaryTrace.PlayerID)) {
+            Debug.Log("Player ID POST: " + currentSummaryTrace.PlayerID);
+            string json = ConvertSummaryTraceToJSON(currentSummaryTrace);
+            StartCoroutine(SubmitSummaryTrace.TrySubmitSummaryTrace(json));
+        }
+    }
+
+    // Helper function for when research tab is opened
+    private void ResearchTabOpened()
+    {
+        Debug.Log("Research tab opened");
+
+        researchOpen = true;
+        currentSummaryTrace.NumResearchTabOpen += 1;
+        EventManager.Instance.SubscribeToEvent(EventType.OnArticleChanged, OnArticleChanged);
+    }
+
+    // Helper function for when research tab is closed
+    private void ResearchTabClosed()
+    {
+        Debug.Log("Research tab closed");
+
+        researchOpen = false;
+        EventManager.Instance.UnsubscribeToEvent(EventType.OnArticleChanged, OnArticleChanged);
+    }
+
+    // Helper function for when observation tab is opened
+    private void ObservationTabOpened()
+    {
+        Debug.Log("Observation tab opened");
+
+        observationOpen = true;
+        currentSummaryTrace.NumObservationToolOpen += 1;
+    }
+
+    // Helper function for when observation tab is closed
+    private void ObservationTabClosed()
+    {
+        Debug.Log("Observation tab closed");
+
+        observationOpen = false;
+    }
+
+    private void ConceptsTabOpened()
+    {
+        Debug.Log("Concepts tab opened");
+
+        conceptsOpen = true;
+        currentSummaryTrace.NumConceptsTabOpen += 1;
+    }
+    private void ConceptsTabClosed()
+    {
+        Debug.Log("Concepts tab closed");
+
+        conceptsOpen = false;
+    }
+
+    private void TestAndMetricsTabOpened()
+    {
+        Debug.Log("TestAndMetrics tab opened");
+
+        testAndMetricsOpen = true;
+        currentSummaryTrace.NumTestAndMetricsTabOpen += 1;
+    }
+    private void TestAndMetricsTabClosed()
+    {
+        Debug.Log("TestAndMetrics tab closed");
+
+        testAndMetricsOpen = false;
+    }
+
+    private void ReportsTabOpened()
+    {
+        Debug.Log("Reports tab opened");
+
+        reportsOpen = true;
+        currentSummaryTrace.NumReportsTabOpen += 1;
+    }
+    private void ReportsTabClosed()
+    {
+        Debug.Log("Reports tab closed");
+
+        reportsOpen = false;
     }
 }

@@ -12,17 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 857335ca450634d41951df7ce9e84e43, type: 3}
   m_Name: StagnantWater
   m_EditorClassIdentifier: 
-  itemID:
-    category: 2
-    index: 8
-  id: Liquid
-  type: 1
   itemName: Stagnant Water
-  price: 2
+  price: 3
   description: 
   icon: {fileID: 21300000, guid: 0fb96b2961813ad4687cb1edb119dd22, type: 3}
   audio:
   - {fileID: 8300000, guid: 71886e2a2b927fc46b91fb6b181dc909, type: 3}
   - {fileID: 8300000, guid: 99e906617b880ca41827f54ed43b9b5d, type: 3}
   BuildTime: 1
-  liquidContents: {x: 0.9, y: 0.01, z: 0.09}
+  liquidContents: {x: 0.95, y: 0, z: 0.05}

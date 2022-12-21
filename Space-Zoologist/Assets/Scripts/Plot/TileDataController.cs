@@ -39,7 +39,8 @@ public class TileDataController : MonoBehaviour
     [SerializeField] private int ReserveWidth = default;
     [SerializeField] private int ReserveHeight = default;
     // grid is accessed using [y, x] due to 2d array structure
-    private TileData[,] TileDataGrid = default;
+    public TileData[,]TileDataGrid => tileDataGrid;
+    private TileData[,] tileDataGrid = default;
     private List<ConstructionCluster> ConstructionClusters;
     public Vector3Int startTile = default;
     public List<LiquidBody> previewBodies { get; private set; } = new List<LiquidBody>();
@@ -49,7 +50,7 @@ public class TileDataController : MonoBehaviour
     [SerializeField] private int quickCheckIterations = 6; //Number of tiles to quick check, if can't reach another tile within this many walks, try to generate new body by performing full check
                                                            // Increment by 2 makes a difference. I.E. even numbers, at least 6 to account for any missing tile in 8 surrounding tiles
 
-    public bool IsConstructing(int x, int y) => (y < TileDataGrid.GetLength(0) && x < TileDataGrid.GetLength(1)) ? TileDataGrid[y, x].isConstructing : false;
+    public bool IsConstructing(int x, int y) => (y < tileDataGrid.GetLength(0) && x < tileDataGrid.GetLength(1)) ? tileDataGrid[y, x].isConstructing : false;
     private Action constructionFinishedCallback = null;
 
     private Texture2D TilemapTexture;
@@ -128,7 +129,7 @@ public class TileDataController : MonoBehaviour
         // set grid dimensions
         ReserveWidth = serializedGrid.width;
         ReserveHeight = serializedGrid.height;
-        this.TileDataGrid = new TileData[this.ReserveHeight, this.ReserveWidth];
+        this.tileDataGrid = new TileData[this.ReserveHeight, this.ReserveWidth];
 
         // set up the information textures
         TilemapTexture = new Texture2D(ReserveWidth + 1, ReserveHeight + 1);
@@ -154,8 +155,8 @@ public class TileDataController : MonoBehaviour
             {
                 for (int i = 0; i < serializedTileData.Repetitions; ++i)
                 {
-                    TileDataGrid[tilePosition.y, tilePosition.x] = new TileData(tilePosition, null);
-                    TileDataGrid[tilePosition.y, tilePosition.x].isTilePlaceable = serializedTileData.Placeable;
+                    tileDataGrid[tilePosition.y, tilePosition.x] = new TileData(tilePosition, null);
+                    tileDataGrid[tilePosition.y, tilePosition.x].isTilePlaceable = serializedTileData.Placeable;
 
                     // move x over first
                     tilePosition.x += 1;
@@ -183,8 +184,8 @@ public class TileDataController : MonoBehaviour
                         for (int i = 0; i < serializedTileData.Repetitions; ++i)
                         {
                             // manually add the tile (may turn into a method later)
-                            TileDataGrid[tilePosition.y, tilePosition.x] = new TileData(tilePosition, gameTile);
-                            TileDataGrid[tilePosition.y, tilePosition.x].isTilePlaceable = serializedTileData.Placeable;
+                            tileDataGrid[tilePosition.y, tilePosition.x] = new TileData(tilePosition, gameTile);
+                            tileDataGrid[tilePosition.y, tilePosition.x].isTilePlaceable = serializedTileData.Placeable;
 
                             // if it is a liquid, add it to the dictionary
                             if (gameTile.type == TileType.Liquid) {
@@ -298,7 +299,7 @@ public class TileDataController : MonoBehaviour
     {
         // Debug.Log("Serialize " + this.tilemap.name);
         // temporarily make new list until full implementation
-        return new SerializedTilemap("Tilemap", TileDataGrid, ReserveWidth, ReserveHeight, LiquidbodyController.Instance.liquidBodies);
+        return new SerializedTilemap("Tilemap", tileDataGrid, ReserveWidth, ReserveHeight, LiquidbodyController.Instance.liquidBodies);
     }
     #endregion
 
@@ -312,7 +313,7 @@ public class TileDataController : MonoBehaviour
     public TileData GetTileData(Vector3Int tilePosition)
     {
         if (IsWithinGridBounds(tilePosition)) {
-            TileData td = TileDataGrid[tilePosition.y, tilePosition.x];
+            TileData td = tileDataGrid[tilePosition.y, tilePosition.x];
 
             if (td != null)
                 return td;
@@ -336,7 +337,7 @@ public class TileDataController : MonoBehaviour
                     LiquidbodyController.Instance.AddLiquidContentsAt(tilePosition, tile.defaultContents,false);
                 }
                 if (tile.type != TileType.Wall)
-                    TileDataGrid[tilePosition.y, tilePosition.x].isTilePlaceable = true;
+                    tileDataGrid[tilePosition.y, tilePosition.x].isTilePlaceable = true;
                 tileData.PreviewReplacement(tile);
                 ChangedTiles.Add(tilePosition);
                 ApplyChangeToTilemapTexture(tilePosition);
@@ -346,28 +347,28 @@ public class TileDataController : MonoBehaviour
             {
                 // if it isn't within grid bounds and is bigger than the current reserve size
                 // change the array such that it will now contain the new tile
-                TileData[,] TileDataGridCopy = TileDataGrid.Clone() as TileData[,];
+                TileData[,] TileDataGridCopy = tileDataGrid.Clone() as TileData[,];
 
                 // get new maximum boundaries
                 int maxWidth = tilePosition.x >= ReserveWidth ? tilePosition.x + 1 : ReserveWidth;
                 int maxHeight = tilePosition.y >= ReserveHeight ? tilePosition.y + 1 : ReserveHeight;
                 // create the new array and texture
-                TileDataGrid = new TileData[maxHeight, maxWidth];
+                tileDataGrid = new TileData[maxHeight, maxWidth];
                 Texture2D newTilemapTexture = new Texture2D(maxWidth + 1, maxHeight + 1);
 
                 // fill the array and texture with values
-                for (int i = 0; i < TileDataGrid.GetLength(1); ++i)
+                for (int i = 0; i < tileDataGrid.GetLength(1); ++i)
                 {
-                    for (int j = 0; j < TileDataGrid.GetLength(0); ++j)
+                    for (int j = 0; j < tileDataGrid.GetLength(0); ++j)
                     {
                         if (i < ReserveWidth && j < ReserveHeight)
                         {
-                            TileDataGrid[j, i] = TileDataGridCopy[j, i];
+                            tileDataGrid[j, i] = TileDataGridCopy[j, i];
                             newTilemapTexture.SetPixel(i, j, TilemapTexture.GetPixel(i, j));
                         }
                         else
                         {
-                            TileDataGrid[j, i] = new TileData(new Vector3Int(i, j, 0));
+                            tileDataGrid[j, i] = new TileData(new Vector3Int(i, j, 0));
                             newTilemapTexture.SetPixel(i, j, new Color(0, 0, 0, 0));
                         }
                     }
@@ -376,10 +377,8 @@ public class TileDataController : MonoBehaviour
                 // update old values
                 ReserveWidth = maxWidth;
                 ReserveHeight = maxHeight;
-                TileDataGrid[tilePosition.y, tilePosition.x] = new TileData(tilePosition);
-                // set placeable here, but idk what to do lol
-                if (tile.type != TileType.Wall)
-                    TileDataGrid[tilePosition.y, tilePosition.x].isTilePlaceable = true;
+                tileDataGrid[tilePosition.y, tilePosition.x] = new TileData(tilePosition);
+                tileDataGrid[tilePosition.y, tilePosition.x].isTilePlaceable = tile.type != TileType.Wall;
 
                 tileData = GetTileData(tilePosition);
 
@@ -420,6 +419,8 @@ public class TileDataController : MonoBehaviour
             }
         }
     }
+
+
     public void RemoveTile(Vector3Int tilePosition)
     {
         TileData tileData = GetTileData(tilePosition);
@@ -451,7 +452,7 @@ public class TileDataController : MonoBehaviour
     public GameTile GetGameTileAt(Vector3Int cellLocation)
     {
         if (IsWithinGridBounds(cellLocation))
-            return TileDataGrid[cellLocation.y, cellLocation.x].currentTile;//Tilemap.GetTile<GameTile>(cellLocation); removed because tilemaps cannot handle that many tiles
+            return tileDataGrid[cellLocation.y, cellLocation.x].currentTile;//Tilemap.GetTile<GameTile>(cellLocation); removed because tilemaps cannot handle that many tiles
 
         return null;
     }
@@ -651,7 +652,7 @@ public class TileDataController : MonoBehaviour
         bufferMaterial.SetTexture("_MainTex", BufferTexture);
         bufferMaterial.SetTexture("_CenterTex", BufferCenterTexture);
 
-        TileDataGrid[pos.y, pos.x].isConstructing = true;
+        tileDataGrid[pos.y, pos.x].isConstructing = true;
     }
     public void ConstructionFinishedCallback(Action action)
     {
@@ -670,7 +671,7 @@ public class TileDataController : MonoBehaviour
                 {
                     Vector2Int bufferPosition = new Vector2Int(pos.x + i, pos.y + j);
 
-                    TileDataGrid[bufferPosition.y, bufferPosition.x].isConstructing = true;
+                    tileDataGrid[bufferPosition.y, bufferPosition.x].isConstructing = true;
 
                     Color bufferColorInformation = new Color(
                         (float)((int)type) / FLAG_VALUE_MULTIPLIER,                 // which construction type it is
@@ -707,7 +708,7 @@ public class TileDataController : MonoBehaviour
 
     public void RemoveBuffer(Vector2Int pos, int sizeX = 1, int sizeY = 1)
     {
-        if (!TileDataGrid[pos.y, pos.x].isConstructing)
+        if (!tileDataGrid[pos.y, pos.x].isConstructing)
         {
             Debug.Log("No construction buffer to remove, proceeding");
             return;
@@ -753,7 +754,7 @@ public class TileDataController : MonoBehaviour
                 bufferMaterial.SetTexture("_MainTex", BufferTexture);
                 bufferMaterial.SetTexture("_CenterTex", BufferCenterTexture);
 
-                TileDataGrid[removeBufferPosition.y, removeBufferPosition.x].isConstructing = false;
+                tileDataGrid[removeBufferPosition.y, removeBufferPosition.x].isConstructing = false;
 
                 changedTiles.Add((Vector3Int)removeBufferPosition);
             }
@@ -784,7 +785,7 @@ public class TileDataController : MonoBehaviour
                     changedTiles.Add((Vector3Int)bufferPosition);
                     BufferTexture.SetPixel(bufferPosition.x, bufferPosition.y, new Color(0, 0, 0, 0));
                     BufferCenterTexture.SetPixel(bufferPosition.x, bufferPosition.y, new Color(0, 0, 0, 0));
-                    TileDataGrid[bufferPosition.y, bufferPosition.x].isConstructing = false;
+                    tileDataGrid[bufferPosition.y, bufferPosition.x].isConstructing = false;
                     LiquidbodyController.Instance.RemoveLiquidContentsFromLiquidbodyAt((Vector3Int)bufferPosition);
                 }
                 if (constructionFinishedCallback != null)
@@ -803,6 +804,7 @@ public class TileDataController : MonoBehaviour
         }
         foreach (ConstructionCluster cluster in finishedClusters)
             ConstructionClusters.Remove(cluster);
+        
         LiquidbodyController.Instance.MergeConstructingTiles();
         BufferTexture.Apply();
         BufferCenterTexture.Apply();
@@ -813,6 +815,7 @@ public class TileDataController : MonoBehaviour
         //Report updates to RPM
         if (changedTiles.Count > 0)
         {
+            EventManager.Instance.InvokeEvent(EventType.TilemapChange, null);
             GameManager.Instance.m_reservePartitionManager.UpdateAccessMapChangedAt(changedTiles);
         }
     }
@@ -1155,11 +1158,20 @@ public class TileDataController : MonoBehaviour
         return tileCheck;
     }
 
+    public bool IsTilePlacementValid(Vector3Int tilePos, GameTile oldTile, TileType newTile)
+    {
+        var type = (oldTile == null) ? TileType.Air : oldTile.type;
+        return IsTilePlacementValid(tilePos, type, newTile);
+    }
+
     public bool IsTilePlacementValid (Vector3Int tilePos, TileType oldTile, TileType newTile) {
         // If there is food on the tile, make sure the food supports the new tile's type
         if (GetTileData (tilePos).Food && !GetTileData (tilePos).Food.GetComponent<FoodSource> ().Species.AccessibleTerrain.Contains(newTile)) {
             return false;
         }
+
+        if (!GetTileData(tilePos).isTilePlaceable)
+            return false;
 
         // If there are any animals standing on the tile, make sure they can walk on the new tile type
         // Actual code: For every population of species that can't walk on the new tile, make sure there isn't an animal currently on the tile
@@ -1186,6 +1198,12 @@ public class TileDataController : MonoBehaviour
     // Returns true if the animal can be placed on the target cell
     private bool IsValidAnimalPlacement(Vector3Int cellPosition, AnimalSpecies selectedSpecies)
     {
+        // Cache needs for performance
+        var neededOnly = selectedSpecies.NeededTerrain;
+        var traversableOnly = selectedSpecies.TraversableOnlyTerrain;
+        var accessibleTerrain = selectedSpecies.AccessibleTerrain;
+        var treeNeeds = selectedSpecies.RequiredTreeNeeds;
+
         Vector3Int pos;
         GameTile tile;
         bool valid = true;
@@ -1203,48 +1221,120 @@ public class TileDataController : MonoBehaviour
                 }
                 else
                 {
-                    HighlightTile(pos, IsValidTileForAnimal(selectedSpecies,pos) ? Color.green : Color.red);
+                    bool isNeededTile = IsNeededTileForAnimal(
+                        selectedSpecies, 
+                        pos, 
+                        treeNeeds, 
+                        accessibleTerrain,
+                        neededOnly);
+                    bool isTraversableOnly = IsTraversableOnlyTileForAnimal(
+                        selectedSpecies,
+                        pos,
+                        treeNeeds,
+                        traversableOnly
+                        );
+                    
+                    Color highlightColor = Color.red;
+                    if (isNeededTile)
+                        highlightColor = Color.green;
+                    if (isTraversableOnly)
+                        highlightColor = Color.yellow;
+                    
+                    HighlightTile(pos, highlightColor);
                 }
             }
         }
         if (!valid) return false;
-        return IsValidTileForAnimal(selectedSpecies, cellPosition);
+        return IsAccessibleTileForAnimal(selectedSpecies, cellPosition, treeNeeds, accessibleTerrain, neededOnly, traversableOnly);
     }
 
     /// <summary>
-    /// Checks if a single tile is valid for a certain species
+    /// Short params overload, only use when performance is not an issue due to costly LINQ need data calls
     /// </summary>
     /// <param name="species"></param>
     /// <param name="cellPosition"></param>
     /// <returns></returns>
-    public bool IsValidTileForAnimal(AnimalSpecies species, Vector3Int cellPosition)
+    public bool IsAccessibleTileForAnimal(AnimalSpecies species, Vector3Int cellPosition)
     {
-        var tile = GetGameTileAt(cellPosition);
-        return IsTreeNeedSatisfiedAtTile(species, cellPosition) && species.AccessibleTerrain.Contains(tile.type);
+        return IsAccessibleTileForAnimal(
+            species,
+            cellPosition,
+            species.RequiredTreeNeeds,
+            species.AccessibleTerrain,
+            species.NeededTerrain,
+            species.TraversableOnlyTerrain);
     }
-
+    
     /// <summary>
-    /// Overload where treeNeeds and AccessibleTerrain can be passed in from a cache for improved performance
+    /// Check if tile is valid (either traversable or needed) for an animal.
     /// </summary>
     /// <param name="species"></param>
     /// <param name="cellPosition"></param>
     /// <param name="treeNeeds"></param>
+    /// <param name="accessibleTerrain"></param>
+    /// <param name="neededTerrain"></param>
+    /// <param name="traversableOnlyTerrain"></param>
     /// <returns></returns>
-    public bool IsValidTileForAnimal(AnimalSpecies species, Vector3Int cellPosition, NeedData[] treeNeeds, HashSet<TileType> accessibleTerrain)
+    public bool IsAccessibleTileForAnimal(
+        AnimalSpecies species, 
+        Vector3Int cellPosition, 
+        NeedData[] treeNeeds, 
+        HashSet<TileType> accessibleTerrain, 
+        HashSet<TileType> neededTerrain,
+        HashSet<TileType> traversableOnlyTerrain)
+    {
+        bool isNeeded = IsNeededTileForAnimal(species, cellPosition, treeNeeds, accessibleTerrain, neededTerrain);
+        bool traversableOnly = IsTraversableOnlyTileForAnimal(species, cellPosition, treeNeeds, traversableOnlyTerrain);
+        return traversableOnly || isNeeded;
+    }
+
+    /// <summary>
+    /// Checks if tile is a needed tile (Satisfies non-empty tree needs, or is a needed terrain type)
+    /// </summary>
+    /// <param name="species"></param>
+    /// <param name="cellPosition"></param>
+    /// <param name="treeNeeds"></param>
+    /// <param name="neededTerrain"></param>
+    /// <param name="accessibleTerrain"></param>
+    /// <returns></returns>
+    public bool IsNeededTileForAnimal(
+        AnimalSpecies species, 
+        Vector3Int cellPosition, 
+        NeedData[] treeNeeds,
+        HashSet<TileType> accessibleTerrain,
+        HashSet<TileType> neededTerrain)
     {
         var tile = GetGameTileAt(cellPosition);
-        return IsTreeNeedSatisfiedAtTile(species, cellPosition, treeNeeds) && accessibleTerrain.Contains(tile.type);
+        bool hasTreeNeeds = treeNeeds.Length > 0;
+        bool treeNeedSatisfied = !hasTreeNeeds || IsTreeNeedSatisfiedAtTile(species, cellPosition);
+        bool terrainSatisfied = hasTreeNeeds ? accessibleTerrain.Contains(tile.type) : neededTerrain.Contains(tile.type);
+        return treeNeedSatisfied && terrainSatisfied;
+    }
+
+    /// <summary>
+    /// Checks if tile is a traversable only tile (Does not satisfy a non-empty tree need, is a traversable only terrain type)
+    /// </summary>
+    /// <param name="species"></param>
+    /// <param name="cellPosition"></param>
+    /// <param name="treeNeeds"></param>
+    /// <param name="traversableOnlyTerrain"></param>
+    /// <returns></returns>
+    public bool IsTraversableOnlyTileForAnimal(
+        AnimalSpecies species, 
+        Vector3Int cellPosition,
+        NeedData[] treeNeeds,
+        HashSet<TileType> traversableOnlyTerrain)
+    {
+        var tile = GetGameTileAt(cellPosition);
+        bool hasTreeNeeds = treeNeeds.Length > 0;
+        bool treeNeedSatisfied = hasTreeNeeds && IsTreeNeedSatisfiedAtTile(species, cellPosition, treeNeeds);
+        return !treeNeedSatisfied && traversableOnlyTerrain.Contains(tile.type);
     }
 
     public bool IsTreeNeedSatisfiedAtTile(AnimalSpecies species, Vector3Int cellPosition)
     {
-        // Check for tree requirements
         var treeNeeds = species.RequiredTreeNeeds;
-        if (treeNeeds.Length == 0)
-            return true;
-        var tileFoodID = GetTileData(cellPosition).Food?.GetComponent<FoodSource>().Species.ID;
-        bool found = treeNeeds.Where(need => need.ID == tileFoodID).Count() > 0;
-        return found;
+        return IsTreeNeedSatisfiedAtTile(species, cellPosition, treeNeeds);
     }
     public bool IsTreeNeedSatisfiedAtTile(AnimalSpecies species, Vector3Int cellPosition, NeedData[] treeNeeds)
     {
@@ -1296,7 +1386,8 @@ public class TileDataController : MonoBehaviour
     // Returns true if the tile can be placed
     private bool IsValidTile(Vector3Int cellPosition, Item tile)
     {
-        if (GetTileData(cellPosition) == null || !GetTileData(cellPosition).currentTile){
+        if (GetTileData(cellPosition) == null){
+            HighlightTile(cellPosition, Color.red);
             return false;
         }
 
@@ -1307,9 +1398,8 @@ public class TileDataController : MonoBehaviour
         } else {
             Enum.TryParse(tile.ItemName, out type);
         }
-        TileType curType = GetTileData(cellPosition).currentTile.type;
-        
-        bool isValid = IsTilePlacementValid(cellPosition, curType, type);
+        var curTile = GetTileData(cellPosition).currentTile;
+        bool isValid = IsTilePlacementValid(cellPosition, curTile, type);
         HighlightTile(cellPosition, isValid ? Color.green : Color.red);
         return isValid;
     }
@@ -1384,13 +1474,13 @@ public class TileDataController : MonoBehaviour
     // TODO: figure out if this still works
     public void UpdateAnimalCellGrid()
     {
-        for (int i = 0; i < this.TileDataGrid.GetLength(0); i++)
+        for (int i = 0; i < this.tileDataGrid.GetLength(0); i++)
         {
-            for (int j = 0; j < this.TileDataGrid.GetLength(1); j++)
+            for (int j = 0; j < this.tileDataGrid.GetLength(1); j++)
             {
-                if (this.TileDataGrid[i, j] != null)
+                if (this.tileDataGrid[i, j] != null)
                 {
-                    this.TileDataGrid[i, j].Animal = null;
+                    this.tileDataGrid[i, j].Animal = null;
                 }
             }
         }

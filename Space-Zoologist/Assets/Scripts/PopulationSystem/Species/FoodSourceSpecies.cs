@@ -10,7 +10,7 @@ public class FoodSourceSpecies : ScriptableObject
     public int RootRadius => rootRadius;
     public int BaseOutput => baseOutput;
     public Item FoodSourceItem => ID.Data.ShopItem;
-    public HashSet<TileType> AccessibleTerrain => needs.FindTraversibleTerrain();
+    public HashSet<TileType> AccessibleTerrain => needs.FindAccessibleTerrain();
     public int WaterTilesRequired => waterTilesRequired;
     public Vector2Int Size => size;
     public NeedRegistry Needs => needs;

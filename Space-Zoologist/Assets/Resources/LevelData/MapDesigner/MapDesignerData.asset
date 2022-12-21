@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75df8cbea201a4d7c8d2497760779228, type: 3}
   m_Name: MapDesignerData
   m_EditorClassIdentifier: 
+  IsSpacer: 0
   Level: {fileID: 11400000, guid: 41dedc8cf980244ae933611f07f0678b, type: 2}
   startingBalance: 1e+11
   MapWidth: 34
   MapHeight: 32
-  WallBreakable: 0
+  WallBreakable: 1
   LevelObjectiveData: {fileID: 11400000, guid: 0fda617c7827b4782a70ae364eb134a5, type: 2}
   foodSources:
   - {fileID: 11400000, guid: 4519d95eb0a9149afaba1c7e635c9b1c, type: 2}

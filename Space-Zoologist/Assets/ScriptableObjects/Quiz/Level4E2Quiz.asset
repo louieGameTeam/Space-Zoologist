@@ -1,0 +1,83 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 523006253e9685d4585be9738485b4ff, type: 3}
+  m_Name: Level4E2Quiz
+  m_EditorClassIdentifier: 
+  importantCategories:
+  - item:
+      category: 0
+      index: 3
+    need: 7
+  fixedQuestions:
+  - question: In which of the following enclosures would a Strot population be the
+      most safe
+    category:
+      item:
+        category: 0
+        index: 4
+      need: 7
+    options:
+    - label: An enclosure containing Flan.
+      weight: 0
+    - label: An enclosure containing Stroteaters and Flan.
+      weight: 0
+    - label: An enclosure containing Lumoos and Flan.
+      weight: 1
+    - label: An enclosure containing Lumoos and Flan.
+      weight: 0
+  - question: There are two available enclosures for housing a population of 10 Flan.
+      Enclosure A contains 50% water and 50% grass and a good amount of Flanweed.
+      Enclosure B contains 70% water, 30% grass and a small amount of Flanweed. Which
+      of the following correctly portrays how the population will perform over 3
+      days in each enclosure.
+    category:
+      item:
+        category: 0
+        index: 4
+      need: 0
+    options:
+    - label: The population in enclosure A will remain stable and the population
+        in enclosure B will decrease.
+      weight: 2
+    - label: The population in both enclosures will remain equally stable.
+      weight: 0
+    - label: The population in enclosure A will decrease and the population in enclosure
+        B will increase.
+      weight: 0
+  - question: "Let\u2019s say Juno designed an enclosure for a population of Lumoo.
+      The enclosure contains plenty of water, an abundance of Astral Maple trees,
+      and mostly grassy terrain broken up by bits of rock. Put the following choices
+      in order of which will be most likely to negatively impact the population first
+      according to the described enclosure: A. There not enough food B. There not
+      enough comfortable terrain C. The purity of the water not being high enough.\r\n"
+    category:
+      item:
+        category: 0
+        index: 1
+      need: 0
+    options:
+    - label: 'A, B, C '
+      weight: 0
+    - label: B, C, A
+      weight: 0
+    - label: C, B, A
+      weight: 2
+  randomQuestionPool:
+    questionsToPick: 0
+    questionPool: []
+  gradingRubric: {fileID: 11400000, guid: 452081780eb603242ad7429c61063876, type: 2}
+  exampleQuiz:
+    template: {fileID: 11400000}
+    answers: 000000000000000000000000
+    runtimeTemplate:
+      template: {fileID: 0}
+      questions: []

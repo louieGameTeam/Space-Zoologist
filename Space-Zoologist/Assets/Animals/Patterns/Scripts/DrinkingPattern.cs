@@ -12,7 +12,7 @@ public class DrinkingPattern : UniversalAnimatorPattern
     {
         base.Init();
     }
-    protected override void EnterPattern(GameObject animal, AnimalData animalData)
+    protected override void EnterPattern(GameObject animal, AnimalCallbackData animalCallbackData)
     {
         Vector3Int currentCell = base.TileDataController.WorldToCell(animal.transform.position);
         for (int i = -1; i < 2; i++)
@@ -23,13 +23,13 @@ public class DrinkingPattern : UniversalAnimatorPattern
                 if (TileDataController.IsCellinGrid(currentCell[0] + j, currentCell[1] + i) && LiquidbodyController.Instance.GetLiquidContentsAt(loopedCell, out float[] contents, out bool constructing))
                 {
                     this.AnimatorTriggerName = GetTriggerName(i, j);
-                    base.EnterPattern(animal, animalData);
+                    base.EnterPattern(animal, animalCallbackData);
                     SetAnimDirectionFloat(animal, i, j);
                     return;
                 }
             }
         }
-        base.EnterPattern(animal, animalData);
+        base.EnterPattern(animal, animalCallbackData);
         base.ExitPattern(animal, true);
     }
     private string GetTriggerName(int i, int j)

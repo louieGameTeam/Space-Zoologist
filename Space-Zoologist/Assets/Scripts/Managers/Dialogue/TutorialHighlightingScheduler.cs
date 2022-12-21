@@ -33,12 +33,14 @@ public class TutorialHighlightingScheduler : MonoBehaviour
     public void Setup(TutorialHighlight highlightPrefab)
     {
         this.highlightPrefab = highlightPrefab;
-    }
+    }    
+
     public void SetHighlights(params ConditionalHighlight[] highlights)
     {
         activeHighlights.Clear();
-        activeHighlights.AddRange(highlights);
+        activeHighlights.AddRange (highlights);
     }
+
     public void ClearHighlights()
     {
         activeHighlights.Clear();

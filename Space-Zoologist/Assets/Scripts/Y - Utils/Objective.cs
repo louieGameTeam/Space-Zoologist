@@ -13,6 +13,8 @@ public abstract class Objective
     public abstract ObjectiveStatus Status { get; }
     public abstract ObjectiveStatus UpdateStatus();
     public abstract string GetObjectiveText();
+    public abstract float GetTargetValue();
+    public abstract float GetCurrentValue();
 }
 
 /// <summary>
@@ -111,8 +113,7 @@ public class SurvivalObjective : Objective
         }
         if (this.TargetTime.Equals(0f))
         {
-            displayText += $"Reach a population size of {this.TargetPopulationSize} {this.AnimalSpecies.ID.Data.Name.Get(ItemName.Type.Colloquial)}s\n\n";
-            displayText += $"Current population size: {totalPopulationCount}\n\n";
+            displayText += $"Reach a population size of \n{this.TargetPopulationSize} {this.AnimalSpecies.ID.Data.Name.Get(ItemName.Type.Colloquial)}s";
             return displayText;
         }
         displayText += $"Maintain at least {this.satisfiedPopulationCount}/{this.TargetPopulationCount} ";
@@ -121,6 +122,16 @@ public class SurvivalObjective : Objective
         displayText += $"[{this.Status.ToString()}] [{Math.Round(this.timer, 0)}/{this.TargetTime}]\n";
 
         return displayText;
+    }
+
+    public override float GetTargetValue()
+    {
+        return TargetPopulationSize;
+    }
+
+    public override float GetCurrentValue()
+    {
+        return (float)totalPopulationCount;
     }
 }
 
@@ -158,5 +169,15 @@ public class ResourceObjective : Objective
     public override string GetObjectiveText()
     {
         return $"Have at least ${this.amountToKeep} left when level is complete [{this.status}]\n";
+    }
+
+    public override float GetCurrentValue()
+    {
+        return GameManager.Instance.Balance;
+    }
+
+    public override float GetTargetValue()
+    {
+         return this.amountToKeep;
     }
 }

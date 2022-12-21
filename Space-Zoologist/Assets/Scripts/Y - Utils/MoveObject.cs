@@ -22,6 +22,9 @@ public class MoveObject : MonoBehaviour
     Item tempItem;
     private enum ItemType { NONE, FOOD, ANIMAL, TILE }
 
+    // ONLY USED FOR TILES
+    private Item tileToMoveItem;
+
     GameObject objectToMove = null;
     ItemPlaceCursorPreviewMover cursorPreviewMover = null;
     GameObject MoveButton = null;
@@ -34,8 +37,8 @@ public class MoveObject : MonoBehaviour
     int moveCost = 0;
     int sellBackCost = 0;
 
-    const float MoveCost = 0.5f;
-    const float SellBackRefund = 0.25f;
+    const float MoveCost = 0.25f;
+    const float SellBackRefund = 0.5f;
     const float FixedCost = 0;
     const float CostPerUnitSizeAnimal = 10;
     const float CostPerUnitSizeFood = 10;
@@ -53,10 +56,10 @@ public class MoveObject : MonoBehaviour
     {
         gridSystem = GameManager.Instance.m_tileDataController;
         foodSourceManager = GameManager.Instance.m_foodSourceManager;
-        foreach (var itemData in GameManager.Instance.LevelData.itemQuantities) {
+        foreach (var itemData in ItemRegistry.GetAllItems()) {
             // Primarily checks for liquids, which may have the same id. Liquids are handled by a separate function
-            if(!itemByID.ContainsKey(itemData.itemObject.ID))
-                itemByID.Add(itemData.itemObject.ID, itemData.itemObject);
+            if(!itemByID.ContainsKey(itemData.ShopItem.ID))
+                itemByID.Add(itemData.ShopItem.ID, itemData.ShopItem);
         }
 
         MoveButton = Instantiate(MoveButtonPrefab, this.transform);
@@ -260,16 +263,13 @@ public class MoveObject : MonoBehaviour
                 sellBackCost = Mathf.RoundToInt(SellBackRefund * price);
                 break;
             case ItemType.TILE:
-                // Why are we searching in the item quantities for an item data?
-                // And how is the "objectToMove" actually named?
-                LevelData.ItemData tileItemData = GameManager.Instance.LevelData.itemQuantities.Find(x => x.itemObject.ID.Data.Name.Get(ItemName.Type.English).ToLower().Equals(objectToMove.name));
-                sellBackCost = Mathf.RoundToInt(SellBackRefund * tileItemData.itemObject.Price);
+                sellBackCost = Mathf.RoundToInt(SellBackRefund * tileToMoveItem.Price);
                 break;
             default:
                 break;
         }
-        MoveButton.GetComponentInChildren<Text>().text = $"${moveCost}";
-        DeleteButton.GetComponentInChildren<Text>().text = $"${sellBackCost}";
+        MoveButton.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = $"-${moveCost}";
+        DeleteButton.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = $"+${sellBackCost}";
     }
 
     private void UpdateMoveUIPosition()
@@ -333,6 +333,7 @@ public class MoveObject : MonoBehaviour
                 string tileName = tileToDelete.name;
                 tempItem = ItemRegistry.Get(ItemRegistry.FindTile(gridSystem.GetGameTileAt(pos).type)).ShopItem;
                 tempItem.SetupData(tileName, 0);
+                tileToMoveItem = tempItem;
 
                 initialTilePosition = pos;
                 initialTile = gridSystem.GetTileData(pos).currentTile;
@@ -484,8 +485,8 @@ public class MoveObject : MonoBehaviour
     private void TryPlaceTile(Vector3 worldPos, GameObject toMove)
     {
         Vector3Int tilePos = gridSystem.WorldToCell(worldPos);
-        var currentGameTile = gridSystem.GetTileData(tilePos).currentTile;
-        if (gridSystem.IsTilePlacementValid (tilePos, currentGameTile.type, initialTile.type))
+        var currentGameTile = gridSystem.GetTileData(tilePos)?.currentTile;
+        if (gridSystem.IsTilePlacementValid (tilePos, currentGameTile, initialTile.type))
         {
             // undo current progress on existing tile
             gridSystem.GetTileData(initialTilePosition).Revert();

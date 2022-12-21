@@ -11,7 +11,6 @@ using UnityEngine.EventSystems;
 public class TileStoreSection : StoreSection
 {
     private EnclosureSystem EnclosureSystem = default;
-    private TilePlacementController tilePlacementController = default;
 
     private float startingBalance;
     private int initialAmt;
@@ -21,7 +20,6 @@ public class TileStoreSection : StoreSection
     public override void Initialize()
     {
         EnclosureSystem = GameManager.Instance.m_enclosureSystem;
-        tilePlacementController = GameManager.Instance.m_tilePlacementController;
         base.itemType = ItemRegistry.Category.Tile;
         base.Initialize();
         //Debug.Assert(tilePlacementController != null);
@@ -75,7 +73,7 @@ public class TileStoreSection : StoreSection
     /// Triggered by mouse down on the cursor item.
     /// </summary>
     public override void OnCursorPointerDown(PointerEventData eventData)
-    {
+    {/*
         base.OnCursorPointerDown(eventData);
         if (!UIBlockerSettings.OperationIsAvailable("Build"))
         {
@@ -85,14 +83,14 @@ public class TileStoreSection : StoreSection
         if (eventData.button == PointerEventData.InputButton.Left && !isPlacing)
         {
             this.StartPlacing();
-        }
+        }*/
     }
 
     /// <summary>
     /// Triggered by mouse up on the cursor item.
     /// </summary>
     public override void OnCursorPointerUp(PointerEventData eventData)
-    {
+    {/*
         base.OnCursorPointerUp(eventData);
         Debug.Log("IsPlacing " + isPlacing);
         if (eventData.button == PointerEventData.InputButton.Left && isPlacing)
@@ -102,6 +100,21 @@ public class TileStoreSection : StoreSection
         if (!base.CanBuy(selectedItem))
         {
             base.OnItemSelectionCanceled();
+        }*/
+    }
+
+    public override void HandleCursor () {
+        base.HandleCursor ();
+
+        if (!UIBlockerSettings.OperationIsAvailable ("Build")) {
+            return;
+        }
+        print ("Place tiles...");
+        if (Input.GetMouseButtonDown (0) && !isPlacing) {
+            this.StartPlacing ();
+        }
+        if (Input.GetMouseButtonUp (0) && isPlacing) {
+            FinishPlacing ();
         }
     }
 

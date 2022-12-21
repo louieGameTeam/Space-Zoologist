@@ -204,11 +204,12 @@ public class FoodQualityVFXHandler : MonoBehaviour
             }
         }
 
-        // Reset SelectedSpecies to null if populationList is empty
+        // Reset SelectedSpecies to null and advance to next species to display if populationList is empty
         else
         {
             // Debug.Log($"FoodQualityVFXHandler: Could not find population of species: {SelectedSpecies}");
             DeselectAnimalSelection();
+            NextSpeciesToDisplayIndex = (NextSpeciesToDisplayIndex + 1) % SpeciesList.Count;
         }
     }
 
@@ -220,7 +221,6 @@ public class FoodQualityVFXHandler : MonoBehaviour
     /// </summary>
     /// <param name="selectedPop"> Selected population of the currently selected species of animal </param>
     /// <returns> Returns true if animal is found, false otherwise </returns>
-
     private bool SearchForAnimalPathingToPreferred(Population selectedPop)
     {
         foreach (ItemID preferredFood in PreferredFoods)

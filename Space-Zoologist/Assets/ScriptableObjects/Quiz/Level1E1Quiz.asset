@@ -25,13 +25,13 @@ MonoBehaviour:
         index: 0
       need: 3
     options:
-    - label: Space Maple
+    - label: Astral Maple
       weight: 1
-    - label: Gold Space Maple
+    - label: Gilded Astral Maple
       weight: 2
-    - label: Berries
+    - label: Bacca Berries
       weight: 1
-    - label: Mushrooms
+    - label: Glowcaps
       weight: 0
   - question: Alright. Now, what food do zeigs absolutely, positively refuse to eat?
     category:
@@ -40,16 +40,16 @@ MonoBehaviour:
         index: 0
       need: 3
     options:
-    - label: Berries
+    - label: Bacca Berries
       weight: 0
-    - label: Space Maples
+    - label: Astral Maple
       weight: 0
-    - label: Flan
+    - label: Gilded Astral Maple
       weight: 0
-    - label: Mushrooms
+    - label: Glowcaps
       weight: 1
-  - question: "Last question. Let\u2019s change it up a bit and talk about terrain.
-      What kind of terrain will the zeigs never enter? "
+  - question: "Let\u2019s change it up a bit and talk about terrain. What kind of
+      terrain will the zeigs never enter? "
     category:
       item:
         category: 0
@@ -60,17 +60,31 @@ MonoBehaviour:
       weight: 0
     - label: Grass
       weight: 0
-    - label: Rocks
+    - label: Stone
       weight: 1
-    - label: Swamp
+    - label: Sand
+      weight: 2
+  - question: Last question. Which of the following is the correct order of the design
+      steps on the first page of the command center?
+    category:
+      item:
+        category: 2
+        index: 3
+      need: 6
+    options:
+    - label: Research, Observe, Concepts, Test and Metrics
       weight: 1
+    - label: 'Observe, Research, Test, Concepts and Metrics '
+      weight: 0
+    - label: Concepts, Test, Observe, Metrics and Research
+      weight: 0
   randomQuestionPool:
     questionsToPick: 0
     questionPool: []
   gradingRubric: {fileID: 11400000, guid: 452081780eb603242ad7429c61063876, type: 2}
   exampleQuiz:
     template: {fileID: 11400000}
-    answers: 010000000300000002000000
+    answers: 01000000030000000200000002000000
     runtimeTemplate:
       template: {fileID: 0}
       questions: []

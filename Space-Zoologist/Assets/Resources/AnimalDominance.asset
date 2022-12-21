@@ -102,11 +102,11 @@ MonoBehaviour:
           id:
             category: 0
             index: 1
-        - dominance: 0
+        - dominance: 1
           id:
             category: 0
             index: 2
-        - dominance: 1
+        - dominance: 0
           id:
             category: 0
             index: 3
@@ -128,11 +128,11 @@ MonoBehaviour:
           id:
             category: 0
             index: 1
-        - dominance: 0.4
+        - dominance: 0
           id:
             category: 0
             index: 2
-        - dominance: 0
+        - dominance: 0.4
           id:
             category: 0
             index: 3
@@ -223,6 +223,32 @@ MonoBehaviour:
             category: 0
             index: 5
         enumValue: 7
+      - dominances:
+        - dominance: 0
+          id:
+            category: 0
+            index: 0
+        - dominance: 0
+          id:
+            category: 0
+            index: 1
+        - dominance: 0
+          id:
+            category: 0
+            index: 2
+        - dominance: 0
+          id:
+            category: 0
+            index: 3
+        - dominance: 0
+          id:
+            category: 0
+            index: 4
+        - dominance: 0
+          id:
+            category: 0
+            index: 5
+        enumValue: 8
   foodDominance:
   - dominance: 0.2
     id:

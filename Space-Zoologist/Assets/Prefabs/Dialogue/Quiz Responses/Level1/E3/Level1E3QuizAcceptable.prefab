@@ -27,6 +27,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3587006352882402158}
   m_Father: {fileID: 0}
@@ -45,9 +46,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentIDCounter: 2
-  json: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":71.5,\"yPos\":22},\"ID\":0,\"TMPFontGUID\":null,\"Text\":\"Well,
+  json: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":306,\"yPos\":22},\"ID\":0,\"TMPFontGUID\":null,\"Text\":\"Well,
     you could stand to pay a bit more attention to the Zeig\u2019s water needs in
-    the future, but it seems like you know enough to proceed.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":74.5,\"yPos\":143},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"
+    the future, but it seems like you know enough to proceed.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":309,\"yPos\":143},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"
     Follow me over to the last Zeig enclosure. This is the home stretch now, kid!
     We\u2019ve learned almost everything we need to in order to save these little
     guys!\",\"parentUIDs\":[0,0],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false}]}"
@@ -91,6 +92,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3587006351264644546}
   m_RootOrder: 0
@@ -112,7 +114,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
+  Icon: {fileID: 21300000, guid: 8c883f4201b912f4881839e372a91750, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &7634134291852199596
 MonoBehaviour:
@@ -131,5 +133,5 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: b212920402016407db3f4179342248a7, type: 3}
+  Icon: {fileID: 21300000, guid: 7646c3955a414ac45b1dac5eaeb2bcfe, type: 3}
   Audio: {fileID: 0}

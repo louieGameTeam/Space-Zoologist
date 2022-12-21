@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 523006253e9685d4585be9738485b4ff, type: 3}
+  m_Name: Level3E3Quiz
+  m_EditorClassIdentifier: 
+  importantCategories:
+  - item:
+      category: 0
+      index: 3
+    need: 4
+  fixedQuestions:
+  - question: Which of the following water sources would be best for a Strot?
+    category:
+      item:
+        category: 0
+        index: 3
+      need: 4
+    options:
+    - label: 'Water with 96% purity, 2% salinity and 2% bacteria content '
+      weight: 0
+    - label: Water with 97% purity, 1% salinity and 2% bacteria content
+      weight: 1
+    - label: Water with 97% purity, 0% salinity and 3% bacteria content
+      weight: 0
+  - question: If you just finished designing an enclosure and are ready to test how
+      well it works, what would be the best next logical course of action?
+    category:
+      item:
+        category: 0
+        index: 3
+      need: 4
+    options:
+    - label: Placing all owned species immediately for efficiency.
+      weight: 0
+    - label: 'Placing 1 or 2 of a species iteratively to see how well the enclosure
+        supports them. '
+      weight: 2
+    - label: Continuing to adjust the enclosure to try and make it perfect before
+        doing any controlled testing.
+      weight: 0
+  - question: "You need to temporarily house 5 Stroteaters in one of 2 available
+      enclosures. Enclosure A contains 25% grass, 25% dirt, 50% sand and Enclosure
+      B contains 70% Dirt, 20% rock, 10% swamp. What do you predict will happen to
+      the Stroteater population in 3 days in these enclosures?\r"
+    category:
+      item:
+        category: 0
+        index: 2
+      need: 4
+    options:
+    - label: 'Stroteater numbers will decrease in Enclosure A and be stable in Enclosure
+        B '
+      weight: 0
+    - label: Stroteater numbers will decrease in both A and B
+      weight: 0
+    - label: Stroteater numbers will be stable in Enclosure A and decrease in Enclosure
+        B
+      weight: 2
+  randomQuestionPool:
+    questionsToPick: 0
+    questionPool: []
+  gradingRubric: {fileID: 11400000, guid: 452081780eb603242ad7429c61063876, type: 2}
+  exampleQuiz:
+    template: {fileID: 11400000}
+    answers: 010000000100000000000000
+    runtimeTemplate:
+      template: {fileID: 0}
+      questions: []

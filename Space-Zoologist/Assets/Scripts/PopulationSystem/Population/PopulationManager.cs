@@ -15,6 +15,14 @@ public class PopulationManager : MonoBehaviour
 
     public void Initialize()
     {
+        SpawnSerializedPopulations();
+        EventManager.Instance.SubscribeToEvent(EventType.PopulationExtinct, this.RemovePopulation);
+        EventManager.Instance.SubscribeToEvent(EventType.PreCacheRebuild, UpdateAccessibleLocations);
+    }
+
+    private void SpawnSerializedPopulations()
+    {
+        RemoveAllExistingPopulations();
         SerializedPopulation[] serializedPopulations = GameManager.Instance.PresetMap.serializedPopulations;
         serializedPopulations = serializedPopulations ?? new SerializedPopulation[0];
         for (int i = 0; i < serializedPopulations.Length; i++)
@@ -27,9 +35,6 @@ public class PopulationManager : MonoBehaviour
                 pop = SpawnAnimal(species, position);
             }
         }
-
-        EventManager.Instance.SubscribeToEvent(EventType.PopulationExtinct, this.RemovePopulation);
-        EventManager.Instance.SubscribeToEvent(EventType.PreCacheRebuild, UpdateAccessibleLocations);
     }
 
     private AnimalSpecies LoadSpecies(string name)
@@ -58,7 +63,6 @@ public class PopulationManager : MonoBehaviour
         // Initialize the basic population data, register the population, then initialize the animals and their behaviors
         population.InitializeNewPopulation(species, position);
         this.HandlePopulationRegistration(population);
-        population.InitializeExistingAnimals();
         EventManager.Instance.InvokeEvent(EventType.NewPopulation, population);
         return population;
     }
@@ -83,29 +87,20 @@ public class PopulationManager : MonoBehaviour
         return copiedBehaviors;
     }*/
 
-    private void RemovePopulation(object eventData)
-    {
-        if (!ExistingPopulations.Contains((Population)eventData))
-        {
-            return;
-        }
-        this.ExistingPopulations.Remove((Population)eventData);
-    }
-
     /// <summary>
     /// Creates a population if needed, then adds a new animal to the population
     /// </summary>
     /// <param name="species">The species of the animals to be added</param>
     /// <param name="count">The number of animals to add</param>
     /// <param name="position">The position to add them</param>
-    public Population SpawnAnimal(AnimalSpecies species, Vector3 position)
+    public Population SpawnAnimal(AnimalSpecies species, Vector3 position, bool triggerSpawnBehavior = false)
     {
         Population population = GetPopulation(species, position);
         if (population == null)
         {
             population = CreatePopulation(species, position);
         }
-        population.AddAnimal(position);
+        population.AddAnimal(position, triggerSpawnBehavior);
         return population;
     }
 
@@ -126,8 +121,10 @@ public class PopulationManager : MonoBehaviour
     private void HandlePopulationRegistration(Population population)
     {
         GameManager.Instance.m_reservePartitionManager.AddPopulation(population);
-        population.UpdateAccessibleArea(GameManager.Instance.m_reservePartitionManager.GetLocationsWithAccess(population),
-        GameManager.Instance.m_tileDataController.GetGridWithAccess(population));
+        population.UpdateAccessibleArea(
+            GameManager.Instance.m_reservePartitionManager.GetLocationsWithAccess(population),
+            GameManager.Instance.m_tileDataController.GetGridWithAccess(population));
+        
         this.BehaviorPatternUpdater.RegisterPopulation(population);
 
         // NOTE: does the need cache need to be updated now?
@@ -206,7 +203,15 @@ public class PopulationManager : MonoBehaviour
 
     public void HandleGrowth () {
         foreach (Population population in this.ExistingPopulations) {
-            population.HandleGrowth ();
+            population.HandleGrowth();
+        }
+    }
+
+    public void RemoveAllExistingPopulations()
+    {
+        for(int i = Populations.Count-1; i >= 0; i--)
+        {
+            RemovePopulation(Populations[i]);
         }
     }
 
@@ -220,6 +225,15 @@ public class PopulationManager : MonoBehaviour
 
         // NOTE: does the need cache need to be updated now?
     }
+    private void RemovePopulation(object eventData)
+    {
+        if (!ExistingPopulations.Contains((Population)eventData))
+        {
+            return;
+        }
+        this.ExistingPopulations.Remove((Population)eventData);
+    }
+
 
     public List<Population> GetPopulationsBySpecies(AnimalSpecies animalSpecies)
     {

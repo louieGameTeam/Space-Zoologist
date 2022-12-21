@@ -42,8 +42,7 @@ public static class NeedRatingBuilder
         float friendRating = FriendRating(
             population.Species.Needs,
             availability,
-            population.Species.FriendsRequired.x * population.Count,
-            population.Species.FriendsRequired.y * population.Count);
+            population.Count);
         float treeRating = TreeRating(
             population.Species.Needs,
             availability,
@@ -107,11 +106,11 @@ public static class NeedRatingBuilder
     }
     private static float TerrainRating(NeedRegistry needs, NeedAvailability availability, int terrainTilesNeeded)
     {
-        return SimplePreferenceNeedRating(
+        return SimpleTotalNeedRating(
             needs.FindTerrainNeeds(),
             availability.FindTerrainItems(),
             terrainTilesNeeded,
-            terrainTilesNeeded,
+            terrainTilesNeeded + 20,
             true);
     }
     private static float TreeRating(NeedRegistry needs, NeedAvailability availability, int treesNeeded)
@@ -123,51 +122,108 @@ public static class NeedRatingBuilder
             treesNeeded,
             false);
     }
-    private static float FriendRating(NeedRegistry needs, NeedAvailability availability, int minFriendsNeeded, int maxFriendsNeeded)
+    private static float FriendRating(NeedRegistry needs, NeedAvailability availability, int populationCount)
     {
-        return SimplePreferenceNeedRating(
-            needs.FindFriendNeeds(),
-            availability.FindFriendItems(),
-            minFriendsNeeded,
-            maxFriendsNeeded,
-            false);
+        // Friend rating is calculated using individual species
+        NeedData[] friendNeeds = needs.FindFriendNeeds();
+        NeedAvailabilityItem[] friendItems = availability.FindFriendItems();
+        if (friendNeeds.Length > 0)
+        {
+            int totalFriendsNeededMin = 0;
+            int totalFriendsNeededBonus = 0;
+
+            int totalFriendsAvailableBounded = 0;
+            int totalFriendsAvailableExtra = 0;
+
+            bool individualSpeciesSatisfied = true;
+            
+            foreach (NeedData need in friendNeeds)
+            {
+                NeedAvailabilityItem applicableItem = Array
+                    .Find(friendItems, item => item.ID == need.ID);
+
+                int speciesFriendNeededMin = need.SpeciesFriendNeedCount.x * populationCount;
+                int speciesFriendNeededMax = need.SpeciesFriendNeedCount.y * populationCount;
+                
+                totalFriendsNeededMin += speciesFriendNeededMin;
+                totalFriendsNeededBonus += Mathf.Max(0,speciesFriendNeededMax - speciesFriendNeededMin);
+
+                if (applicableItem != null)
+                {
+                    int speciesAvailable = (int)applicableItem.AmountAvailable;
+                    
+                    totalFriendsAvailableExtra += Mathf.Min(speciesAvailable, speciesFriendNeededMax) - speciesFriendNeededMin;
+                    totalFriendsAvailableBounded += Mathf.Min(speciesAvailable, speciesFriendNeededMin);
+                    
+                    if (speciesAvailable < speciesFriendNeededMin)
+                    {
+                        individualSpeciesSatisfied = false;
+                    }
+                }
+                else
+                {
+                    individualSpeciesSatisfied = false;
+                }
+            }
+
+            if (individualSpeciesSatisfied)
+            {
+                float bonus = totalFriendsNeededBonus == 0 ? 0 : (float)totalFriendsAvailableExtra / totalFriendsNeededBonus;
+                return 1 + bonus;
+            }
+            else
+            {
+                return (float)totalFriendsAvailableBounded / totalFriendsNeededMin;
+            }
+        }
+        else
+        {
+            return float.NaN;
+        }
     }
     private static float WaterRating(NeedRegistry needs, NeedAvailability availability, int waterTilesNeeded)
     {
         // Select only water that is drinkable
-        IEnumerable<NeedAvailabilityItem> drinkableWater = availability
+        IEnumerable<NeedAvailabilityItem> drinkableWaterPools = availability
             .FindWaterItems()
             .Where(item => needs.WaterIsDrinkable(item.WaterContent.Contents));
 
         // Number of water tiles that the species can drink from
-        float totalDrinkableWater = drinkableWater.Sum(item => item.AmountAvailable);
-        
-        // Drinkable water used will not exceed the amount actually needed
-        float drinkableWaterUsed = Mathf.Min(totalDrinkableWater, waterTilesNeeded);
+        float totalDrinkableWaterTiles = drinkableWaterPools.Sum(item => item.AmountAvailable);
 
-        if (drinkableWaterUsed >= waterTilesNeeded)
-        {
-            // Find the need for fresh water
-            NeedData freshWaterNeed = Array.Find(
-                needs.FindWaterNeeds(), 
-                need => need.ID.WaterIndex == 0);
+        // Water rating calculated this way to give rise to the following behavior:
+        //  - If the population has no drinkable water, their water needs bar should be empty
+        //  - Once the population has drinkable water, their water needs bar will begin to fill
+        // This value is clamped between (0f, 2f) to account for the boosting
+        return Mathf.Clamp( (float)totalDrinkableWaterTiles / waterTilesNeeded, 0f, 2f );
 
-            // If we have a fresh water need, boost it
-            if (freshWaterNeed != null)
-            {
-                // Average the fresh water from all water sources
-                float averageFreshWater = drinkableWater
-                    .Sum(item => item.WaterContent.Contents[0] * item.AmountAvailable);
-                averageFreshWater /= totalDrinkableWater;
 
-                // Boost the rating by how close it is to the max possible fresh water
-                return 1 + (averageFreshWater - freshWaterNeed.Minimum) / (MaxFreshWater - freshWaterNeed.Minimum);
-            }
-            // If we have no fresh water need,
-            // for now just assume a max boost
-            else return 2f;
-        }
-        else return (float)drinkableWaterUsed / waterTilesNeeded;
+        //// Drinkable water used will not exceed the amount actually needed
+        //float drinkableWaterUsed = Mathf.Min(totalDrinkableWater, waterTilesNeeded);
+
+        //if (drinkableWaterUsed >= waterTilesNeeded)
+        //{
+        //    // Find the need for fresh water
+        //    NeedData freshWaterNeed = Array.Find(
+        //        needs.FindWaterNeeds(), 
+        //        need => need.ID.WaterIndex == 0);
+
+        //    // If we have a fresh water need, boost it
+        //    if (freshWaterNeed != null)
+        //    {
+        //        // Average the fresh water from all water sources
+        //        float averageFreshWater = drinkableWater
+        //            .Sum(item => item.WaterContent.Contents[0] * item.AmountAvailable);
+        //        averageFreshWater /= totalDrinkableWater;
+
+        //        // Boost the rating by how close it is to the max possible fresh water
+        //        return 1 + (averageFreshWater - freshWaterNeed.Minimum) / (MaxFreshWater - freshWaterNeed.Minimum);
+        //    }
+        //    // If we have no fresh water need,
+        //    // for now just assume a max boost
+        //    else return 2f;
+        //}
+        //else return (float)drinkableWaterUsed / waterTilesNeeded;
     }
     private static float SimplePreferenceNeedRating(
         NeedData[] needs,
@@ -240,6 +296,72 @@ public static class NeedRatingBuilder
         // If there were no needs then return the number for no need rating "NaN"
         else return float.NaN;
     }
+    
+    /// <summary>
+    /// This variant ignores preferences when calculating how much "extra" need is available.
+    /// Bonus value comes from extra available needs, preferred or not
+    /// </summary>
+    /// <param name="needs"></param>
+    /// <param name="items"></param>
+    /// <param name="minNeeded"></param>
+    /// <param name="maxUsed"></param>
+    /// <param name="useAmount"></param>
+    /// <returns></returns>
+    private static float SimpleTotalNeedRating(
+        NeedData[] needs,
+        NeedAvailabilityItem[] items,
+        int minNeeded,
+        int maxUsed,
+        bool useAmount)
+    {
+        // Check if some needs were passed in
+        if (needs.Length > 0)
+        {
+            // Start at using none
+            float preferredUsed = 0;
+            float survivableUsed = 0;
 
+            // Go through each need in the needs
+            foreach (NeedData need in needs)
+            {
+                // Find an item with the same id as the need
+                NeedAvailabilityItem applicableItem = Array
+                    .Find(items, item => item.ID == need.ID);
+
+                if (applicableItem != null)
+                {
+                    // Get total available based on whether to use the item count or amount available
+                    float totalAvailable = useAmount ? applicableItem.AmountAvailable : applicableItem.ItemCount;
+
+                    // If the need is preferred then add to preferred used
+                    if (need.Preferred)
+                    {
+                        preferredUsed += totalAvailable;
+                    }
+                    // If the need is not preferred the add to survivable used
+                    else survivableUsed += totalAvailable;
+                }
+
+            }
+
+            // Cannot use more than what is needed
+            preferredUsed = Mathf.Min(preferredUsed, maxUsed);
+            survivableUsed = Mathf.Min(survivableUsed, maxUsed - preferredUsed);
+            float totalUsed = preferredUsed + survivableUsed;
+
+            // If we used the amound we needed, then boost the rating
+            if (totalUsed >= minNeeded)
+            {
+                int bonusMax = maxUsed - minNeeded;
+                int extra = (int)totalUsed - minNeeded;
+                return 1 + (float)extra/bonusMax;
+            }
+            // If we did not use the amount we needed
+            // then the rating is the proportion that we needed
+            else return (float)totalUsed / minNeeded;
+        }
+        // If there were no needs then return the number for no need rating "NaN"
+        else return float.NaN;
+    }
     #endregion
 }

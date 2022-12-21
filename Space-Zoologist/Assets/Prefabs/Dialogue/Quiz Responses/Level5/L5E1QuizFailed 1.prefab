@@ -1,0 +1,1046 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &848018635908003695
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1666162499727703867}
+  - component: {fileID: 1490480151776893422}
+  m_Layer: 0
+  m_Name: L5E1QuizFailed 1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1666162499727703867
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 848018635908003695}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1398020052037860393}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1490480151776893422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 848018635908003695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83189876d4d389f43b7dd2e925aa112e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentIDCounter: 47
+  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-699,\"yPos\":5484},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"We
+    can go share our research with Dr. Star?\",\"parentUIDs\":[1,46,46],\"SpeechUID\":5},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-700,\"yPos\":5732},\"ID\":6,\"TMPFontGUID\":null,\"Text\":\"What\u2019s
+    wrong?\",\"parentUIDs\":[5,5],\"SpeechUID\":7},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-901,\"yPos\":5956},\"ID\":8,\"TMPFontGUID\":null,\"Text\":\"What!?\",\"parentUIDs\":[7,7],\"SpeechUID\":9},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-541,\"yPos\":5949},\"ID\":10,\"TMPFontGUID\":null,\"Text\":\"Yea
+    I figured...\",\"parentUIDs\":[7,7],\"SpeechUID\":11},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-2858,\"yPos\":17586},\"ID\":13,\"TMPFontGUID\":null,\"Text\":\"So
+    why didn\u2019t you tell Star?\",\"parentUIDs\":[12,12],\"SpeechUID\":14},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-5173,\"yPos\":29587},\"ID\":15,\"TMPFontGUID\":null,\"Text\":\"I\u2019m
+    sure Dr. Star will understand.\",\"parentUIDs\":[14,14],\"SpeechUID\":16},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-4834,\"yPos\":29590},\"ID\":17,\"TMPFontGUID\":null,\"Text\":\"Barry,
+    I\u2019m going to have to tell Dr. Star.\",\"parentUIDs\":[14,14],\"SpeechUID\":18},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-5009,\"yPos\":30093},\"ID\":20,\"TMPFontGUID\":null,\"Text\":\"How
+    about we go tell Dr. Star together?\",\"parentUIDs\":[19,19],\"SpeechUID\":21},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-5011,\"yPos\":31060},\"ID\":28,\"TMPFontGUID\":null,\"Text\":\"Barry
+    found a new species from Planet X and we raised it without you knowing.\",\"parentUIDs\":[27,27],\"SpeechUID\":29}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":-729,\"yPos\":5134},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Hmmmm,
+    these answers don\u2019t really line up, but hey you still met this enclosure\u2019s
+    requirements! I\u2019d probably have done just as bad on the report back too...\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Barry\",\"OptionUIDs\":[],\"SpeechUID\":46,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-699,\"yPos\":5606},\"ID\":5,\"TMPFontGUID\":null,\"Text\":\"Oh,
+    uh yeah! Well, I don\u2019t know...\",\"parentUIDs\":[4,4],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Barry\",\"OptionUIDs\":[6],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-699,\"yPos\":5834},\"ID\":7,\"TMPFontGUID\":null,\"Text\":\"Well...
+    can I tell you something? You might have pieced this together already, but no
+    one else actually knows about the Mimis...\",\"parentUIDs\":[6,6],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Barry\",\"OptionUIDs\":[8,10],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-910,\"yPos\":6049},\"ID\":9,\"TMPFontGUID\":null,\"Text\":\"Yea...\",\"parentUIDs\":[8,8],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Barry\",\"OptionUIDs\":[],\"SpeechUID\":12,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-539,\"yPos\":6056},\"ID\":11,\"TMPFontGUID\":null,\"Text\":\"I
+    guess I didn\u2019t do a great job hiding it...\",\"parentUIDs\":[10,10],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Barry\",\"OptionUIDs\":[],\"SpeechUID\":12,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-1748,\"yPos\":11364},\"ID\":12,\"TMPFontGUID\":null,\"Text\":\"Well,
+    I originally found Mimi hiding in the back of a Flan stasis chamber. After doing
+    some testing and looking at those notes from Dr. Star I realized it must have
+    been the final species that we failed to retrieve from Planet X.\",\"parentUIDs\":[11,9,9,11],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Barry\",\"OptionUIDs\":[13],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-2850,\"yPos\":17698},\"ID\":14,\"TMPFontGUID\":null,\"Text\":\"I
+    messed up an enclosure real bad this one time and ended up making a species go
+    extinct. I\u2019ve been trying to live that down ever since and I was thinking
+    this would be my chance to redeem myself. But now it just feels wrong.\",\"parentUIDs\":[13,13],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Barry\",\"OptionUIDs\":[15,17],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-5180,\"yPos\":29704},\"ID\":16,\"TMPFontGUID\":null,\"Text\":\"Do
+    you really think so?\\r\\n\",\"parentUIDs\":[15,15],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Barry\",\"OptionUIDs\":[],\"SpeechUID\":19,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-4825,\"yPos\":29715},\"ID\":18,\"TMPFontGUID\":null,\"Text\":\"No,
+    wait I don\u2019t know.\",\"parentUIDs\":[17,17],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Barry\",\"OptionUIDs\":[],\"SpeechUID\":19,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-4993,\"yPos\":29914},\"ID\":19,\"TMPFontGUID\":null,\"Text\":\"
+    I shouldn\u2019t have done this, I especially shouldn\u2019t have involved you
+    of all people! You\u2019re still a new recruit! Though I guess you still did
+    a pretty good job handling the Mimis and you\u2019re handling this whole situation
+    pretty well.\",\"parentUIDs\":[18,16,16,18],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Barry\",\"OptionUIDs\":[20],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-5012,\"yPos\":30215},\"ID\":21,\"TMPFontGUID\":null,\"Text\":\"I...\",\"parentUIDs\":[20,20],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Barry\",\"OptionUIDs\":[],\"SpeechUID\":22,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-5021,\"yPos\":30374},\"ID\":22,\"TMPFontGUID\":null,\"Text\":\"Okay.\",\"parentUIDs\":[21,21],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Barry\",\"OptionUIDs\":[],\"SpeechUID\":24,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-5022,\"yPos\":30526},\"ID\":24,\"TMPFontGUID\":null,\"Text\":\"...\",\"parentUIDs\":[22,22],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Barry\",\"OptionUIDs\":[],\"SpeechUID\":25,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-5009,\"yPos\":30669},\"ID\":25,\"TMPFontGUID\":null,\"Text\":\"Aurora?\",\"parentUIDs\":[24,24],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Barry\",\"OptionUIDs\":[],\"SpeechUID\":26,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-5009,\"yPos\":30804},\"ID\":26,\"TMPFontGUID\":null,\"Text\":\"Yeah
+    Barry?\",\"parentUIDs\":[25,25],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":27,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-5008,\"yPos\":30926},\"ID\":27,\"TMPFontGUID\":null,\"Text\":\"I...
+    I messed up. I...\",\"parentUIDs\":[26,26],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Barry\",\"OptionUIDs\":[28],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-5004,\"yPos\":31174},\"ID\":29,\"TMPFontGUID\":null,\"Text\":\"You
+    what? How?\",\"parentUIDs\":[28,28],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":30,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-5001,\"yPos\":31309},\"ID\":30,\"TMPFontGUID\":null,\"Text\":\"There
+    was a Mimi hiding in one of the-\",\"parentUIDs\":[29,29],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Barry\",\"OptionUIDs\":[],\"SpeechUID\":31,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-4999,\"yPos\":31447},\"ID\":31,\"TMPFontGUID\":null,\"Text\":\"Mimi!
+    You mean that final species we weren\u2019t able to find!?\",\"parentUIDs\":[30,30],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":32,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-4999,\"yPos\":31584},\"ID\":32,\"TMPFontGUID\":null,\"Text\":\"Yeah
+    that one. Aurora I\u2019m really sorry I should\u2019ve told you I just felt
+    so bad for the last time I messed up and I wanted to make up for it.\",\"parentUIDs\":[31,31],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Barry\",\"OptionUIDs\":[],\"SpeechUID\":33,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-4999,\"yPos\":31721},\"ID\":33,\"TMPFontGUID\":null,\"Text\":\"Are
+    the Mimis okay?\",\"parentUIDs\":[32,32],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":34,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-4998,\"yPos\":31857},\"ID\":34,\"TMPFontGUID\":null,\"Text\":\"Yeah,
+    our new researcher did a great job with them actually. And they weren\u2019t
+    part of me keeping it a secret at all, they didn\u2019t know. If anything it\u2019s
+    thanks to them that I\u2019m coming clean now.\",\"parentUIDs\":[33,33],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Barry\",\"OptionUIDs\":[],\"SpeechUID\":35,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-5001,\"yPos\":31983},\"ID\":35,\"TMPFontGUID\":null,\"Text\":\"*Phew*
+    okay good.\",\"parentUIDs\":[34,34],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":36,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-4997,\"yPos\":32115},\"ID\":36,\"TMPFontGUID\":null,\"Text\":\"Barry,
+    our research isn\u2019t about what we achieve, it\u2019s about working together
+    to preserve and study these creatures. You had already made up for what happened
+    by continuing to work and do research for the greater good of these animals.\",\"parentUIDs\":[35,35],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":37,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-4995,\"yPos\":32238},\"ID\":37,\"TMPFontGUID\":null,\"Text\":\"Really?\",\"parentUIDs\":[36,36],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Barry\",\"OptionUIDs\":[],\"SpeechUID\":38,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-4998,\"yPos\":32357},\"ID\":38,\"TMPFontGUID\":null,\"Text\":\"Yes
+    Barry. Though I think I might make you work under Juno for a while so you can
+    remind yourself about how important teamwork is in this field.\",\"parentUIDs\":[37,37],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":39,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-4998,\"yPos\":32484},\"ID\":39,\"TMPFontGUID\":null,\"Text\":\"Aw
+    man, why do I have to get punished?\",\"parentUIDs\":[38,38],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":40,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-4994,\"yPos\":32627},\"ID\":40,\"TMPFontGUID\":null,\"Text\":\"Oh,
+    hi Juno I didn\u2019t realize you were there. The fact that you view this a punishment
+    goes to show you have a thing or two to learn about teamwork too. \",\"parentUIDs\":[39,39],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":41,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-4995,\"yPos\":32775},\"ID\":41,\"TMPFontGUID\":null,\"Text\":\"Ughh.\",\"parentUIDs\":[40,40],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":42,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-4998,\"yPos\":32921},\"ID\":42,\"TMPFontGUID\":null,\"Text\":\"Thank
+    you so much Aurora, I really appreciate it! Also sorry Juno.\",\"parentUIDs\":[41,41],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Barry\",\"OptionUIDs\":[],\"SpeechUID\":43,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-4994,\"yPos\":33043},\"ID\":43,\"TMPFontGUID\":null,\"Text\":\"Yeah
+    whatever, we both have a bit more to learn I suppose.\",\"parentUIDs\":[42,42],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":44,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-4996,\"yPos\":33180},\"ID\":44,\"TMPFontGUID\":null,\"Text\":\"And
+    you new recruit, good job getting Barry to come talk to me. I think it\u2019s
+    about time we stop referring to you as the newbie and start talking to you as
+    who you really are, an official xenobiology engineer!\",\"parentUIDs\":[43,43],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":45,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-4993,\"yPos\":33302},\"ID\":45,\"TMPFontGUID\":null,\"Text\":\"You
+    clearly know all about engineering enclosures, researching animals and working
+    together with your team members in order to make great new discoveries to help
+    better the lives of others. Welcome to the team!\",\"parentUIDs\":[44,44],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-729,\"yPos\":5311},\"ID\":46,\"TMPFontGUID\":null,\"Text\":\"And
+    now...\",\"parentUIDs\":[1,1],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Barry\",\"OptionUIDs\":[4],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false}]}"
+  saveVersion: 103
+  DefaultName: 
+  DefaultSprite: {fileID: 0}
+  DefaultFont: {fileID: 0}
+  NodeSerializedDataList:
+  - {fileID: 1059371210100667305}
+  - {fileID: 5506718642517653366}
+  - {fileID: 1376530769709050029}
+  - {fileID: 920344832307350742}
+  - {fileID: 8109426389109671081}
+  - {fileID: 8515988823370191320}
+  - {fileID: 4307352573205494597}
+  - {fileID: 1160948613309637846}
+  - {fileID: 8058108365083026801}
+  - {fileID: 6690966692395675026}
+  - {fileID: 518495631712572428}
+  - {fileID: 4864869909361831719}
+  - {fileID: 5760192476518860216}
+  - {fileID: 5261679310529151208}
+  - {fileID: 6892123965270414707}
+  - {fileID: 1830776637630165475}
+  - {fileID: 2243239116355863885}
+  - {fileID: 926232402131588007}
+  - {fileID: 5728621669839396574}
+  - {fileID: 8861141056522990468}
+  - {fileID: 8996022207169887459}
+  - {fileID: 7201108092255913154}
+  - {fileID: 1884834248946070657}
+  - {fileID: 4922896794106418193}
+  - {fileID: 7951406820341841065}
+  - {fileID: 2750388799205322498}
+  - {fileID: 5491440370763418743}
+  - {fileID: 6953607196643897162}
+  - {fileID: 3406392249768180319}
+  - {fileID: 7788280727989526457}
+  - {fileID: 6516272261194398600}
+  - {fileID: 877234330905960978}
+  - {fileID: 5742717847647468657}
+  - {fileID: 2515737054589565496}
+  - {fileID: 8155699193554421332}
+  - {fileID: 4740794593579402603}
+  - {fileID: 2316024274495355768}
+  - {fileID: 1754349179290002165}
+  - {fileID: 1940787637255363020}
+  - {fileID: 1876998930507856555}
+  - {fileID: 4771723438928194973}
+  - {fileID: 7370473012046491751}
+  - {fileID: 1608674012018463677}
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!1 &8975517945923358303
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1398020052037860393}
+  - component: {fileID: 1059371210100667305}
+  - component: {fileID: 5506718642517653366}
+  - component: {fileID: 1376530769709050029}
+  - component: {fileID: 920344832307350742}
+  - component: {fileID: 8109426389109671081}
+  - component: {fileID: 8515988823370191320}
+  - component: {fileID: 4307352573205494597}
+  - component: {fileID: 1160948613309637846}
+  - component: {fileID: 8058108365083026801}
+  - component: {fileID: 6690966692395675026}
+  - component: {fileID: 518495631712572428}
+  - component: {fileID: 4864869909361831719}
+  - component: {fileID: 5760192476518860216}
+  - component: {fileID: 5261679310529151208}
+  - component: {fileID: 6892123965270414707}
+  - component: {fileID: 1830776637630165475}
+  - component: {fileID: 2243239116355863885}
+  - component: {fileID: 926232402131588007}
+  - component: {fileID: 5728621669839396574}
+  - component: {fileID: 8861141056522990468}
+  - component: {fileID: 8996022207169887459}
+  - component: {fileID: 7201108092255913154}
+  - component: {fileID: 1884834248946070657}
+  - component: {fileID: 4922896794106418193}
+  - component: {fileID: 7951406820341841065}
+  - component: {fileID: 2750388799205322498}
+  - component: {fileID: 5491440370763418743}
+  - component: {fileID: 6953607196643897162}
+  - component: {fileID: 3406392249768180319}
+  - component: {fileID: 7788280727989526457}
+  - component: {fileID: 6516272261194398600}
+  - component: {fileID: 877234330905960978}
+  - component: {fileID: 5742717847647468657}
+  - component: {fileID: 2515737054589565496}
+  - component: {fileID: 8155699193554421332}
+  - component: {fileID: 4740794593579402603}
+  - component: {fileID: 2316024274495355768}
+  - component: {fileID: 1754349179290002165}
+  - component: {fileID: 1940787637255363020}
+  - component: {fileID: 1876998930507856555}
+  - component: {fileID: 4771723438928194973}
+  - component: {fileID: 7370473012046491751}
+  - component: {fileID: 1608674012018463677}
+  m_Layer: 0
+  m_Name: ConversationEventInfo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1398020052037860393
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1666162499727703867}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1059371210100667305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 1
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: ba7da11aff8543047b3d19b7d629c282, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &5506718642517653366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 5
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: ba7da11aff8543047b3d19b7d629c282, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &1376530769709050029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 7
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: ba7da11aff8543047b3d19b7d629c282, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &920344832307350742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 9
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: ba7da11aff8543047b3d19b7d629c282, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &8109426389109671081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 11
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: ba7da11aff8543047b3d19b7d629c282, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &8515988823370191320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 4
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 0}
+  Audio: {fileID: 0}
+--- !u!114 &4307352573205494597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 6
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 0}
+  Audio: {fileID: 0}
+--- !u!114 &1160948613309637846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 8
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 0}
+  Audio: {fileID: 0}
+--- !u!114 &8058108365083026801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 10
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 0}
+  Audio: {fileID: 0}
+--- !u!114 &6690966692395675026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 12
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: ba7da11aff8543047b3d19b7d629c282, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &518495631712572428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 14
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: ba7da11aff8543047b3d19b7d629c282, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &4864869909361831719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 13
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 0}
+  Audio: {fileID: 0}
+--- !u!114 &5760192476518860216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 16
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: ba7da11aff8543047b3d19b7d629c282, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &5261679310529151208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 18
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: ba7da11aff8543047b3d19b7d629c282, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &6892123965270414707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 19
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: ba7da11aff8543047b3d19b7d629c282, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &1830776637630165475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 21
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: ba7da11aff8543047b3d19b7d629c282, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &2243239116355863885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 22
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: ba7da11aff8543047b3d19b7d629c282, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &926232402131588007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 24
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: ba7da11aff8543047b3d19b7d629c282, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &5728621669839396574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 25
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: ba7da11aff8543047b3d19b7d629c282, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &8861141056522990468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 26
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 8c883f4201b912f4881839e372a91750, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &8996022207169887459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 27
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: ba7da11aff8543047b3d19b7d629c282, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &7201108092255913154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 29
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 8c883f4201b912f4881839e372a91750, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &1884834248946070657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 30
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: ba7da11aff8543047b3d19b7d629c282, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &4922896794106418193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 31
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 8c883f4201b912f4881839e372a91750, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &7951406820341841065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 32
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: ba7da11aff8543047b3d19b7d629c282, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &2750388799205322498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 33
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 8c883f4201b912f4881839e372a91750, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &5491440370763418743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 34
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: ba7da11aff8543047b3d19b7d629c282, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &6953607196643897162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 35
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 8c883f4201b912f4881839e372a91750, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &3406392249768180319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 36
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 8c883f4201b912f4881839e372a91750, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &7788280727989526457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 37
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: ba7da11aff8543047b3d19b7d629c282, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &6516272261194398600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 38
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 8c883f4201b912f4881839e372a91750, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &877234330905960978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 39
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: fabf7af1c8cb79f45a1449c35f52a4a9, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &5742717847647468657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 40
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 8c883f4201b912f4881839e372a91750, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &2515737054589565496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 41
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: fabf7af1c8cb79f45a1449c35f52a4a9, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &8155699193554421332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 42
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: ba7da11aff8543047b3d19b7d629c282, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &4740794593579402603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 43
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: fabf7af1c8cb79f45a1449c35f52a4a9, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &2316024274495355768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 44
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 8c883f4201b912f4881839e372a91750, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &1754349179290002165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 45
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 8c883f4201b912f4881839e372a91750, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &1940787637255363020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 15
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 0}
+  Audio: {fileID: 0}
+--- !u!114 &1876998930507856555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 17
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 0}
+  Audio: {fileID: 0}
+--- !u!114 &4771723438928194973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 20
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 0}
+  Audio: {fileID: 0}
+--- !u!114 &7370473012046491751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 28
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 0}
+  Audio: {fileID: 0}
+--- !u!114 &1608674012018463677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 46
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 0}
+  Icon: {fileID: 21300000, guid: ba7da11aff8543047b3d19b7d629c282, type: 3}
+  Audio: {fileID: 0}

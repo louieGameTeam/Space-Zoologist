@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75df8cbea201a4d7c8d2497760779228, type: 3}
   m_Name: L3E2Data
   m_EditorClassIdentifier: 
+  IsSpacer: 0
   Level: {fileID: 11400000, guid: ec42c76cce84a5e48ab94a01129816f4, type: 2}
   startingBalance: 600
   MapWidth: 29
   MapHeight: 29
-  WallBreakable: 0
+  WallBreakable: 1
   LevelObjectiveData: {fileID: 11400000, guid: b853f30439aaf457092f4688f2473a5b, type: 2}
   foodSources:
   - {fileID: 11400000, guid: 4519d95eb0a9149afaba1c7e635c9b1c, type: 2}
@@ -70,7 +71,7 @@ MonoBehaviour:
   startingPositions:
   - {x: 10, y: 4, z: 0}
   - {x: 20, y: 15, z: 0}
-  startingConversation: {fileID: 492502004931850185, guid: 14cafe0bb96a54d769df0401e323ef30,
+  startingConversation: {fileID: 492502004931850185, guid: 028f4453b1f9e4d4cb56fe4d608743fe,
     type: 3}
   defaultConversation: {fileID: 674947355878461197, guid: 3124ca85bbd1c476498793667738a9e7,
     type: 3}
@@ -80,15 +81,15 @@ MonoBehaviour:
     nextLevelID:
       levelNumber: 0
       enclosureNumber: 0
-    quizConversation: {fileID: 8938176367728474889, guid: f6cf09b327d9283489e62435dc54420c,
+    quizConversation: {fileID: 3706545390196553166, guid: 1fe081af817482548a571818ef6c4d1a,
       type: 3}
     nextLevelIDs:
       levelIDs:
       - levelNumber: 3
         enclosureNumber: 3
       - levelNumber: 3
-        enclosureNumber: 3
+        enclosureNumber: 4
       - levelNumber: 3
         enclosureNumber: 4
-  restertEnclosureConversation: {fileID: 4477804778286551868, guid: 3a2c012a36f50432ab698afac781da35,
+  restertEnclosureConversation: {fileID: 6321586904675867812, guid: cd9cefc4f23194f4a923d1d3e896324d,
     type: 3}

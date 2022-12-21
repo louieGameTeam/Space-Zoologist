@@ -24,7 +24,7 @@ public class FoodSourceStoreSection : StoreSection
     /// Handles the click release on the cursor item.
     /// </summary>
     public override void OnCursorPointerUp(PointerEventData eventData)
-    {
+    {/*
         base.OnCursorPointerUp(eventData);
         if (!UIBlockerSettings.OperationIsAvailable("Build") || 
             eventData.button == PointerEventData.InputButton.Right ||
@@ -42,6 +42,23 @@ public class FoodSourceStoreSection : StoreSection
         if (!base.CanBuy(selectedItem))
         {
             base.OnItemSelectionCanceled();
+        }*/
+    }
+
+    public override void HandleCursor () {
+        base.HandleCursor ();
+
+        if (!UIBlockerSettings.OperationIsAvailable ("Build")) {
+            return;
+        }
+
+        if (Input.GetMouseButtonUp (0)) {
+            Vector3 mousePosition = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+            PlaceFood (mousePosition);
+        }
+
+        if (selectedItem != null && base.ResourceManager.CheckRemainingResource (selectedItem) == 0) {
+            base.OnItemSelectionCanceled ();
         }
     }
 
@@ -72,7 +89,8 @@ public class FoodSourceStoreSection : StoreSection
             Vector3 FoodLocation = instance.m_tileDataController.CellToWorld (mouseGridPosition);
             FoodLocation.x += species.Size.x / 2f;
             FoodLocation.y += species.Size.y / 2f;
-            instance.m_foodSourceManager.CreateFoodSource (species, FoodLocation, this.selectedItem.buildTime);
+            int buildTime = tilePlacementController.godMode ? 0 : this.selectedItem.buildTime;
+            instance.m_foodSourceManager.CreateFoodSource (species, FoodLocation, buildTime);
         }
         else
         {

@@ -27,6 +27,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -601.50885, y: -301.20956, z: 656.46436}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2580494621373948065}
   m_Father: {fileID: 0}
@@ -45,27 +46,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentIDCounter: 12
-  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":430,\"yPos\":-545},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"Unlucky?
-    Disaster? Death?!\",\"parentUIDs\":[1,1],\"SpeechUID\":3},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":430,\"yPos\":-345},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"What
-    happened around here?\",\"parentUIDs\":[3,3],\"SpeechUID\":5}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":430,\"yPos\":-645},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"I
+  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":308,\"yPos\":-494},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"Unlucky?
+    Disaster? Death?!\",\"parentUIDs\":[1,1],\"SpeechUID\":3},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":308,\"yPos\":-294},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"What
+    happened around here?\",\"parentUIDs\":[3,3],\"SpeechUID\":5}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":308,\"yPos\":-594},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"I
     must admit, newbie. When Dr. Star said she had another \u201Cace\u201D new recruit,
     I was skeptical. Star\u2019s approval is usually a mark of death around here.
-    Disaster seems to always follow her unlucky little scions.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[2],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":430,\"yPos\":-445},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"Figurative
-    death. Now, if only I could say the same about the disaster\u2026\",\"parentUIDs\":[2,2],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[4],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":430,\"yPos\":-245},\"ID\":5,\"TMPFontGUID\":null,\"Text\":\"A
+    Disaster seems to always follow her unlucky little scions.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[2],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":308,\"yPos\":-394},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"Figurative
+    death. Now, if only I could say the same about the disaster\u2026\",\"parentUIDs\":[2,2],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[4],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":308,\"yPos\":-194},\"ID\":5,\"TMPFontGUID\":null,\"Text\":\"A
     full recounting would do little to improve your work, I\u2019m afraid, so I won\u2019t
     bother. Let us just say there is a reason we have a xenobiologist on staff who\u2019s
-    only allowed to do resurfacing and transport work.\",\"parentUIDs\":[4,4],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":6,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":430,\"yPos\":-145},\"ID\":6,\"TMPFontGUID\":null,\"Text\":\"Now,
+    only allowed to do resurfacing and transport work.\",\"parentUIDs\":[4,4],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":6,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":312,\"yPos\":-96},\"ID\":6,\"TMPFontGUID\":null,\"Text\":\"Now,
     setting aside such unpleasant talk\u2026 This is it, the last enclosure in this
-    wing. It has proven rather\u2026troublesome for our existing staff.\",\"parentUIDs\":[5,5],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":7,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":430,\"yPos\":-45},\"ID\":7,\"TMPFontGUID\":null,\"Text\":\"Troublesome
+    wing. It has proven rather\u2026troublesome for our existing staff.\",\"parentUIDs\":[5,5],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":7,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":308,\"yPos\":6},\"ID\":7,\"TMPFontGUID\":null,\"Text\":\"Troublesome
     terrain, disagreeable specimens, limited viable terrain\u2026this enclosure really
-    has all of the makings of a truly challenging test.\",\"parentUIDs\":[6,6],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":8,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":430,\"yPos\":55},\"ID\":8,\"TMPFontGUID\":null,\"Text\":\"Yours,
-    specifically.\",\"parentUIDs\":[7,7],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":9,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":430,\"yPos\":155},\"ID\":9,\"TMPFontGUID\":null,\"Text\":\"No
+    has all of the makings of a truly challenging test.\",\"parentUIDs\":[6,6],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":8,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":308,\"yPos\":106},\"ID\":8,\"TMPFontGUID\":null,\"Text\":\"Yours,
+    specifically.\",\"parentUIDs\":[7,7],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":9,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":308,\"yPos\":206},\"ID\":9,\"TMPFontGUID\":null,\"Text\":\"No
     lecture this time, newbie. You should already know everything you need in order
     to properly design this enclosure. Remember what you\u2019ve learned, and you
-    shouldn\u2019t struggle with it.\",\"parentUIDs\":[8,8],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":10,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":430,\"yPos\":255},\"ID\":10,\"TMPFontGUID\":null,\"Text\":\"And
-    try not to think about how even Dr. Star gave up working on it.\",\"parentUIDs\":[9,9],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":11,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":430,\"yPos\":355},\"ID\":11,\"TMPFontGUID\":null,\"Text\":\"I\u2019ll
+    shouldn\u2019t struggle with it.\",\"parentUIDs\":[8,8],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":10,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":308,\"yPos\":306},\"ID\":10,\"TMPFontGUID\":null,\"Text\":\"And
+    try not to think about how even Dr. Star gave up working on it.\",\"parentUIDs\":[9,9],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":11,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":308,\"yPos\":406},\"ID\":11,\"TMPFontGUID\":null,\"Text\":\"I\u2019ll
     be back in 30 days to perform your report back, as per our usual. I expect that
-    there will be 20 Eligans Impar and Caprax Zeigrun here to greet me when I return.\",\"parentUIDs\":[10,10],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false}]}"
+    there will be 20 Lumoos and Zeigs here to greet me when I return.\",\"parentUIDs\":[10,10],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false}]}"
   saveVersion: 103
   DefaultName: 
   DefaultSprite: {fileID: 0}
@@ -123,6 +124,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1481684556321413420}
   m_RootOrder: 0
@@ -144,7 +146,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: 90fff8d9d45b4634cb80c13f1618ec21, type: 3}
+  Icon: {fileID: 21300000, guid: fabf7af1c8cb79f45a1449c35f52a4a9, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &6249039972745361185
 MonoBehaviour:
@@ -163,7 +165,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: 90fff8d9d45b4634cb80c13f1618ec21, type: 3}
+  Icon: {fileID: 21300000, guid: fabf7af1c8cb79f45a1449c35f52a4a9, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &321871561606788520
 MonoBehaviour:
@@ -182,7 +184,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: 90fff8d9d45b4634cb80c13f1618ec21, type: 3}
+  Icon: {fileID: 21300000, guid: fabf7af1c8cb79f45a1449c35f52a4a9, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &4764041463944408101
 MonoBehaviour:
@@ -201,7 +203,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: 90fff8d9d45b4634cb80c13f1618ec21, type: 3}
+  Icon: {fileID: 21300000, guid: fabf7af1c8cb79f45a1449c35f52a4a9, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &5318577709525904539
 MonoBehaviour:
@@ -220,7 +222,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: 90fff8d9d45b4634cb80c13f1618ec21, type: 3}
+  Icon: {fileID: 21300000, guid: fabf7af1c8cb79f45a1449c35f52a4a9, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &5088093094540478212
 MonoBehaviour:
@@ -239,7 +241,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: 90fff8d9d45b4634cb80c13f1618ec21, type: 3}
+  Icon: {fileID: 21300000, guid: fabf7af1c8cb79f45a1449c35f52a4a9, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &2222603552136187795
 MonoBehaviour:
@@ -258,7 +260,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: 90fff8d9d45b4634cb80c13f1618ec21, type: 3}
+  Icon: {fileID: 21300000, guid: fabf7af1c8cb79f45a1449c35f52a4a9, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &282234943515039857
 MonoBehaviour:
@@ -277,7 +279,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: 90fff8d9d45b4634cb80c13f1618ec21, type: 3}
+  Icon: {fileID: 21300000, guid: fabf7af1c8cb79f45a1449c35f52a4a9, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &6007554260346152682
 MonoBehaviour:
@@ -296,7 +298,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 0}
-  Icon: {fileID: 21300000, guid: 90fff8d9d45b4634cb80c13f1618ec21, type: 3}
+  Icon: {fileID: 21300000, guid: fabf7af1c8cb79f45a1449c35f52a4a9, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &7995183552713338283
 MonoBehaviour:

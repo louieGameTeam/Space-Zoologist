@@ -53,6 +53,10 @@ public class DebuggingUI : MonoBehaviour
         winButton.onClick.AddListener(Win);
         toggleLevelOverrideButton.onClick.AddListener(ToggleLevelSelectOverride);
         toggleVerboseInspectorButton.onClick.AddListener(ToggleVerboseInspector);
+#if UNITY_EDITOR
+        mainPanel.SetActive (true);
+        active = true;
+#endif
     }
 
     private void Update()
@@ -137,7 +141,7 @@ public class DebuggingUI : MonoBehaviour
         // If the navigator exists then toggle its override
         if (navigator)
         {
-            LevelID maxID = new LevelID(LevelDataLoader.MaxLevel() + 1, 1);
+            LevelID maxID = new LevelID(LevelDataLoader.MaxLevel() + 1, 4);
             navigator.ToggleOverride(maxID);
         }
     }

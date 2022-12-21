@@ -28,10 +28,11 @@ namespace DialogueEditor
             serializedObject.Update();
             EditorGUILayout.Space();
             EditorGUILayout.Space();
-            EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.PrefixLabel("Conversation: ", boldStyle);
-            EditorGUILayout.TextField(serializedObject.targetObject.name, regularStyle);
-            EditorGUILayout.EndHorizontal();
+            using (new EditorGUILayout.HorizontalScope ())
+            {
+                EditorGUILayout.PrefixLabel ("Conversation: ", boldStyle);
+                EditorGUILayout.TextField (serializedObject.targetObject.name, regularStyle);
+            }
             serializedObject.ApplyModifiedProperties();
         }
     }
