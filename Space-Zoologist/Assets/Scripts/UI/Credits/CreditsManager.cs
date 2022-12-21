@@ -170,9 +170,11 @@ public class CreditsManager : MonoBehaviour
     /// </summary>
     public void StartCredits()
     {
+        CreditsCanvasGroup.gameObject.SetActive(true);
+
         // Force rebuild of layout to update height of RectTransform
         LayoutRebuilder.ForceRebuildLayoutImmediate(CreditsContent.rectTransform);
-        CreditsCanvasGroup.gameObject.SetActive(true);
+
         ResetCreditsContentPosition();
         IsScrolling = true;
     }
