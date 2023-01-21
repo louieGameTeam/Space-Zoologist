@@ -45,7 +45,7 @@ MonoBehaviour:
   - itemObject: {fileID: 11400000, guid: bbfbb40c97bab4ec69618bda24523c73, type: 2}
     initialAmount: 2
   - itemObject: {fileID: 11400000, guid: 8f5e6e5601b29904a912917401defe66, type: 2}
-    initialAmount: 1
+    initialAmount: 3
   - itemObject: {fileID: 11400000, guid: 31f282139e3e8419bac2c8091d5be836, type: 2}
     initialAmount: 40
   - itemObject: {fileID: 11400000, guid: dcb09fb121096452cbb3c787e5212aac, type: 2}
@@ -76,11 +76,11 @@ MonoBehaviour:
     initialAmount: 5
   - itemObject: {fileID: 11400000, guid: 38cda74f699f241129cf6815fa33a73c, type: 2}
     initialAmount: 5
-  levelMusic: {fileID: 8300000, guid: 62792088a7f1edc40bf0057d5138e5fa, type: 3}
+  levelMusic: {fileID: 8300000, guid: 74b817033a7a1b847ac52d70f7159b37, type: 3}
   startingPositions:
   - {x: 5, y: 20, z: 0}
   - {x: 17, y: 3, z: 0}
-  startingConversation: {fileID: 9161315908772567349, guid: af1e581d2866a4ba9a73900a20b72b76,
+  startingConversation: {fileID: 9161315908772567349, guid: 1c4e0787fd68a1b498699e621cf0ffe8,
     type: 3}
   defaultConversation: {fileID: 674947355878461197, guid: 3124ca85bbd1c476498793667738a9e7,
     type: 3}
@@ -90,15 +90,15 @@ MonoBehaviour:
     nextLevelID:
       levelNumber: 0
       enclosureNumber: 0
-    quizConversation: {fileID: 8938176367728474889, guid: 32d08c68c96de0a4b9609ce6fb117c7d,
+    quizConversation: {fileID: 6455619126537920444, guid: 1140186b092379d439e770a6419da0af,
       type: 3}
     nextLevelIDs:
       levelIDs:
-      - levelNumber: 4
-        enclosureNumber: 1
       - levelNumber: 5
         enclosureNumber: 1
       - levelNumber: 5
         enclosureNumber: 1
-  restertEnclosureConversation: {fileID: 4477804778286551868, guid: 3a2c012a36f50432ab698afac781da35,
+      - levelNumber: 5
+        enclosureNumber: 1
+  restertEnclosureConversation: {fileID: 1490480151776893422, guid: 6380c50b97e9d7743a200a2d6dff5be0,
     type: 3}

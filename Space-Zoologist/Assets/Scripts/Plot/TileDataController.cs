@@ -804,6 +804,7 @@ public class TileDataController : MonoBehaviour
         }
         foreach (ConstructionCluster cluster in finishedClusters)
             ConstructionClusters.Remove(cluster);
+        
         LiquidbodyController.Instance.MergeConstructingTiles();
         BufferTexture.Apply();
         BufferCenterTexture.Apply();
@@ -814,6 +815,7 @@ public class TileDataController : MonoBehaviour
         //Report updates to RPM
         if (changedTiles.Count > 0)
         {
+            EventManager.Instance.InvokeEvent(EventType.TilemapChange, null);
             GameManager.Instance.m_reservePartitionManager.UpdateAccessMapChangedAt(changedTiles);
         }
     }
@@ -1196,6 +1198,12 @@ public class TileDataController : MonoBehaviour
     // Returns true if the animal can be placed on the target cell
     private bool IsValidAnimalPlacement(Vector3Int cellPosition, AnimalSpecies selectedSpecies)
     {
+        // Cache needs for performance
+        var neededOnly = selectedSpecies.NeededTerrain;
+        var traversableOnly = selectedSpecies.TraversableOnlyTerrain;
+        var accessibleTerrain = selectedSpecies.AccessibleTerrain;
+        var treeNeeds = selectedSpecies.RequiredTreeNeeds;
+
         Vector3Int pos;
         GameTile tile;
         bool valid = true;
@@ -1213,57 +1221,120 @@ public class TileDataController : MonoBehaviour
                 }
                 else
                 {
-                    bool isValidTile = IsValidTileForAnimal(selectedSpecies, pos);
-                    bool isTraversableOnly = IsTraversableOnlyTileForAnimal(selectedSpecies, pos);
-                    Color highlightColor = isValidTile ? (isTraversableOnly ? Color.yellow : Color.green) : Color.red;
+                    bool isNeededTile = IsNeededTileForAnimal(
+                        selectedSpecies, 
+                        pos, 
+                        treeNeeds, 
+                        accessibleTerrain,
+                        neededOnly);
+                    bool isTraversableOnly = IsTraversableOnlyTileForAnimal(
+                        selectedSpecies,
+                        pos,
+                        treeNeeds,
+                        traversableOnly
+                        );
+                    
+                    Color highlightColor = Color.red;
+                    if (isNeededTile)
+                        highlightColor = Color.green;
+                    if (isTraversableOnly)
+                        highlightColor = Color.yellow;
+                    
                     HighlightTile(pos, highlightColor);
                 }
             }
         }
         if (!valid) return false;
-        return IsValidTileForAnimal(selectedSpecies, cellPosition);
+        return IsAccessibleTileForAnimal(selectedSpecies, cellPosition, treeNeeds, accessibleTerrain, neededOnly, traversableOnly);
     }
 
     /// <summary>
-    /// Checks if a single tile is valid for a certain species
+    /// Short params overload, only use when performance is not an issue due to costly LINQ need data calls
     /// </summary>
     /// <param name="species"></param>
     /// <param name="cellPosition"></param>
     /// <returns></returns>
-    public bool IsValidTileForAnimal(AnimalSpecies species, Vector3Int cellPosition)
+    public bool IsAccessibleTileForAnimal(AnimalSpecies species, Vector3Int cellPosition)
     {
-        var tile = GetGameTileAt(cellPosition);
-        return IsTreeNeedSatisfiedAtTile(species, cellPosition) && species.AccessibleTerrain.Contains(tile.type);
+        return IsAccessibleTileForAnimal(
+            species,
+            cellPosition,
+            species.RequiredTreeNeeds,
+            species.AccessibleTerrain,
+            species.NeededTerrain,
+            species.TraversableOnlyTerrain);
     }
-
-    public bool IsTraversableOnlyTileForAnimal(AnimalSpecies species, Vector3Int cellPosition)
-    {
-        var tile = GetGameTileAt(cellPosition);
-        return IsTreeNeedSatisfiedAtTile(species, cellPosition) && species.TraversableOnlyTerrain.Contains(tile.type);
-    }
-
+    
     /// <summary>
-    /// Overload where treeNeeds and AccessibleTerrain can be passed in from a cache for improved performance
+    /// Check if tile is valid (either traversable or needed) for an animal.
     /// </summary>
     /// <param name="species"></param>
     /// <param name="cellPosition"></param>
     /// <param name="treeNeeds"></param>
+    /// <param name="accessibleTerrain"></param>
+    /// <param name="neededTerrain"></param>
+    /// <param name="traversableOnlyTerrain"></param>
     /// <returns></returns>
-    public bool IsValidTileForAnimal(AnimalSpecies species, Vector3Int cellPosition, NeedData[] treeNeeds, HashSet<TileType> accessibleTerrain)
+    public bool IsAccessibleTileForAnimal(
+        AnimalSpecies species, 
+        Vector3Int cellPosition, 
+        NeedData[] treeNeeds, 
+        HashSet<TileType> accessibleTerrain, 
+        HashSet<TileType> neededTerrain,
+        HashSet<TileType> traversableOnlyTerrain)
+    {
+        bool isNeeded = IsNeededTileForAnimal(species, cellPosition, treeNeeds, accessibleTerrain, neededTerrain);
+        bool traversableOnly = IsTraversableOnlyTileForAnimal(species, cellPosition, treeNeeds, traversableOnlyTerrain);
+        return traversableOnly || isNeeded;
+    }
+
+    /// <summary>
+    /// Checks if tile is a needed tile (Satisfies non-empty tree needs, or is a needed terrain type)
+    /// </summary>
+    /// <param name="species"></param>
+    /// <param name="cellPosition"></param>
+    /// <param name="treeNeeds"></param>
+    /// <param name="neededTerrain"></param>
+    /// <param name="accessibleTerrain"></param>
+    /// <returns></returns>
+    public bool IsNeededTileForAnimal(
+        AnimalSpecies species, 
+        Vector3Int cellPosition, 
+        NeedData[] treeNeeds,
+        HashSet<TileType> accessibleTerrain,
+        HashSet<TileType> neededTerrain)
     {
         var tile = GetGameTileAt(cellPosition);
-        return IsTreeNeedSatisfiedAtTile(species, cellPosition, treeNeeds) && accessibleTerrain.Contains(tile.type);
+        bool hasTreeNeeds = treeNeeds.Length > 0;
+        bool treeNeedSatisfied = !hasTreeNeeds || IsTreeNeedSatisfiedAtTile(species, cellPosition);
+        bool terrainSatisfied = hasTreeNeeds ? accessibleTerrain.Contains(tile.type) : neededTerrain.Contains(tile.type);
+        return treeNeedSatisfied && terrainSatisfied;
+    }
+
+    /// <summary>
+    /// Checks if tile is a traversable only tile (Does not satisfy a non-empty tree need, is a traversable only terrain type)
+    /// </summary>
+    /// <param name="species"></param>
+    /// <param name="cellPosition"></param>
+    /// <param name="treeNeeds"></param>
+    /// <param name="traversableOnlyTerrain"></param>
+    /// <returns></returns>
+    public bool IsTraversableOnlyTileForAnimal(
+        AnimalSpecies species, 
+        Vector3Int cellPosition,
+        NeedData[] treeNeeds,
+        HashSet<TileType> traversableOnlyTerrain)
+    {
+        var tile = GetGameTileAt(cellPosition);
+        bool hasTreeNeeds = treeNeeds.Length > 0;
+        bool treeNeedSatisfied = hasTreeNeeds && IsTreeNeedSatisfiedAtTile(species, cellPosition, treeNeeds);
+        return !treeNeedSatisfied && traversableOnlyTerrain.Contains(tile.type);
     }
 
     public bool IsTreeNeedSatisfiedAtTile(AnimalSpecies species, Vector3Int cellPosition)
     {
-        // Check for tree requirements
         var treeNeeds = species.RequiredTreeNeeds;
-        if (treeNeeds.Length == 0)
-            return true;
-        var tileFoodID = GetTileData(cellPosition).Food?.GetComponent<FoodSource>().Species.ID;
-        bool found = treeNeeds.Where(need => need.ID == tileFoodID).Count() > 0;
-        return found;
+        return IsTreeNeedSatisfiedAtTile(species, cellPosition, treeNeeds);
     }
     public bool IsTreeNeedSatisfiedAtTile(AnimalSpecies species, Vector3Int cellPosition, NeedData[] treeNeeds)
     {

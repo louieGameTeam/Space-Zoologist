@@ -1,7 +1,9 @@
 ﻿using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 /// <summary>
 /// Used to build objects of type 'NeedAvailability'
@@ -41,6 +43,14 @@ public static class NeedAvailabilityBuilder
 
         // SPECIES
 
+        // Cache access hash sets for performance
+        var accessSets = new HashSet<Vector3Int>[rpm.Populations.Count];
+
+        for (int i = 0; i < rpm.Populations.Count; i++)
+        {
+            accessSets[i] = rpm.GetLocationsSetWithAccess(rpm.Populations[i]);
+        }
+
         // Loop from the first species to the second to last species
         for (int i = 0; i < rpm.Populations.Count - 1; i++)
         {
@@ -52,7 +62,7 @@ public static class NeedAvailabilityBuilder
                 Population popB = rpm.Populations[j];
 
                 // Get the number of tiles shared
-                int sharedTiles = rpm.NumOverlapTiles(popA, popB);
+                int sharedTiles = rpm.NumOverlapTiles(accessSets[i], accessSets[j]);
 
                 // Count the number of popA invading popB's space,
                 // then the number of popB invading popA's space

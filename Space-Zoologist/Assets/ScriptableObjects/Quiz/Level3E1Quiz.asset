@@ -18,8 +18,8 @@ MonoBehaviour:
       index: 3
     need: 0
   fixedQuestions:
-  - question: Which of the following is a correct selection of terrain that is traversable
-      by a Strot?
+  - question: Which of the following is a correct selection of terrain that is benefical
+      and not just traversable for a Strot?
     category:
       item:
         category: 0
@@ -28,9 +28,9 @@ MonoBehaviour:
     options:
     - label: Rock, grass, sand
       weight: 0
-    - label: Dirt, grass, swamp
+    - label: Grass, rock, swamp
       weight: 1
-    - label: Water, dirt, grass
+    - label: Rock, dirt grass
       weight: 0
   - question: You need to temporarily house 10 Strots in an enclosure containing
       20% swamp, 20% grass and 60% sand. What do you predict will happen to the Strot

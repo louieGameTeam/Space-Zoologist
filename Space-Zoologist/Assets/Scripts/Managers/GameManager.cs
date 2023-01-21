@@ -232,6 +232,18 @@ public class GameManager : MonoBehaviour
             string json = File.ReadAllText(fullPath);
             NotebookData data = new NotebookData(NotebookUI.Config);
             JsonUtility.FromJsonOverwrite(json, data);
+
+            // fucked up hack LMAO
+            // so basically,,,
+            // when the player has already played, and a new Item of some kind (in our case, the Mimi) is added with no encyclopedia entry,
+            // the game will shit itself if you then add articles because it overwrites the new data with the empty existing saved encyclopedia
+            // in summary
+            // please do not use this ever again
+            // and write better code lol
+            if (data.Research.ResearchEntryData [0].Entries [5].Articles.Count == 0)
+            {
+                data.Research.ResearchEntryData [0].Entries [5] = new ResearchEntryData(NotebookUI.Config, NotebookUI.Config.Research.ResearchEntryLists [0].Entries [5]);
+            }
             return data;
         }
         catch

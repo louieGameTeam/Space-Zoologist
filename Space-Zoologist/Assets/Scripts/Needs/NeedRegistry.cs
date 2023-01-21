@@ -62,8 +62,7 @@ public class NeedRegistry
     {
         // Get all tile types on traversable terrain
         IEnumerable<TileType> tileTypes = GetNeedsWithCategory(ItemRegistry.Category.Tile)
-            .Where(need => need.Needed && !need.TraversableOnly)
-            .Where(need => !need.ID.IsWater || need.UseAsTerrainNeed)
+            .Where(IsNeededTileOnly)
             .Select(need => need.ID.Data.Tile)
             .Distinct();
 
@@ -77,8 +76,7 @@ public class NeedRegistry
     public HashSet<TileType> FindAccessibleTerrain()
     {
         IEnumerable<TileType> tileTypes = GetNeedsWithCategory(ItemRegistry.Category.Tile)
-            .Where(need => need.Needed || need.TraversableOnly)
-            .Where(need => !need.ID.IsWater || need.UseAsTerrainNeed)
+            .Where(need => IsTraversableTileOnly(need) || IsNeededTileOnly(need))
             .Select(need => need.ID.Data.Tile)
             .Distinct();
         
@@ -89,12 +87,25 @@ public class NeedRegistry
     {
         // Get all tile types on traversable terrain
         IEnumerable<TileType> tileTypes = GetNeedsWithCategory(ItemRegistry.Category.Tile)
-            .Where(need => need.TraversableOnly && !need.UseAsTerrainNeed)
-            .Where(need => !need.ID.IsWater || need.UseAsTerrainNeed)
+            .Where(IsTraversableTileOnly)
             .Select(need => need.ID.Data.Tile)
             .Distinct();
 
         return new HashSet<TileType>(tileTypes);
+    }
+
+    private bool IsNeededTileOnly(NeedData need)
+    {
+        bool isNeededLiquid = need.ID.IsWater && need.UseAsTerrainNeed && !need.TraversableOnly;
+        bool isNeededTerrain = !need.ID.IsWater && need.Needed && !need.TraversableOnly;
+        return isNeededLiquid || isNeededTerrain;
+    }
+    
+    private bool IsTraversableTileOnly(NeedData need)
+    {
+        bool isTraversableOnlyLiquid = need.ID.IsWater && need.UseAsTerrainNeed && need.TraversableOnly;
+        bool isTraversableOnlyTerrain = !need.ID.IsWater && need.TraversableOnly;
+        return isTraversableOnlyLiquid || isTraversableOnlyTerrain;
     }
 
     public NeedData[] FindPredatorNeeds()

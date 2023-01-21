@@ -166,7 +166,8 @@ public class ReservePartitionManager : MonoBehaviour
         var treeNeeds = population.species.RequiredTreeNeeds;
         var neededTerrain = population.species.NeededTerrain;
         var traversableOnlyTerrain = population.species.TraversableOnlyTerrain;
-
+        var accessibleTerrain = population.species.AccessibleTerrain;
+        
         if (!this.NeededArea.ContainsKey(population))
         {
             this.NeededArea.Add(population, new List<Vector3Int>());
@@ -227,10 +228,24 @@ public class ReservePartitionManager : MonoBehaviour
                 newLiquidCompositions.Add(composition);
                 newLiquidLocations.Add(cur);
             }
-
+            
+            // Tile validity logic
+            
             bool isTileNull = (tile == null);
-            bool isTileNeeded = !isTileNull && gridSystem.IsValidTileForAnimal(population.species, cur , treeNeeds, neededTerrain);
-            bool isTileOnlyTraversable = !isTileNull && gridSystem.IsValidTileForAnimal(population.species, cur , treeNeeds, traversableOnlyTerrain);
+            bool isTileNeeded = !isTileNull && gridSystem.IsNeededTileForAnimal(
+                population.species,
+                cur,
+                treeNeeds,
+                accessibleTerrain,
+                neededTerrain);
+            
+            
+            bool isTileOnlyTraversable = !isTileNull && gridSystem.IsTraversableOnlyTileForAnimal(
+                population.species, 
+                cur , 
+                treeNeeds, 
+                traversableOnlyTerrain);
+            
             if (isTileNeeded || isTileOnlyTraversable)
             {
                 // save the accessible location
@@ -358,7 +373,7 @@ public class ReservePartitionManager : MonoBehaviour
     /// <returns></returns>
     public List<Vector3Int> GetLocationsWithAccess(Population population)
     {
-        List<Vector3Int> list = new List<Vector3Int>();
+        var list = new List<Vector3Int>();
         foreach (KeyValuePair<Vector3Int, long> position in AccessMap)
         {
             if (CanAccess(population, position.Key))
@@ -367,6 +382,19 @@ public class ReservePartitionManager : MonoBehaviour
             }
         }
         return list;
+    }
+    
+    public HashSet<Vector3Int> GetLocationsSetWithAccess(Population population)
+    {
+        var set = new HashSet<Vector3Int>();
+        foreach (KeyValuePair<Vector3Int, long> position in AccessMap)
+        {
+            if (CanAccess(population, position.Key))
+            {
+                set.Add(position.Key);
+            }
+        }
+        return set;
     }
 
     /// <summary>
@@ -407,15 +435,13 @@ public class ReservePartitionManager : MonoBehaviour
     /// <returns>True is two population's accessible area overlaps, false otherwise</returns>
     public bool CanAccessPopulation(Population populationA, Population populationB)
     {
-        List<Vector3Int> AccessibleArea_A = GetLocationsWithAccess(populationA);
-        List<Vector3Int> AccessibleArea_B = GetLocationsWithAccess(populationB);
+        var accessibleAreaA = GetLocationsSetWithAccess(populationA);
+        var accessibleAreaB = GetLocationsSetWithAccess(populationB);
 
-        foreach (Vector3Int cellPos in AccessibleArea_A)
+        foreach (var location in accessibleAreaA)
         {
-            if (AccessibleArea_B.Contains(cellPos))
-            {
+            if (accessibleAreaB.Contains(location))
                 return true;
-            }
         }
 
         return false;
@@ -430,18 +456,23 @@ public class ReservePartitionManager : MonoBehaviour
     /// <returns>True is two population's accessible area overlaps, false otherwise</returns>
     public int NumOverlapTiles(Population populationA, Population populationB)
     {
-        List<Vector3Int> AccessibleArea_A = GetLocationsWithAccess(populationA);
-        List<Vector3Int> AccessibleArea_B = GetLocationsWithAccess(populationB);
-        int numOverlapTiles = 0;
-        foreach (Vector3Int cellPos in AccessibleArea_A)
+        var accessibleAreaA = GetLocationsSetWithAccess(populationA);
+        var accessibleAreaB = GetLocationsSetWithAccess(populationB);
+        accessibleAreaA.IntersectWith(accessibleAreaB);
+
+        return accessibleAreaA.Count;
+    }
+
+    public int NumOverlapTiles(HashSet<Vector3Int> accessA, HashSet<Vector3Int> accessB)
+    {
+        int count = 0;
+        foreach (var location in accessA)
         {
-            if (AccessibleArea_B.Contains(cellPos))
-            {
-                numOverlapTiles++;
-            }
+            if (accessB.Contains(location))
+                count++;
         }
 
-        return numOverlapTiles;
+        return count;
     }
 
     /// <summary>
@@ -503,12 +534,13 @@ public class ReservePartitionManager : MonoBehaviour
             throw new ArgumentNullException(
                 "Cannot get the accessible food sources for population 'null'");
 
-        if (!NeededArea.ContainsKey(population))
+        if (!NeededArea.ContainsKey(population) && !TraversableOnlyArea.ContainsKey(population))
             throw new ArgumentException(
                 $"Population '{population}' has no list of accessible area associated with it");
 
-        // Get the area that this population can access
+        // Get the area that this population can access, both needed and traversable only
         HashSet<Vector3Int> area = new HashSet<Vector3Int>(NeededArea[population]);
+        area.UnionWith(TraversableOnlyArea[population]);
 
         // Local function checks if this food source has any cell position
         // in the set of positions that the population can access

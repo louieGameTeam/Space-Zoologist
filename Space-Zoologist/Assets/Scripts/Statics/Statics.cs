@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class Statics : MonoBehaviour
 {
-    public static int LatestUnlockableSector = 4;
+    public static int LatestUnlockableSector = 5;
 }
