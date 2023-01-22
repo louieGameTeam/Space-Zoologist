@@ -16,15 +16,20 @@ public class GameOverController : MonoBehaviour
     private GenericWindow objectiveFinishedWindow = null;
     [SerializeField]
     [Tooltip("Data for the window displayed when the enclosure is finished")]
-    private GenericWindow successWindow = null;
+    private GenericSpriteAnimWindow successWindow = null;
     [SerializeField]
     [Tooltip("Data for the window displayed when the level fails")]
-    private GenericWindow failWindow = null;
+    private GenericSpriteAnimWindow failWindow = null;
+    
     #endregion
 
     #region Private Fields
     // True when the main objectives are completed
     private bool mainObjectivesCompleted = false;
+    
+    // Param used to select the correct star count animation when opening the level success window
+    private readonly string quizGradeAnimParam = "QuizGrade";
+    
     #endregion
 
     #region Monobehaviour Messages
@@ -60,7 +65,7 @@ public class GameOverController : MonoBehaviour
             // When the conversation ends then show the fail window
             restartConversation.OnConversationEnded(() =>
             {
-                OpenWindow(failWindow, () => LevelDataLoader.ReloadLevel(), () => SceneNavigator.LoadScene("LevelMenu"));
+                OpenSpriteAnimWindow(failWindow, () => LevelDataLoader.ReloadLevel(), () => SceneNavigator.LoadScene("LevelMenu"));
             });
         }
     }
@@ -93,9 +98,10 @@ public class GameOverController : MonoBehaviour
             ending.ActiveQuizConversation.OnConversationEnded.AddListener(OnSuccessConversationEnded);
         }
         // If the ending is not a quiz then subscribe to the ending event for the non-quiz conversation
-        else ending.ActiveConversation.OnConversationEnded(OnSuccessConversationEnded);
+        // This results in an excellent score by default (3 stars)
+        else ending.ActiveConversation.OnConversationEnded(() => OnSuccessConversationEnded(QuizGrade.Excellent));
     }
-    private void OnSuccessConversationEnded()
+    private void OnSuccessConversationEnded(QuizGrade grade)
     {
         // Update the save data with the id of the level we are qualified to go to
         LevelEndingData ending = GameManager.Instance.LevelData.Ending;
@@ -112,7 +118,11 @@ public class GameOverController : MonoBehaviour
         GameManager.Instance.HandleExitLevel();
 
         // Open the success window
-        OpenWindow(successWindow, () => SceneNavigator.LoadScene("LevelMenu"), () => LevelDataLoader.ReloadLevel());
+        OpenSpriteAnimWindow(
+            successWindow, 
+            () => SceneNavigator.LoadScene("LevelMenu"), 
+            () => LevelDataLoader.ReloadLevel(),
+            grade);
     }
     private void OpenWindow(GenericWindow window, UnityAction primaryAction, UnityAction secondaryAction = null)
     {
@@ -126,9 +136,31 @@ public class GameOverController : MonoBehaviour
         {
             window.AddSecondaryAction(secondaryAction);
         }
-
+    
         // Open the window
         window.Open();
+    }
+    
+    private void OpenSpriteAnimWindow(GenericSpriteAnimWindow window, UnityAction primaryAction, UnityAction secondaryAction, QuizGrade grade = 0)
+    {
+        // Instantiate the window under the main canvas
+        Transform canvas = GameObject.FindWithTag("MainCanvas").transform;
+        window = Instantiate(window, canvas);
+
+        // Setup the primary and secondary action of the window
+        window.AddPrimaryAction(primaryAction);
+        if (secondaryAction != null)
+        {
+            window.AddSecondaryAction(secondaryAction);
+        }
+        
+        void OpenBehavior()
+        {
+            window.Animator.SetInteger(quizGradeAnimParam, (int)grade);
+        }
+
+        // Open the window
+        window.Open(OpenBehavior);
     }
     #endregion
 }

@@ -12,7 +12,7 @@ public class QuizConversation : MonoBehaviour
     #region Public Properties
     public QuizTemplate Template => template;
     public QuizInstance CurrentQuiz => currentQuiz;
-    public UnityEvent OnConversationEnded => onConversationEnded;
+    public UnityEvent<QuizGrade> OnConversationEnded => onConversationEnded;
     #endregion
 
     #region Public Typedefs
@@ -63,7 +63,7 @@ public class QuizConversation : MonoBehaviour
 
     [SerializeField]
     [Tooltip("Event invoked when the quiz conversation is finished")]
-    private UnityEvent onConversationEnded = null;
+    private UnityEvent<QuizGrade> onConversationEnded = null;
     #endregion
 
     #region Private Fields
@@ -123,7 +123,7 @@ public class QuizConversation : MonoBehaviour
                 GameManager.Instance.NotebookUI.Data.Reports.SetQuiz(LevelID.Current(), currentQuiz);
 
                 // Invoke the quiz conversation ended event when the response is over
-                currentResponse.OnConversationEnded(onConversationEnded.Invoke);
+                currentResponse.OnConversationEnded(() => onConversationEnded.Invoke(CurrentQuiz.Grade));
             }
         }
 
