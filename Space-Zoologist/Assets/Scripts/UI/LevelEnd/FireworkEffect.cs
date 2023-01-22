@@ -4,6 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+/// <summary>
+/// Simple monobehavior for level end firework VFX
+/// OnEnable chooses a random position and plays a random animation
+/// </summary>
 public class FireworkEffect : MonoBehaviour
 {
     [SerializeField] private Animator animator;

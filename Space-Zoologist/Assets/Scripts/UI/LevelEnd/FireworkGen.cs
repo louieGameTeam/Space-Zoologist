@@ -22,11 +22,11 @@ public class FireworkGen : MonoBehaviour
 
     private Queue<FireworkInstance> fireworkInstances = new();
     private float spawnTime = 0f;
-    private bool spawning;
+    private bool isSpawning;
 
-    public void SetSpawning(bool val)
+    public void SetIsSpawning(bool val)
     {
-        spawning = val;
+        isSpawning = val;
     }
     
     private void Update()
@@ -42,7 +42,7 @@ public class FireworkGen : MonoBehaviour
         }
         
         // Spawn new fireworks
-        if (spawning && Time.time - spawnTime >= spawnInterval)
+        if (isSpawning && Time.time - spawnTime >= spawnInterval)
         {
             spawnTime = Time.time;
             SpawnFirework();
