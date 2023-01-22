@@ -606,6 +606,7 @@ GameObject:
   - component: {fileID: 3816146339421848214}
   - component: {fileID: 3816146339421848213}
   - component: {fileID: 2681522463444857783}
+  - component: {fileID: 113223371432670911}
   m_Layer: 5
   m_Name: Success Window
   m_TagString: Untagged
@@ -625,6 +626,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 7838243022954820135}
   - {fileID: 3816146337961807237}
   m_Father: {fileID: 0}
   m_RootOrder: -1
@@ -692,3 +694,56 @@ MonoBehaviour:
   primaryButton: {fileID: 2793448845708056867}
   hasSecondaryButton: 1
   secondaryButton: {fileID: 3622615668323848060}
+--- !u!114 &113223371432670911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3816146339421848203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8cbd640b320df549b968a10a7c4dbbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fireworkPrefab: {fileID: 5323336896914112095, guid: faa8d4885386fce4ea89b3a64a86f715,
+    type: 3}
+  spawnInterval: 0.25
+  lifeTime: 2.25
+  fireworkParentTransform: {fileID: 7838243022954820135}
+--- !u!1 &8227973320440281942
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7838243022954820135}
+  m_Layer: 5
+  m_Name: FireworksContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &7838243022954820135
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8227973320440281942}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3816146339421848212}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}

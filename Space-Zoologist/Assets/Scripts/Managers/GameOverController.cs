@@ -161,6 +161,12 @@ public class GameOverController : MonoBehaviour
 
         // Open the window
         window.Open(OpenBehavior);
+
+        // Firework VFX if 3 stars
+        if (grade == QuizGrade.Excellent)
+        {
+            window.GetComponent<FireworkGen>()?.SetSpawning(true);
+        }
     }
     #endregion
 }
