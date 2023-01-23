@@ -101,6 +101,7 @@ public class GameOverController : MonoBehaviour
         // This results in an excellent score by default (3 stars)
         else ending.ActiveConversation.OnConversationEnded(() => OnSuccessConversationEnded(QuizGrade.Excellent));
     }
+
     private void OnSuccessConversationEnded(QuizGrade grade)
     {
         // Update the save data with the id of the level we are qualified to go to
@@ -108,7 +109,7 @@ public class GameOverController : MonoBehaviour
         SaveData.QualifyForLevel(ending.GetNextLevelID());
 
         // Compute the rating for this level
-        int rating = LevelRatingSystem.RateCurrentLevel();
+        int rating = LevelRatingSystem.RateLevel(grade);
         SaveData.SetLevelRating(LevelID.Current(), rating);
 
         // Save changes to the save data
