@@ -26,6 +26,13 @@ public static class LevelRatingSystem
         }
         else return noRatingText;
     }
+    
+    
+    /// <summary>
+    /// Depracated, The quiz conversation object now provides the quiz grade in the OnConversationEnded event.
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="MissingReferenceException"></exception>
     public static int RateCurrentLevel()
     {
         GameManager gameManager = GameManager.Instance;
