@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 public class GeneralPathfinding : BehaviorPattern
 {
@@ -33,16 +35,21 @@ public class GeneralPathfinding : BehaviorPattern
         
         if (animalMovementController.HasPath)
         {
+            // First move
+            Vector3 moveStep = animalMovementController.MoveTowardsDestination();
+            
+            // Check if moved onto an invalid tile
             var target = animalMovementController.transform.position;
-
             var targetTileData = GameManager.Instance.m_tileDataController.GetGameTileAt(target);
-
             if (!animalCallbackData.animal.PopulationInfo.species.AccessibleTerrain.Contains(targetTileData.type))
             {
+                // If so, then undo the movestep and cancel the entire behavior 
+                // TODO: Maybe have the pathfinding try again?
+                animalMovementController.MoveVector(-moveStep);
                 animalMovementController.TryToCancelDestination();
+                return false;
             }
 
-            animalMovementController.MoveTowardsDestination();
             if (animalMovementController.DestinationReached)
             {
                 animalMovementController.ResetPathfindingConditions();
@@ -54,15 +61,24 @@ public class GeneralPathfinding : BehaviorPattern
         return true;
     }
 
+    private static float timeList = 0f;
+
+    /// <summary>
+    /// If the path is cancelled, such as due to tiles being placed in the way, then kick out of the entire pop behavior.
+    /// </summary>
+    /// <param name="animal"></param>
+    /// <param name="animalCallbackData"></param>
+    /// <returns></returns>
     protected override bool IsAlternativeConditionSatisfied(GameObject animal, AnimalCallbackData animalCallbackData)
     {
-        //if (animalData.animal.MovementController.HasPath)
-        //{
-        //    if (animalData.animal.MovementController.DestinationCancelled)
-        //    {
-        //        return true;
-        //    }
-        //}
+        MovementController animalMovementController = animalCallbackData.animal.MovementController;
+        if (animalMovementController.HasPath)
+        {
+            if (animalMovementController.DestinationCancelled)
+            {
+                return true;
+            }
+        }
         return false;
     }
 }

@@ -208,9 +208,7 @@ public class Population : MonoBehaviour
             }
         }
         sourcePos = possibleSpawnPos[UnityEngine.Random.Range(0, possibleSpawnPos.Count - 1)];
-        // random position inside the chosen tile
         Vector3 finalPos = sourcePos + new Vector3(0.5f, 0.5f, 0);
-        finalPos += (0.4f * UnityEngine.Random.insideUnitCircle).ToVector3();
         return finalPos;
     }
 

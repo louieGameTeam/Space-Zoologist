@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections.Generic;
 
 // TODO refactor MoveInDirection
@@ -84,24 +85,24 @@ public class MovementController : MonoBehaviour
     }
 
     /// <summary>
-    /// Called in update to move towards destination. Returns true when destination reached.
+    /// Called in update to move towards destination. Returns returns the vector step moved.
     /// </summary>
     /// <returns></returns>
-    public void MoveTowardsDestination()
+    public Vector3 MoveTowardsDestination()
     {
         if (IsPaused)
         {
             this.Animal.MovementData.MovementStatus = Movement.idle;
-            return;
+            return Vector3.zero;
         }
-        if (this.DestinationCancelled || this.PathToDestination.Count == 0)
+        if (this.PathToDestination.Count == 0)
         {
             this.PathIndex = 0;
             this.HasPath = false;
             this.DestinationReached = true;
             this.bufferedSpeed = -1;
             this.Animal.MovementData.Speed = 0;
-            return;
+            return Vector3.zero;
         }
         if (this.NextPathVectorReached(this.NextPathTile, this.transform.position))
         {
@@ -114,7 +115,7 @@ public class MovementController : MonoBehaviour
                 this.Animal.MovementData.Speed = 0;
                 this.DestinationReached = true;
                 this.HasPath = false;
-                return;
+                return Vector3.zero;
             }
             // Update to the next path tile and visual logic stuff
             else
@@ -126,7 +127,19 @@ public class MovementController : MonoBehaviour
             }
         }
         this.HasPath = true;
-        this.transform.position = this.MoveTowardsTile(this.transform.position, this.NextPathTile, this.CalculateSpeed());
+        Vector3 currentPos = transform.position;
+        Vector3 newPos = this.MoveTowardsTile(this.transform.position, this.NextPathTile, this.CalculateSpeed());
+        transform.position = newPos;
+        return newPos - currentPos;
+    }
+
+    /// <summary>
+    /// Move the animal by some vector step and do nothing else. Should probably not be used directly, unless in special cases.
+    /// </summary>
+    /// <param name="vector"></param>
+    public void MoveVector(Vector3 vector)
+    {
+        transform.position += vector;
     }
 
     public void MoveInDirection(Direction direction)
@@ -310,4 +323,22 @@ public class MovementController : MonoBehaviour
         }
     }
 
+    #if UNITY_EDITOR
+
+    private void OnDrawGizmosSelected()
+    {
+        if (HasPath)
+        {
+            Gizmos.color = Color.green;
+            Vector3 start = transform.position;
+            Vector3 end = PathToDestination[PathIndex] + Vector3.one * 0.5f;
+            start.z = -1f;
+            end.z = -1f;
+            Gizmos.DrawLine(transform.position, end);
+        }
+    }
+
+
+#endif
+    
 }
