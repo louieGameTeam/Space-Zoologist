@@ -467,28 +467,6 @@ AnimatorStateTransition:
   m_InterruptionSource: 2
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 0
---- !u!1101 &-5061319977921273337
-AnimatorStateTransition:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_Conditions: []
-  m_DstStateMachine: {fileID: -3294529558232765902}
-  m_DstState: {fileID: 0}
-  m_Solo: 0
-  m_Mute: 0
-  m_IsExit: 0
-  serializedVersion: 3
-  m_TransitionDuration: 0
-  m_TransitionOffset: 0
-  m_ExitTime: 1
-  m_HasExitTime: 1
-  m_HasFixedDuration: 1
-  m_InterruptionSource: 0
-  m_OrderedInterruption: 1
-  m_CanTransitionToSelf: 1
 --- !u!1102 &-4731730427189551032
 AnimatorState:
   serializedVersion: 6
@@ -763,28 +741,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 644b79b3888cefe48a57fc93079b11ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1101 &-2740298925927543986
-AnimatorStateTransition:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_Conditions: []
-  m_DstStateMachine: {fileID: -3294529558232765902}
-  m_DstState: {fileID: 0}
-  m_Solo: 0
-  m_Mute: 0
-  m_IsExit: 0
-  serializedVersion: 3
-  m_TransitionDuration: 0
-  m_TransitionOffset: 0
-  m_ExitTime: 1
-  m_HasExitTime: 1
-  m_HasFixedDuration: 1
-  m_InterruptionSource: 0
-  m_OrderedInterruption: 1
-  m_CanTransitionToSelf: 1
 --- !u!1102 &-1738155493945793119
 AnimatorState:
   serializedVersion: 6
@@ -795,8 +751,7 @@ AnimatorState:
   m_Name: goat_er
   m_Speed: 1
   m_CycleOffset: 0
-  m_Transitions:
-  - {fileID: -2740298925927543986}
+  m_Transitions: []
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
@@ -1200,7 +1155,7 @@ AnimatorStateMachine:
     m_Position: {x: 370, y: 600, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -3028585418315442580}
-    m_Position: {x: 280, y: 380, z: 0}
+    m_Position: {x: 300, y: 380, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -6174352362109846720}
     m_Position: {x: -50, y: 420, z: 0}
@@ -1241,7 +1196,7 @@ AnimatorStateMachine:
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
-  m_AnyStatePosition: {x: -50, y: 230, z: 0}
+  m_AnyStatePosition: {x: -150, y: 180, z: 0}
   m_EntryPosition: {x: 540, y: 100, z: 0}
   m_ExitPosition: {x: 570, y: 160, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
@@ -1307,8 +1262,7 @@ AnimatorState:
   m_Name: goat_el
   m_Speed: 1
   m_CycleOffset: 0
-  m_Transitions:
-  - {fileID: -5061319977921273337}
+  m_Transitions: []
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
@@ -1768,8 +1722,7 @@ AnimatorState:
   m_Name: goat_ed
   m_Speed: 1
   m_CycleOffset: 0
-  m_Transitions:
-  - {fileID: 8316581957036866556}
+  m_Transitions: []
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
@@ -1836,28 +1789,6 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1101 &8316581957036866556
-AnimatorStateTransition:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_Conditions: []
-  m_DstStateMachine: {fileID: -3294529558232765902}
-  m_DstState: {fileID: 0}
-  m_Solo: 0
-  m_Mute: 0
-  m_IsExit: 0
-  serializedVersion: 3
-  m_TransitionDuration: 0
-  m_TransitionOffset: 0
-  m_ExitTime: 1
-  m_HasExitTime: 1
-  m_HasFixedDuration: 1
-  m_InterruptionSource: 0
-  m_OrderedInterruption: 1
-  m_CanTransitionToSelf: 1
 --- !u!1109 &8338441726854128331
 AnimatorTransition:
   m_ObjectHideFlags: 1

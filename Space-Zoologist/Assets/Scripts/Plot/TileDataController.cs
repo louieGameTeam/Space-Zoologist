@@ -322,6 +322,8 @@ public class TileDataController : MonoBehaviour
         return null;
     }
 
+    public TileData GetTileData(Vector3 tilePosition) => GetTileData(WorldToCell(tilePosition));
+
     public void SetTile(Vector3Int tilePosition, GameTile tile, bool godmode = false)
     {
         TileData tileData = GetTileData(tilePosition);
@@ -456,6 +458,8 @@ public class TileDataController : MonoBehaviour
 
         return null;
     }
+
+    public GameTile GetGameTileAt(Vector3 cellLocation) => GetGameTileAt(WorldToCell(cellLocation));
 
     /// <summary>
     /// Whether a tile exists at given location, regardless to overlapping

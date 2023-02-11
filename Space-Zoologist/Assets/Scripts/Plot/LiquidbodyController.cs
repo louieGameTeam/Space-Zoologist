@@ -38,7 +38,7 @@ public class LiquidbodyController : MonoBehaviour
             if (!constructingTileContentDict.ContainsKey(pos)) {
                 // add to construction list, do not affect the existing liquidbodies
                 constructingTileContentDict.Add(pos, contents);
-                Debug.Log("Liquid constructing at " + pos);
+                //Debug.Log("Liquid constructing at " + pos);
             }
         }
         else

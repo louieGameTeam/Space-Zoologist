@@ -35,14 +35,16 @@ public class FoodQualityVFXHandler : MonoBehaviour
     [SerializeField][EditorReadOnly] private bool CanDisplayFoodQualityFX = true;
 
     [Tooltip("Time in seconds between food VFX being displayed")]
-    [SerializeField] private int FoodQualityVFXInterval = 15; // Interval of time between checks for displaying food quality VFX
+    [SerializeField] private int FoodQualityVFXInterval; // Interval of time between checks for displaying food quality VFX
     #endregion
 
     #region Monobehaviour Callbacks
 
     private void Update()
     {
-        if (GameManager.Instance != null && VFXManager.Instance != null)
+        if (GameManager.Instance != null && 
+            VFXManager.Instance != null && 
+            !GameManager.Instance.IsPaused)
         {
             if (SelectedAnimal == null)
             {

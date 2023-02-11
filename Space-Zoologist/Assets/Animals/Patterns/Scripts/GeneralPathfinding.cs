@@ -21,20 +21,31 @@ public class GeneralPathfinding : BehaviorPattern
             if (animalCallbackData.animal.PopulationInfo.AccessibleLocationsExist)
                 destination = animalCallbackData.animal.PopulationInfo.AccessibleLocations[locationIndex];
         }
-        AnimalPathfinding.PathRequestManager.RequestPath(base.TileDataController.WorldToCell(gameObject.transform.position), destination, animalCallbackData.animal.MovementController.AssignPath, animalCallbackData.animal.PopulationInfo.Grid);
+        AnimalPathfinding.PathRequestManager.RequestPath(
+            base.TileDataController.WorldToCell(gameObject.transform.position), 
+            destination, 
+            animalCallbackData.animal.MovementController.AssignPath, 
+            animalCallbackData.animal.PopulationInfo.Grid);
     }
     protected override bool IsPatternFinishedAfterUpdate(GameObject animal, AnimalCallbackData animalCallbackData)
     {
-        if (animalCallbackData.animal.MovementController.HasPath)
+        MovementController animalMovementController = animalCallbackData.animal.MovementController;
+        
+        if (animalMovementController.HasPath)
         {
-            if (animalCallbackData.animal.MovementController.DestinationCancelled)
+            var target = animalMovementController.transform.position;
+
+            var targetTileData = GameManager.Instance.m_tileDataController.GetGameTileAt(target);
+
+            if (!animalCallbackData.animal.PopulationInfo.species.AccessibleTerrain.Contains(targetTileData.type))
             {
-                return true;
+                animalMovementController.TryToCancelDestination();
             }
-            animalCallbackData.animal.MovementController.MoveTowardsDestination();
-            if (animalCallbackData.animal.MovementController.DestinationReached)
+
+            animalMovementController.MoveTowardsDestination();
+            if (animalMovementController.DestinationReached)
             {
-                animalCallbackData.animal.MovementController.ResetPathfindingConditions();
+                animalMovementController.ResetPathfindingConditions();
                 //Debug.Log(animal.name + " has reached their destination of " + this.Destination.ToString());
                 return true;
             }

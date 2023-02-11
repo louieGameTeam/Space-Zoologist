@@ -15,7 +15,7 @@ public class MovementController : MonoBehaviour
     private Animal Animal { get; set; }
     private List<Vector3> PathToDestination { get; set; }
     private int PathIndex = 0;
-    private Vector3 NextPathTile { get; set; }
+    public Vector3 NextPathTile { get; private set; }
     // Animal doesn't change direction until they've moved a certain distance in that direction
     private float ChangeDirectionThreshold = 0.5f;
     private float ChangeDirectionMovement = 0f;
@@ -94,7 +94,7 @@ public class MovementController : MonoBehaviour
             this.Animal.MovementData.MovementStatus = Movement.idle;
             return;
         }
-        if (this.PathToDestination.Count == 0)
+        if (this.DestinationCancelled || this.PathToDestination.Count == 0)
         {
             this.PathIndex = 0;
             this.HasPath = false;
