@@ -297,7 +297,6 @@ public class TilePlacementController : MonoBehaviour
     }
     private bool IsPositionFree(Vector3Int cellLocation)
     {
-        Debug.Log("check");
         if (godMode)
         {
             return true;
