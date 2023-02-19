@@ -54,11 +54,6 @@ public class IntroManager : MonoBehaviour
         if (transitionTimer > 0f)
         {
             transitionTimer -= Time.deltaTime * speed;
-            if (transitionTimer <= 0f)
-            {
-                isInTransition = false;
-                SetConversationContinueIndicator(true);
-            }
 
             float t = 1f - transitionTimer;
             
@@ -69,6 +64,14 @@ public class IntroManager : MonoBehaviour
                 c = Introduction.color;
                 c.a = 1 - t;
                 Introduction.color = c;
+            }
+            else
+            {
+                if (transitionTimer <= 0f)
+                {
+                    isInTransition = false;
+                    SetConversationContinueIndicator(true);
+                }
             }
             // Line transition
             var color = line.color;
@@ -100,6 +103,7 @@ public class IntroManager : MonoBehaviour
         SetConversationContinueIndicator(false);
         transitionTimer = 1f;
         isInTransition = true;
+        
         if (Index > IntroductionTexts.Count) return;
         
         var color = Introduction.color;
@@ -116,6 +120,7 @@ public class IntroManager : MonoBehaviour
             speed = 1.0f / (delay + MusicManager.SECONDS_PER_BAR / MusicManager.BEATS_PER_BAR * numIntroBeats);
             color = Color.black;
             Introduction.alignment = TMPro.TextAlignmentOptions.Center;
+            Introduction.text = "";
         }
         else
         {
@@ -139,7 +144,11 @@ public class IntroManager : MonoBehaviour
             if (dialogueIndicatorTween == null)
             {
                 dialogueIndicatorTween = DOTween.To(
-                    a => dialogueContinueIndicator.anchoredPosition = new Vector2(pos.x, a),
+                    a =>
+                    {
+                        if(dialogueContinueIndicator)
+                            dialogueContinueIndicator.anchoredPosition = new Vector2(pos.x, a);
+                    },
                     pos.y,
                     pos.y - bounceDist,
                     0.4f
