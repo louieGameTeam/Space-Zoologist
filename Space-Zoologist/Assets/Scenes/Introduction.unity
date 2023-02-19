@@ -43,7 +43,7 @@ RenderSettings:
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 11
+  serializedVersion: 12
   m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
@@ -98,7 +98,8 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 03ee16cb3c4b8dc4f9f0ddb6001f0b42,
+    type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -118,6 +119,8 @@ NavMeshSettings:
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
+    maxJobWorkers: 0
+    preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
@@ -149,6 +152,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 0}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1029912027}
   m_RootOrder: 1
@@ -173,14 +177,16 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
+  m_sharedMaterial: {fileID: 3162270882384572516, guid: 7f1022f530b45b148a3cd1b1d5da6994,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -198,13 +204,12 @@ MonoBehaviour:
   m_fontColorGradientPreset: {fileID: 0}
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_outlineColor:
-    serializedVersion: 2
-    rgba: 4278190080
   m_fontSize: 60
   m_fontSizeBase: 60
   m_fontWeight: 400
@@ -212,20 +217,20 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
-  m_textAlignment: 514
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: -72
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: -1
   m_linkedTextComponent: {fileID: 0}
-  m_isLinkedTextComponent: 0
-  m_isTextTruncated: 0
+  parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
@@ -233,40 +238,18 @@ MonoBehaviour:
   m_parseCtrlCharacters: 1
   m_isOrthographic: 1
   m_isCullingEnabled: 0
-  m_ignoreRectMaskCulling: 0
-  m_ignoreCulling: 1
   m_horizontalMapping: 0
   m_verticalMapping: 0
   m_uvLineOffset: 0
   m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
   m_VertexBufferAutoSizeReduction: 1
-  m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
   m_margin: {x: 90.10008, y: 52.618347, z: 119.670715, w: 25.786535}
-  m_textInfo:
-    textComponent: {fileID: 88214022}
-    characterCount: 0
-    spriteCount: 0
-    spaceCount: 0
-    wordCount: 0
-    linkCount: 0
-    lineCount: 0
-    pageCount: 0
-    materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_spriteAnimator: {fileID: 0}
   m_hasFontAssetChanged: 0
-  m_subTextObjects:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &88214023
@@ -305,6 +288,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 0}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1029912027}
   m_RootOrder: 0
@@ -329,6 +313,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0.8156863}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -378,6 +363,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -397,19 +383,19 @@ MonoBehaviour:
   speed: 1.31
   Introduction: {fileID: 88214022}
   IntroductionTexts:
-  - 'Astronomists recently discovered Planet X, the largest biodiverse planet on
-    record. However, Planet X fell into a rapidly decaying orbit around a black hole. '
+  - Astronomists recently discovered Planet X, the largest biodiverse planet on record.
+    However, Planet X fell into a rapidly decaying orbit around a black hole.
   - "Rescue teams were sent to save as much of Planet X\u2019s fauna and flora as
     possible. To allow lifeforms to survive rescue transport, they were stored in
     stasis pods on the container ships."
-  - 'These alien species were preserved in suspended animation on the journey to
-    their new home on the nearest nature preserve planet, Natura Serva 22. '
+  - These alien species were preserved in suspended animation on the journey to their
+    new home on the nearest nature preserve planet, Natura Serva 22.
   - You are a recent recruit at Natura Serva 22, tasked with interning under Aurora
     Star, a senior zoologist. Your first rotation is with the CapraX Zeigrun, or
     space goat, population.
-  - 'Since most of the creatures represent the last of their kind in the universe,
+  - Since most of the creatures represent the last of their kind in the universe,
     it is critical to quickly determine their needs to stabilize the populations
-    and promote growth to restore their numbers. '
+    and promote growth to restore their numbers.
   - "Wait, who is that coming over? You should see what they want\u2026"
   PrologueIllustrations:
   - {fileID: 21300000, guid: f2b334d8e5ecf48e8b3e747bd1473cf8, type: 3}
@@ -421,7 +407,6 @@ MonoBehaviour:
   BackgroundImage: {fileID: 759210052}
   PreviousBackgroundImage: {fileID: 1838508325}
   TextBoxImage: {fileID: 309840310}
-  SceneNavigator: {fileID: 11400000, guid: 2f3174284efd34e32ad8eb0f5d93d9d0, type: 2}
   musicManager: {fileID: 1865441844}
 --- !u!1 &638390405
 GameObject:
@@ -474,12 +459,14 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
   m_RenderPostProcessing: 0
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
   m_Dithering: 0
   m_ClearDepth: 1
+  m_AllowXRRendering: 1
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
@@ -544,6 +531,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 5, y: 6, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1531323788}
   m_Father: {fileID: 0}
@@ -577,6 +565,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1531323788}
   m_RootOrder: 1
@@ -601,6 +590,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -685,6 +675,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -747,6 +738,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
 --- !u!223 &1029912026
 Canvas:
   m_ObjectHideFlags: 0
@@ -765,6 +757,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
+  m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -778,6 +771,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 309840309}
   - {fileID: 88214021}
@@ -829,9 +823,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 896.6499, y: 600.2381, z: -27.46062}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1458300819
 MonoBehaviour:
@@ -874,6 +869,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1838508327}
   - {fileID: 759210051}
@@ -924,6 +920,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
 --- !u!223 &1531323791
 Canvas:
   m_ObjectHideFlags: 0
@@ -942,6 +939,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
+  m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: -38
   m_TargetDisplay: 0
@@ -978,6 +976,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1010,6 +1009,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1531323788}
   m_RootOrder: 0
@@ -1042,8 +1042,24 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1335803119446807727, guid: 92345d16d3a984156b81ba7cb42f1cee,
+        type: 3}
+      propertyPath: curMusic
+      value: 
+      objectReference: {fileID: 3300588552918386866}
+    - target: {fileID: 1335803119446807727, guid: 92345d16d3a984156b81ba7cb42f1cee,
+        type: 3}
+      propertyPath: nextMusic
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1335803119446807727, guid: 92345d16d3a984156b81ba7cb42f1cee,
+        type: 3}
+      propertyPath: backgroundImage
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 1335803119446807727, guid: 92345d16d3a984156b81ba7cb42f1cee,
         type: 3}
       propertyPath: curMusic.mainClip
@@ -1054,20 +1070,10 @@ PrefabInstance:
       propertyPath: curMusic.startupClip
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 1335803119446807727, guid: 92345d16d3a984156b81ba7cb42f1cee,
+    - target: {fileID: 1335803121180380181, guid: 92345d16d3a984156b81ba7cb42f1cee,
         type: 3}
-      propertyPath: backgroundImage
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1335803119446807727, guid: 92345d16d3a984156b81ba7cb42f1cee,
-        type: 3}
-      propertyPath: curMusic
-      value: 
-      objectReference: {fileID: 3300588552918386866}
-    - target: {fileID: 1335803119446807727, guid: 92345d16d3a984156b81ba7cb42f1cee,
-        type: 3}
-      propertyPath: nextMusic
-      value: 
+      propertyPath: m_RootOrder
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1335803121180380181, guid: 92345d16d3a984156b81ba7cb42f1cee,
         type: 3}
@@ -1086,6 +1092,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1335803121180380181, guid: 92345d16d3a984156b81ba7cb42f1cee,
         type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1335803121180380181, guid: 92345d16d3a984156b81ba7cb42f1cee,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
@@ -1098,16 +1109,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1335803121180380181, guid: 92345d16d3a984156b81ba7cb42f1cee,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1335803121180380181, guid: 92345d16d3a984156b81ba7cb42f1cee,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1335803121180380181, guid: 92345d16d3a984156b81ba7cb42f1cee,
         type: 3}
@@ -1135,6 +1136,11 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 1335803119446807722, guid: 92345d16d3a984156b81ba7cb42f1cee,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5423665932238035804}
   m_SourcePrefab: {fileID: 100100000, guid: 92345d16d3a984156b81ba7cb42f1cee, type: 3}
 --- !u!82 &1725342232709547935
 AudioSource:
@@ -1254,6 +1260,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.8121338, y: 9.77409, z: 471.47842}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1865441845}
   m_RootOrder: 0
