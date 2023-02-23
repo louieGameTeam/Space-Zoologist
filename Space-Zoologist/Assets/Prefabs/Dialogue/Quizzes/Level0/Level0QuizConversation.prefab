@@ -49,7 +49,8 @@ MonoBehaviour:
   template: {fileID: 11400000, guid: a0d9ed2ae589f3a46ace0216f4f15ccd, type: 2}
   npcIcon: {fileID: 21300000, guid: 8c883f4201b912f4881839e372a91750, type: 3}
   npcName: Star
-  npcFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
+  npcTextFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
+  quizOptionFont: {fileID: 11400000, guid: fc03621bdcb78864ebe8333f49849b37, type: 2}
   openingConversation: {fileID: 5437691235473108205}
   endOfQuizText: "And...We\u2019re all done! Gimme a sec to process your answers,
     and we\u2019ll see how you did\u2026"
@@ -104,20 +105,32 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 4033851422117246193}
     m_Modifications:
+    - target: {fileID: 300892513439287836, guid: 0df79dcf6f64a6c4189f7fb1c9069e8e,
+        type: 3}
+      propertyPath: TMPFont
+      value: 
+      objectReference: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994,
+        type: 2}
     - target: {fileID: 639479201659925060, guid: 0df79dcf6f64a6c4189f7fb1c9069e8e,
         type: 3}
       propertyPath: json
-      value: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":30,\"yPos\":22},\"ID\":0,\"TMPFontGUID\":null,\"Text\":\"Oh...It
+      value: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":30,\"yPos\":21},\"ID\":0,\"TMPFontGUID\":null,\"Text\":\"Oh...It
         looks like you might need to review your basics a bit more. Make sure you
-        pay close attention to the Zeig\u2019s preferences next time.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":32,\"yPos\":148},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Still,
+        pay close attention to the Zeig\u2019s preferences next time.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":32,\"yPos\":148},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Still,
         you did an amazing job completing the enclosure! Head on down to the next
-        one when you\u2019re ready, and I\u2019ll see you there!\",\"parentUIDs\":[0,0],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false}]}"
+        one when you\u2019re ready, and I\u2019ll see you there!\",\"parentUIDs\":[0,0],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false}]}"
       objectReference: {fileID: 0}
     - target: {fileID: 4040371622886929512, guid: 0df79dcf6f64a6c4189f7fb1c9069e8e,
         type: 3}
       propertyPath: m_Name
       value: Level0QuizPoor
       objectReference: {fileID: 0}
+    - target: {fileID: 4431896222902207707, guid: 0df79dcf6f64a6c4189f7fb1c9069e8e,
+        type: 3}
+      propertyPath: TMPFont
+      value: 
+      objectReference: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994,
+        type: 2}
     - target: {fileID: 8577578024256347328, guid: 0df79dcf6f64a6c4189f7fb1c9069e8e,
         type: 3}
       propertyPath: m_RootOrder
@@ -202,14 +215,20 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 4033851422117246193}
     m_Modifications:
+    - target: {fileID: 2319849143063539470, guid: 000aeac2f1f8cb44093186cbac01aa74,
+        type: 3}
+      propertyPath: TMPFont
+      value: 
+      objectReference: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994,
+        type: 2}
     - target: {fileID: 3749100206741484029, guid: 000aeac2f1f8cb44093186cbac01aa74,
         type: 3}
       propertyPath: json
       value: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":30,\"yPos\":22},\"ID\":0,\"TMPFontGUID\":null,\"Text\":\"Holy
-        Moly! You did way better than any of the other recruits ever did! \",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":28,\"yPos\":157},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"I\u2019m
-        telling you, kid, you\u2019re something special. You\u2019re killing it!\",\"parentUIDs\":[0,0],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":3,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":33,\"yPos\":310},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"But
+        Moly! You did way better than any of the other recruits ever did! \",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":28,\"yPos\":157},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"I\u2019m
+        telling you, kid, you\u2019re something special. You\u2019re killing it!\",\"parentUIDs\":[0,0],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":3,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":33,\"yPos\":310},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"But
         enough about how amazing you are! We have more Zeigs to save! Head on down
-        to the next enclosure, if you\u2019re up for it. I\u2019ll see you there!\",\"parentUIDs\":[1,1],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false}]}"
+        to the next enclosure, if you\u2019re up for it. I\u2019ll see you there!\",\"parentUIDs\":[1,1],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false}]}"
       objectReference: {fileID: 0}
     - target: {fileID: 6370724670626266259, guid: 000aeac2f1f8cb44093186cbac01aa74,
         type: 3}
@@ -271,6 +290,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7384566937610420595, guid: 000aeac2f1f8cb44093186cbac01aa74,
+        type: 3}
+      propertyPath: TMPFont
+      value: 
+      objectReference: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994,
+        type: 2}
+    - target: {fileID: 8779229097626293950, guid: 000aeac2f1f8cb44093186cbac01aa74,
+        type: 3}
+      propertyPath: TMPFont
+      value: 
+      objectReference: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994,
+        type: 2}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 000aeac2f1f8cb44093186cbac01aa74, type: 3}
@@ -306,10 +337,16 @@ PrefabInstance:
       value: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":30,\"yPos\":22},\"ID\":0,\"TMPFontGUID\":null,\"Text\":\"Well\u2026
         Looks like you got the most important bits right, but you still have a bit
         more to learn. Pay close attention to the terrain preferences of the Zeigs
-        next time! \",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":36,\"yPos\":145},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Don\u2019t
+        next time! \",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":35,\"yPos\":145},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Don\u2019t
         get down about it, though! Live and learn, I always say. Now let\u2019s get
-        on to the next enclosure!\",\"parentUIDs\":[0,0],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false}]}"
+        on to the next enclosure!\",\"parentUIDs\":[0,0],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false}]}"
       objectReference: {fileID: 0}
+    - target: {fileID: 3130082835263568420, guid: 9d380337b87fd9b4cab82135b9e89719,
+        type: 3}
+      propertyPath: TMPFont
+      value: 
+      objectReference: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994,
+        type: 2}
     - target: {fileID: 6264227496795954992, guid: 9d380337b87fd9b4cab82135b9e89719,
         type: 3}
       propertyPath: m_RootOrder
@@ -370,6 +407,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Level0QuizAcceptable
       objectReference: {fileID: 0}
+    - target: {fileID: 9139060428408562379, guid: 9d380337b87fd9b4cab82135b9e89719,
+        type: 3}
+      propertyPath: TMPFont
+      value: 
+      objectReference: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994,
+        type: 2}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d380337b87fd9b4cab82135b9e89719, type: 3}
@@ -399,20 +442,38 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 3627268876672331859}
     m_Modifications:
+    - target: {fileID: 882030456881280185, guid: 483051e15f748f14dac9a351c9ad1a36,
+        type: 3}
+      propertyPath: TMPFont
+      value: 
+      objectReference: {fileID: 11400000, guid: fc03621bdcb78864ebe8333f49849b37,
+        type: 2}
+    - target: {fileID: 1074722265897152032, guid: 483051e15f748f14dac9a351c9ad1a36,
+        type: 3}
+      propertyPath: TMPFont
+      value: 
+      objectReference: {fileID: 11400000, guid: fc03621bdcb78864ebe8333f49849b37,
+        type: 2}
+    - target: {fileID: 3392734533063868129, guid: 483051e15f748f14dac9a351c9ad1a36,
+        type: 3}
+      propertyPath: TMPFont
+      value: 
+      objectReference: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994,
+        type: 2}
     - target: {fileID: 4122728360657949761, guid: 483051e15f748f14dac9a351c9ad1a36,
         type: 3}
       propertyPath: json
       value: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-82,\"yPos\":196},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Ha-ha,
-        sportsball. I love sportsball!\",\"parentUIDs\":[0,0],\"SpeechUID\":5},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":168,\"yPos\":188},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"You
+        sportsball. I love sportsball!\",\"parentUIDs\":[0,0],\"SpeechUID\":5},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":168,\"yPos\":187},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"You
         bet. Keep putting me in, and I\u2019ll knock your expectations out of the
         park!\\r\",\"parentUIDs\":[0,0],\"SpeechUID\":5}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":30,\"yPos\":22},\"ID\":0,\"TMPFontGUID\":null,\"Text\":\"Whoa,
         you actually pulled it off! Not many new recruits can pull off a job this
-        tough. Looks like you\u2019re our new pinch hitter, kid!\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[1,2],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":44,\"yPos\":311},\"ID\":5,\"TMPFontGUID\":null,\"Text\":\"It\u2019s
+        tough. Looks like you\u2019re our new pinch hitter, kid!\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[1,2],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":44,\"yPos\":311},\"ID\":5,\"TMPFontGUID\":null,\"Text\":\"It\u2019s
         time for your report-back, like I mentioned when you first got here. I\u2019ll
-        be asking a series of questions to gauge your learning.\",\"parentUIDs\":[1,2,1,2],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":6,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":38,\"yPos\":436},\"ID\":6,\"TMPFontGUID\":null,\"Text\":\"Don\u2019t
+        be asking a series of questions to gauge your learning.\",\"parentUIDs\":[1,2,1,2],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":6,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":38,\"yPos\":436},\"ID\":6,\"TMPFontGUID\":null,\"Text\":\"Don\u2019t
         worry. There\u2019s no trick questions here. Just remember the work you did,
         and you\u2019ll be fine. If you can handle the enclosure, you can handle
-        the report-back.\",\"parentUIDs\":[5,5],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false}]}"
+        the report-back.\",\"parentUIDs\":[5,5],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false}]}"
       objectReference: {fileID: 0}
     - target: {fileID: 4539689340290387487, guid: 483051e15f748f14dac9a351c9ad1a36,
         type: 3}
@@ -474,6 +535,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7186680971862537157, guid: 483051e15f748f14dac9a351c9ad1a36,
+        type: 3}
+      propertyPath: TMPFont
+      value: 
+      objectReference: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994,
+        type: 2}
+    - target: {fileID: 8637005464166737898, guid: 483051e15f748f14dac9a351c9ad1a36,
+        type: 3}
+      propertyPath: TMPFont
+      value: 
+      objectReference: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994,
+        type: 2}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 483051e15f748f14dac9a351c9ad1a36, type: 3}

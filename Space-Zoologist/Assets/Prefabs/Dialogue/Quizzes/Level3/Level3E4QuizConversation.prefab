@@ -49,7 +49,8 @@ MonoBehaviour:
   template: {fileID: 11400000, guid: d665e5038d9171a4687889c53054dc39, type: 2}
   npcIcon: {fileID: 21300000, guid: fabf7af1c8cb79f45a1449c35f52a4a9, type: 3}
   npcName: Juno
-  npcFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
+  npcTextFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
+  quizOptionFont: {fileID: 11400000, guid: fc03621bdcb78864ebe8333f49849b37, type: 2}
   openingConversation: {fileID: 2911074987948934811}
   endOfQuizText: "And that\u2019s it. Give me a moment to look over your answers."
   response:
@@ -102,11 +103,31 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 92660166653450427}
     m_Modifications:
+    - target: {fileID: 255366925509939228, guid: c9b77ca519004694f971626c87d5c72c,
+        type: 3}
+      propertyPath: TMPFont
+      value: 
+      objectReference: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994,
+        type: 2}
+    - target: {fileID: 3754872184266340311, guid: c9b77ca519004694f971626c87d5c72c,
+        type: 3}
+      propertyPath: json
+      value: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":306,\"yPos\":22},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"An
+        admirable attempt, but unfortunately your results are a bit lacking.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":2,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":313,\"yPos\":118},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"Let\u2019s
+        head back to the last enclosure, where we can more thoroughly review the
+        theoretical aspects of inter-species dominance.\",\"parentUIDs\":[1,1],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false}]}"
+      objectReference: {fileID: 0}
     - target: {fileID: 5978117685633893367, guid: c9b77ca519004694f971626c87d5c72c,
         type: 3}
       propertyPath: m_Name
       value: L2E4QuizFailed
       objectReference: {fileID: 0}
+    - target: {fileID: 7726787465820311084, guid: c9b77ca519004694f971626c87d5c72c,
+        type: 3}
+      propertyPath: TMPFont
+      value: 
+      objectReference: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994,
+        type: 2}
     - target: {fileID: 8536449805486912138, guid: c9b77ca519004694f971626c87d5c72c,
         type: 3}
       propertyPath: m_RootOrder
@@ -202,12 +223,30 @@ PrefabInstance:
       value: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":415,\"yPos\":222},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"So
         does that mean we can skip the report back?\",\"parentUIDs\":[2,2],\"SpeechUID\":4}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":415,\"yPos\":22},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"I
         must admit, newbie, you\u2019re beginning to impress me. This enclosure was
-        more than the equal of many of your more experienced peers.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":2,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":415,\"yPos\":122},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"I
+        more than the equal of many of your more experienced peers.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":2,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":415,\"yPos\":122},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"I
         thought that Dr. Star had sent you here to be babysat, but you\u2019ve made
-        it clear nothing could be further from the truth.\",\"parentUIDs\":[1,1],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[3],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":417,\"yPos\":322},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"Absolutely
+        it clear nothing could be further from the truth.\",\"parentUIDs\":[1,1],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[3],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":417,\"yPos\":322},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"Absolutely
         not. I hope you have taken comprehensive notes. You will need them. Let us
-        begin. .\",\"parentUIDs\":[3,3],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false}]}"
+        begin. .\",\"parentUIDs\":[3,3],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false}]}"
       objectReference: {fileID: 0}
+    - target: {fileID: 5090503820557274433, guid: a4710aa48afa9fa418452c4655ac6d13,
+        type: 3}
+      propertyPath: TMPFont
+      value: 
+      objectReference: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994,
+        type: 2}
+    - target: {fileID: 6548171371439818379, guid: a4710aa48afa9fa418452c4655ac6d13,
+        type: 3}
+      propertyPath: TMPFont
+      value: 
+      objectReference: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994,
+        type: 2}
+    - target: {fileID: 6755728805418398639, guid: a4710aa48afa9fa418452c4655ac6d13,
+        type: 3}
+      propertyPath: TMPFont
+      value: 
+      objectReference: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994,
+        type: 2}
     - target: {fileID: 7119561897681922593, guid: a4710aa48afa9fa418452c4655ac6d13,
         type: 3}
       propertyPath: m_RootOrder
@@ -263,6 +302,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8181932442396743886, guid: a4710aa48afa9fa418452c4655ac6d13,
+        type: 3}
+      propertyPath: TMPFont
+      value: 
+      objectReference: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994,
+        type: 2}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: a4710aa48afa9fa418452c4655ac6d13, type: 3}
@@ -297,6 +342,29 @@ PrefabInstance:
       propertyPath: m_Name
       value: L2E4QuizPassed
       objectReference: {fileID: 0}
+    - target: {fileID: 1059371210100667305, guid: df266cee73f43ba49b532d2128611d42,
+        type: 3}
+      propertyPath: TMPFont
+      value: 
+      objectReference: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994,
+        type: 2}
+    - target: {fileID: 1490480151776893422, guid: df266cee73f43ba49b532d2128611d42,
+        type: 3}
+      propertyPath: json
+      value: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":306,\"yPos\":22},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Excellent.
+        It seems you are quite an apt pupil, unlike the last one Star foisted upon
+        me.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":2,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":308,\"yPos\":122},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"If
+        you keep this up, you\u2019ll become quite a valuable asset. I can only hope
+        you do so. Doing all of this enclosure modification work is becoming tiresome.\",\"parentUIDs\":[1,1],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":3,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":306,\"yPos\":222},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"But
+        that\u2019s a question for the future, still. We\u2019re done in this wing,
+        but there\u2019s another that requires our attention. Follow me.\",\"parentUIDs\":[2,2],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false}]}"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1527699774563667572, guid: df266cee73f43ba49b532d2128611d42,
+        type: 3}
+      propertyPath: TMPFont
+      value: 
+      objectReference: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994,
+        type: 2}
     - target: {fileID: 1666162499727703867, guid: df266cee73f43ba49b532d2128611d42,
         type: 3}
       propertyPath: m_RootOrder
@@ -352,6 +420,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5077495442731072510, guid: df266cee73f43ba49b532d2128611d42,
+        type: 3}
+      propertyPath: TMPFont
+      value: 
+      objectReference: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994,
+        type: 2}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: df266cee73f43ba49b532d2128611d42, type: 3}
