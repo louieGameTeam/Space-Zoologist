@@ -97,7 +97,7 @@ MonoBehaviour:
           m_StringArgument: IncreaseDecrease
           m_BoolArgument: 0
         m_CallState: 2
-  TMPFont: {fileID: 0}
+  TMPFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
   Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &674947355866260804
@@ -349,7 +349,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  TMPFont: {fileID: 0}
+  TMPFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
   Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &7420494577019947622
@@ -380,7 +380,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  TMPFont: {fileID: 0}
+  TMPFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
   Icon: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
   Audio: {fileID: 0}
 --- !u!1 &674947355878461199
@@ -432,11 +432,11 @@ MonoBehaviour:
   CurrentIDCounter: 24
   json: '{"Options":[],"SpeechNodes":[{"EditorInfo":{"isRoot":true,"xPos":51.5,"yPos":22},"ID":1,"TMPFontGUID":null,"Text":"This
     is the Test and Metrics tab. Here you can plan tests and record the results for
-    any particular enclosure.","parentUIDs":[],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"IconGUID":null,"Name":"Star","OptionUIDs":[],"SpeechUID":22,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":true},{"EditorInfo":{"isRoot":false,"xPos":60,"yPos":124},"ID":22,"TMPFontGUID":null,"Text":"You
+    any particular enclosure.","parentUIDs":[],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":null,"IconGUID":null,"Name":"Star","OptionUIDs":[],"SpeechUID":22,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":true},{"EditorInfo":{"isRoot":false,"xPos":60,"yPos":123},"ID":22,"TMPFontGUID":null,"Text":"You
     can choose what plant or animal the test is for, what you are testing, and if
-    the test resulted in an improvement or deterioration of their needs.","parentUIDs":[1,1],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"IconGUID":null,"Name":"Star","OptionUIDs":[],"SpeechUID":23,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":true},{"EditorInfo":{"isRoot":false,"xPos":51,"yPos":235},"ID":23,"TMPFontGUID":null,"Text":"You
+    the test resulted in an improvement or deterioration of their needs.","parentUIDs":[1,1],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":null,"IconGUID":null,"Name":"Star","OptionUIDs":[],"SpeechUID":23,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":true},{"EditorInfo":{"isRoot":false,"xPos":51,"yPos":235},"ID":23,"TMPFontGUID":null,"Text":"You
     can also specify when the test took place and other further details that pertain
-    to the test.","parentUIDs":[22],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"IconGUID":null,"Name":"Star","OptionUIDs":[],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":true}]}'
+    to the test.","parentUIDs":[22,22],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":null,"IconGUID":null,"Name":"Star","OptionUIDs":[],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":true}]}'
   saveVersion: 103
   DefaultName: 
   DefaultSprite: {fileID: 0}
@@ -461,38 +461,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 441157961251796164}
         m_TargetAssemblyTypeName: TutorialPrompter, Assembly-CSharp
-        m_MethodName: HighlightTestAndMetricsDropdownNoFreeze
-        m_Mode: 5
+        m_MethodName: ClearHighlights
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: SimpleResearchCategory
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 441157961251796164}
-        m_TargetAssemblyTypeName: TutorialPrompter, Assembly-CSharp
-        m_MethodName: HighlightTestAndMetricsDropdownNoFreeze
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: NeedType
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 441157961251796164}
-        m_TargetAssemblyTypeName: TutorialPrompter, Assembly-CSharp
-        m_MethodName: HighlightTestAndMetricsDropdownNoFreeze
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: IncreaseDecrease
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &441157961251796164
