@@ -50,9 +50,9 @@ MonoBehaviour:
   npcIcon: {fileID: 21300000, guid: fabf7af1c8cb79f45a1449c35f52a4a9, type: 3}
   npcName: Juno
   npcTextFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
-  quizOptionFont: {fileID: 11400000, guid: fc03621bdcb78864ebe8333f49849b37, type: 2}
+  quizOptionFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
   openingConversation: {fileID: 4793458904101554438}
-  endOfQuizText: "And that's it. Give me a moment to look over your answers."
+  endOfQuizText: And that's it. Give me a moment to look over your answers.
   response:
     responses:
     - {fileID: 6766782708905769475}
@@ -277,10 +277,10 @@ PrefabInstance:
     - target: {fileID: 8191602925442665779, guid: 012544bc776949f40976ed08e654afec,
         type: 3}
       propertyPath: json
-      value: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":306,\"yPos\":21},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Your
-        answers mostly align with my own observations. Very well. It seems you've
-        learned all that's necessary.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":2,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":306,\"yPos\":122},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"I'll
-        be working again with you on a new enclosure. Let's us depart.\",\"parentUIDs\":[1,1],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false}]}"
+      value: '{"Options":[],"SpeechNodes":[{"EditorInfo":{"isRoot":true,"xPos":306,"yPos":21},"ID":1,"TMPFontGUID":null,"Text":"Your
+        answers mostly align with my own observations. Very well. It seems you''ve
+        learned all that''s necessary.","parentUIDs":[],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":null,"IconGUID":null,"Name":"Juno","OptionUIDs":[],"SpeechUID":2,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":306,"yPos":122},"ID":2,"TMPFontGUID":null,"Text":"I''ll
+        be working again with you on a new enclosure. Let''s us depart.","parentUIDs":[1,1],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":null,"IconGUID":null,"Name":"Juno","OptionUIDs":[],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false}]}'
       objectReference: {fileID: 0}
     - target: {fileID: 8419702417989675157, guid: 012544bc776949f40976ed08e654afec,
         type: 3}
@@ -330,10 +330,9 @@ PrefabInstance:
     - target: {fileID: 2702643545176491878, guid: 28dfb739dd72e4743b29752e0490b374,
         type: 3}
       propertyPath: json
-      value: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":306,\"yPos\":22},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Impressive.
-        You really managed it. Perhaps this station's fortunes are about to
-        change.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":2,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":306,\"yPos\":122},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"Be
-        that as it may, it's time to start your report back.\",\"parentUIDs\":[1,1],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false}]}"
+      value: '{"Options":[],"SpeechNodes":[{"EditorInfo":{"isRoot":true,"xPos":306,"yPos":22},"ID":1,"TMPFontGUID":null,"Text":"Impressive.
+        You really managed it. Perhaps this station''s fortunes are about to change.","parentUIDs":[],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":null,"IconGUID":null,"Name":"Juno","OptionUIDs":[],"SpeechUID":2,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":306,"yPos":122},"ID":2,"TMPFontGUID":null,"Text":"Be
+        that as it may, it''s time to start your report back.","parentUIDs":[1,1],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":null,"IconGUID":null,"Name":"Juno","OptionUIDs":[],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false}]}'
       objectReference: {fileID: 0}
     - target: {fileID: 2759315992070329387, guid: 28dfb739dd72e4743b29752e0490b374,
         type: 3}
@@ -500,11 +499,11 @@ PrefabInstance:
     - target: {fileID: 3475025234489852325, guid: 84cd2d84f87a02e4ebbe80f22cb97e49,
         type: 3}
       propertyPath: json
-      value: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":306,\"yPos\":22},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Interesting.
+      value: '{"Options":[],"SpeechNodes":[{"EditorInfo":{"isRoot":true,"xPos":306,"yPos":22},"ID":1,"TMPFontGUID":null,"Text":"Interesting.
         I believe you are in need of some remedial labor. Please pay more attention
-        to species needs this time.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":2,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":306,\"yPos\":121},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"I'll
+        to species needs this time.","parentUIDs":[],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":null,"IconGUID":null,"Name":"Juno","OptionUIDs":[],"SpeechUID":2,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":306,"yPos":121},"ID":2,"TMPFontGUID":null,"Text":"I''ll
         have Barry resurface the enclosure and reconstruct it in a more basic form.
-        It may behoove you to use your notebook this time.\",\"parentUIDs\":[1,1],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false}]}"
+        It may behoove you to use your notebook this time.","parentUIDs":[1,1],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":null,"IconGUID":null,"Name":"Juno","OptionUIDs":[],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false}]}'
       objectReference: {fileID: 0}
     - target: {fileID: 7538312245774617487, guid: 84cd2d84f87a02e4ebbe80f22cb97e49,
         type: 3}

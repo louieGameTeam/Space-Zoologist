@@ -84,9 +84,9 @@ MonoBehaviour:
   npcIcon: {fileID: 21300000, guid: fabf7af1c8cb79f45a1449c35f52a4a9, type: 3}
   npcName: Juno
   npcTextFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
-  quizOptionFont: {fileID: 11400000, guid: fc03621bdcb78864ebe8333f49849b37, type: 2}
+  quizOptionFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
   openingConversation: {fileID: 3928375015839560486}
-  endOfQuizText: "And that's it. Give me a moment to look over your answers."
+  endOfQuizText: And that's it. Give me a moment to look over your answers.
   response:
     responses:
     - {fileID: 6281416792096004552}
@@ -162,11 +162,11 @@ PrefabInstance:
     - target: {fileID: 3333847281283106645, guid: dd6667ca8611ce7448295f2de74d6068,
         type: 3}
       propertyPath: json
-      value: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":306,\"yPos\":22},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Good.
-        You've met this enclosure's objective easily enough, and the Eligans
-        Impar population is already beginning to rebound.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":2,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":306,\"yPos\":122},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"Now
-        let us see if you've mastered the conceptual elements you were meant
-        to improve upon. Let us begin our report back.\",\"parentUIDs\":[1,1],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false}]}"
+      value: '{"Options":[],"SpeechNodes":[{"EditorInfo":{"isRoot":true,"xPos":306,"yPos":22},"ID":1,"TMPFontGUID":null,"Text":"Good.
+        You''ve met this enclosure''s objective easily enough, and the Eligans Impar
+        population is already beginning to rebound.","parentUIDs":[],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":null,"IconGUID":null,"Name":"Juno","OptionUIDs":[],"SpeechUID":2,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":306,"yPos":122},"ID":2,"TMPFontGUID":null,"Text":"Now
+        let us see if you''ve mastered the conceptual elements you were meant to
+        improve upon. Let us begin our report back.","parentUIDs":[1,1],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":null,"IconGUID":null,"Name":"Juno","OptionUIDs":[],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false}]}'
       objectReference: {fileID: 0}
     - target: {fileID: 4430485308255003523, guid: dd6667ca8611ce7448295f2de74d6068,
         type: 3}
@@ -223,11 +223,11 @@ PrefabInstance:
     - target: {fileID: 7548781420697440964, guid: 62ae0d55ca14e374fb24c3a78ad6d959,
         type: 3}
       propertyPath: json
-      value: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":306,\"yPos\":22},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Good.
+      value: '{"Options":[],"SpeechNodes":[{"EditorInfo":{"isRoot":true,"xPos":306,"yPos":22},"ID":1,"TMPFontGUID":null,"Text":"Good.
         It seems you have a basic enough understanding of Eligans Impar for us to
-        continue.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":2,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":306,\"yPos\":122},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"Follow
-        me to the next encounter, and we'll begin to touch on some of the finer
-        points of multi-species enclosures.\",\"parentUIDs\":[1,1],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false}]}"
+        continue.","parentUIDs":[],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":null,"IconGUID":null,"Name":"Juno","OptionUIDs":[],"SpeechUID":2,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":306,"yPos":122},"ID":2,"TMPFontGUID":null,"Text":"Follow
+        me to the next encounter, and we''ll begin to touch on some of the finer
+        points of multi-species enclosures.","parentUIDs":[1,1],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":null,"IconGUID":null,"Name":"Juno","OptionUIDs":[],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false}]}'
       objectReference: {fileID: 0}
     - target: {fileID: 8082859328175029697, guid: 62ae0d55ca14e374fb24c3a78ad6d959,
         type: 3}
@@ -503,12 +503,12 @@ PrefabInstance:
     - target: {fileID: 4272431979114928493, guid: 438fa1cfb9eeb484682e98f139bf8bd3,
         type: 3}
       propertyPath: json
-      value: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":306,\"yPos\":22},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"These
-        responses are becoming worrisome, newbie. Let's head back to the first
-        enclosure, where you will repeat your previous efforts in their entirety.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":2,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":306,\"yPos\":122},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"Please
+      value: '{"Options":[],"SpeechNodes":[{"EditorInfo":{"isRoot":true,"xPos":306,"yPos":22},"ID":1,"TMPFontGUID":null,"Text":"These
+        responses are becoming worrisome, newbie. Let''s head back to the first enclosure,
+        where you will repeat your previous efforts in their entirety.","parentUIDs":[],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":null,"IconGUID":null,"Name":"Juno","OptionUIDs":[],"SpeechUID":2,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":306,"yPos":122},"ID":2,"TMPFontGUID":null,"Text":"Please
         endeavor to either take more detailed notes, or use whatever method of information
-        retention works best for you this time.\",\"parentUIDs\":[1,1],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":3,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":306,\"yPos\":222},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"I
-        would hate for us to have to repeat these lessons yet again.\",\"parentUIDs\":[2,2],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false}]}"
+        retention works best for you this time.","parentUIDs":[1,1],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":null,"IconGUID":null,"Name":"Juno","OptionUIDs":[],"SpeechUID":3,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":306,"yPos":222},"ID":3,"TMPFontGUID":null,"Text":"I
+        would hate for us to have to repeat these lessons yet again.","parentUIDs":[2,2],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":null,"IconGUID":null,"Name":"Juno","OptionUIDs":[],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false}]}'
       objectReference: {fileID: 0}
     - target: {fileID: 7079322261930259966, guid: 438fa1cfb9eeb484682e98f139bf8bd3,
         type: 3}

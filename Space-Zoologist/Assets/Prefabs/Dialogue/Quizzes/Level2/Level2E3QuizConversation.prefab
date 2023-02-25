@@ -84,9 +84,9 @@ MonoBehaviour:
   npcIcon: {fileID: 21300000, guid: fabf7af1c8cb79f45a1449c35f52a4a9, type: 3}
   npcName: Juno
   npcTextFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
-  quizOptionFont: {fileID: 11400000, guid: fc03621bdcb78864ebe8333f49849b37, type: 2}
+  quizOptionFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
   openingConversation: {fileID: 7160778945212694777}
-  endOfQuizText: "And that's it. Give me a moment to look over your answers."
+  endOfQuizText: And that's it. Give me a moment to look over your answers.
   response:
     responses:
     - {fileID: 7160778944611803443}
@@ -125,13 +125,13 @@ PrefabInstance:
     - target: {fileID: 7088595113351740344, guid: 3cf5c444aba4eb04b99756b833afd284,
         type: 3}
       propertyPath: json
-      value: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":306,\"yPos\":22},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Excellent.
+      value: '{"Options":[],"SpeechNodes":[{"EditorInfo":{"isRoot":true,"xPos":306,"yPos":22},"ID":1,"TMPFontGUID":null,"Text":"Excellent.
         It seems you are quite an apt pupil, unlike the last one Star foisted upon
-        me.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":2,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":306,\"yPos\":121},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"If
-        you keep this up, you'll become quite a valuable asset. I can only hope
-        you do so. Doing all of this enclosure modification work is becoming tiresome.\",\"parentUIDs\":[1,1],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":3,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":306,\"yPos\":222},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"But
-        that's a question for the future, still. We're done in this wing,
-        but there's another that requires our attention. Follow me.\",\"parentUIDs\":[2,2],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false}]}"
+        me.","parentUIDs":[],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":null,"IconGUID":null,"Name":"Juno","OptionUIDs":[],"SpeechUID":2,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":306,"yPos":121},"ID":2,"TMPFontGUID":null,"Text":"If
+        you keep this up, you''ll become quite a valuable asset. I can only hope
+        you do so. Doing all of this enclosure modification work is becoming tiresome.","parentUIDs":[1,1],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":null,"IconGUID":null,"Name":"Juno","OptionUIDs":[],"SpeechUID":3,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":306,"yPos":222},"ID":3,"TMPFontGUID":null,"Text":"But
+        that''s a question for the future, still. We''re done in this wing, but there''s
+        another that requires our attention. Follow me.","parentUIDs":[2,2],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":null,"IconGUID":null,"Name":"Juno","OptionUIDs":[],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false}]}'
       objectReference: {fileID: 0}
     - target: {fileID: 7088595113351740345, guid: 3cf5c444aba4eb04b99756b833afd284,
         type: 3}
@@ -242,10 +242,10 @@ PrefabInstance:
     - target: {fileID: 7389689209248117717, guid: 3267c692c4b5b584188f80fe963e4f8a,
         type: 3}
       propertyPath: json
-      value: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":415,\"yPos\":22},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Nicely
-        done, newbie. It seems you've mastered the practical elements of inter-species
-        dominance.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":2,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":415,\"yPos\":121},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"But
-        have you similarly mastered the theoretical? Let us begin our report back.\",\"parentUIDs\":[1,1],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false}]}"
+      value: '{"Options":[],"SpeechNodes":[{"EditorInfo":{"isRoot":true,"xPos":415,"yPos":22},"ID":1,"TMPFontGUID":null,"Text":"Nicely
+        done, newbie. It seems you''ve mastered the practical elements of inter-species
+        dominance.","parentUIDs":[],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":null,"IconGUID":null,"Name":"Juno","OptionUIDs":[],"SpeechUID":2,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":415,"yPos":121},"ID":2,"TMPFontGUID":null,"Text":"But
+        have you similarly mastered the theoretical? Let us begin our report back.","parentUIDs":[1,1],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":null,"IconGUID":null,"Name":"Juno","OptionUIDs":[],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false}]}'
       objectReference: {fileID: 0}
     - target: {fileID: 7389689209248117718, guid: 3267c692c4b5b584188f80fe963e4f8a,
         type: 3}
@@ -334,10 +334,10 @@ PrefabInstance:
     - target: {fileID: 7892823621335765330, guid: 4937d7d36d35f5f4181d610ea41982fb,
         type: 3}
       propertyPath: json
-      value: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":306,\"yPos\":21},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Good
-        enough. Glad to see these lessons haven't gone to waste.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":2,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":306,\"yPos\":122},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"Let's
-        head to the final enclosure in this wing, where you can put everything you've
-        learned together.\",\"parentUIDs\":[1,1],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false}]}"
+      value: '{"Options":[],"SpeechNodes":[{"EditorInfo":{"isRoot":true,"xPos":306,"yPos":21},"ID":1,"TMPFontGUID":null,"Text":"Good
+        enough. Glad to see these lessons haven''t gone to waste.","parentUIDs":[],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":null,"IconGUID":null,"Name":"Juno","OptionUIDs":[],"SpeechUID":2,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":306,"yPos":122},"ID":2,"TMPFontGUID":null,"Text":"Let''s
+        head to the final enclosure in this wing, where you can put everything you''ve
+        learned together.","parentUIDs":[1,1],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":null,"IconGUID":null,"Name":"Juno","OptionUIDs":[],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false}]}'
       objectReference: {fileID: 0}
     - target: {fileID: 7892823621335765331, guid: 4937d7d36d35f5f4181d610ea41982fb,
         type: 3}
@@ -448,14 +448,14 @@ PrefabInstance:
     - target: {fileID: 8571421997817666862, guid: 12a01f3e7ce2eb14ea66d965a091a42b,
         type: 3}
       propertyPath: json
-      value: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":306,\"yPos\":22},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Interesting.
-        Seems like some of the most critical theoretical concepts for our work haven't
-        quite rubbed off on you, yet.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":2,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":306,\"yPos\":121},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"I
+      value: '{"Options":[],"SpeechNodes":[{"EditorInfo":{"isRoot":true,"xPos":306,"yPos":22},"ID":1,"TMPFontGUID":null,"Text":"Interesting.
+        Seems like some of the most critical theoretical concepts for our work haven''t
+        quite rubbed off on you, yet.","parentUIDs":[],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":null,"IconGUID":null,"Name":"Juno","OptionUIDs":[],"SpeechUID":2,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":306,"yPos":121},"ID":2,"TMPFontGUID":null,"Text":"I
         have created a remedial enclosure where you can focus on mastering these
-        concepts.\",\"parentUIDs\":[1,1],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":3,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":304,\"yPos\":223},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"Please
+        concepts.","parentUIDs":[1,1],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":null,"IconGUID":null,"Name":"Juno","OptionUIDs":[],"SpeechUID":3,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":304,"yPos":223},"ID":3,"TMPFontGUID":null,"Text":"Please
         endeavor to either take more detailed notes, or use whatever method of information
-        retention works best for you this time.\",\"parentUIDs\":[2,2],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":4,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":306,\"yPos\":322},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"I
-        would hate for us to have to repeat these lessons yet again.\",\"parentUIDs\":[3,3],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false}]}"
+        retention works best for you this time.","parentUIDs":[2,2],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":null,"IconGUID":null,"Name":"Juno","OptionUIDs":[],"SpeechUID":4,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":306,"yPos":322},"ID":4,"TMPFontGUID":null,"Text":"I
+        would hate for us to have to repeat these lessons yet again.","parentUIDs":[3,3],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":null,"IconGUID":null,"Name":"Juno","OptionUIDs":[],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false}]}'
       objectReference: {fileID: 0}
     - target: {fileID: 8571421997817666863, guid: 12a01f3e7ce2eb14ea66d965a091a42b,
         type: 3}
