@@ -40,15 +40,6 @@ public class MenuManager : MonoBehaviour
         StoreCanvas.localScale = Vector3.zero;
     }
 
-    public void TrySellItem(Item item, int amount)
-    {
-        foreach(var section in StoreMenus)
-        {
-            if (section?.SellItem(item, amount) > 0)
-                return;
-        }
-    }
-
     public void OnToggleMenu(GameObject menu)
     {
         if (currentMenu != menu)
