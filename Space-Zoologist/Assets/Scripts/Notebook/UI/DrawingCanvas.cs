@@ -72,8 +72,11 @@ public class DrawingCanvas : MonoBehaviour,  IBeginDragHandler, IDragHandler
     {
         if(drawingTexture != null)
         {
+            // SummaryManager is backend, should not be used in editor
             SummaryManager summaryManager = (SummaryManager)FindObjectOfType(typeof(SummaryManager));
-            summaryManager.CurrentSummaryTrace.NumDrawToolUsed += 1;
+            if(summaryManager)
+                summaryManager.CurrentSummaryTrace.NumDrawToolUsed += 1;
+            
             previousTexturePosition = MousePositionToPositionInTexture(data.position);
 
             // Fill a circle as the cap of this line
