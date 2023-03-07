@@ -98,7 +98,8 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 1141072074}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 03ee16cb3c4b8dc4f9f0ddb6001f0b42,
+    type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -184,8 +185,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
+  m_sharedMaterial: {fileID: 3162270882384572516, guid: 7f1022f530b45b148a3cd1b1d5da6994,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -221,7 +223,7 @@ MonoBehaviour:
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: -72
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
@@ -382,19 +384,19 @@ MonoBehaviour:
   speed: 1.31
   Introduction: {fileID: 88214022}
   IntroductionTexts:
-  - 'Astronomists recently discovered Planet X, the largest biodiverse planet on
-    record. However, Planet X fell into a rapidly decaying orbit around a black hole. '
+  - Astronomists recently discovered Planet X, the largest biodiverse planet on record.
+    However, Planet X fell into a rapidly decaying orbit around a black hole.
   - "Rescue teams were sent to save as much of Planet X\u2019s fauna and flora as
     possible. To allow lifeforms to survive rescue transport, they were stored in
     stasis pods on the container ships."
-  - 'These alien species were preserved in suspended animation on the journey to
-    their new home on the nearest nature preserve planet, Natura Serva 22. '
+  - These alien species were preserved in suspended animation on the journey to their
+    new home on the nearest nature preserve planet, Natura Serva 22.
   - You are a recent recruit at Natura Serva 22, tasked with interning under Aurora
     Star, a senior zoologist. Your first rotation is with the CapraX Zeigrun, or
     space goat, population.
-  - 'Since most of the creatures represent the last of their kind in the universe,
+  - Since most of the creatures represent the last of their kind in the universe,
     it is critical to quickly determine their needs to stabilize the populations
-    and promote growth to restore their numbers. '
+    and promote growth to restore their numbers.
   - "Wait, who is that coming over? You should see what they want\u2026"
   PrologueIllustrations:
   - {fileID: 21300000, guid: f2b334d8e5ecf48e8b3e747bd1473cf8, type: 3}

@@ -47,9 +47,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentIDCounter: 2
   json: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":306,\"yPos\":22},\"ID\":0,\"TMPFontGUID\":null,\"Text\":\"Looking
-    good, kid. Looking good. Seems you\u2019ve met this enclosure\u2019s objective,
-    just like I knew you would.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":306,\"yPos\":154},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Now
-    it\u2019s time for the last report back about the Zeigs. Are you ready? Good.\",\"parentUIDs\":[0,0],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false}]}"
+    good, kid. Looking good. Seems you've met this enclosure's objective,
+    just like I knew you would.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":306,\"yPos\":154},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Now
+    it's time for the last report back about the Zeigs. Are you ready? Good.\",\"parentUIDs\":[0,0],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false}]}"
   saveVersion: 103
   DefaultName: Star
   DefaultSprite: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
@@ -111,7 +111,7 @@ MonoBehaviour:
   Event:
     m_PersistentCalls:
       m_Calls: []
-  TMPFont: {fileID: 0}
+  TMPFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
   Icon: {fileID: 21300000, guid: bdf52160a0856f54b8af8ed579bd7a75, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &4706235906187915167
@@ -130,6 +130,6 @@ MonoBehaviour:
   Event:
     m_PersistentCalls:
       m_Calls: []
-  TMPFont: {fileID: 0}
+  TMPFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
   Icon: {fileID: 21300000, guid: 8c883f4201b912f4881839e372a91750, type: 3}
   Audio: {fileID: 0}

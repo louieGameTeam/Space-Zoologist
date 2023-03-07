@@ -83,9 +83,10 @@ MonoBehaviour:
   template: {fileID: 11400000, guid: 1369b495d4d1e2040a000132174dc6d5, type: 2}
   npcIcon: {fileID: 21300000, guid: fabf7af1c8cb79f45a1449c35f52a4a9, type: 3}
   npcName: Juno
-  npcFont: {fileID: 0}
+  npcTextFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
+  quizOptionFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
   openingConversation: {fileID: 3928375015839560486}
-  endOfQuizText: "And that\u2019s it. Give me a moment to look over your answers."
+  endOfQuizText: And that's it. Give me a moment to look over your answers.
   response:
     responses:
     - {fileID: 6281416792096004552}
@@ -158,11 +159,32 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3333847281283106645, guid: dd6667ca8611ce7448295f2de74d6068,
+        type: 3}
+      propertyPath: json
+      value: '{"Options":[],"SpeechNodes":[{"EditorInfo":{"isRoot":true,"xPos":306,"yPos":22},"ID":1,"TMPFontGUID":null,"Text":"Good.
+        You''ve met this enclosure''s objective easily enough, and the Eligans Impar
+        population is already beginning to rebound.","parentUIDs":[],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":null,"IconGUID":null,"Name":"Juno","OptionUIDs":[],"SpeechUID":2,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":306,"yPos":122},"ID":2,"TMPFontGUID":null,"Text":"Now
+        let us see if you''ve mastered the conceptual elements you were meant to
+        improve upon. Let us begin our report back.","parentUIDs":[1,1],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":null,"IconGUID":null,"Name":"Juno","OptionUIDs":[],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false}]}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4430485308255003523, guid: dd6667ca8611ce7448295f2de74d6068,
+        type: 3}
+      propertyPath: TMPFont
+      value: 
+      objectReference: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994,
+        type: 2}
     - target: {fileID: 7294645188857644193, guid: dd6667ca8611ce7448295f2de74d6068,
         type: 3}
       propertyPath: m_Name
       value: Level2E2QuizIntro
       objectReference: {fileID: 0}
+    - target: {fileID: 8088670764043306158, guid: dd6667ca8611ce7448295f2de74d6068,
+        type: 3}
+      propertyPath: TMPFont
+      value: 
+      objectReference: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994,
+        type: 2}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: dd6667ca8611ce7448295f2de74d6068, type: 3}
@@ -192,6 +214,27 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 8683394279205861942}
     m_Modifications:
+    - target: {fileID: 6453737869793561071, guid: 62ae0d55ca14e374fb24c3a78ad6d959,
+        type: 3}
+      propertyPath: TMPFont
+      value: 
+      objectReference: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994,
+        type: 2}
+    - target: {fileID: 7548781420697440964, guid: 62ae0d55ca14e374fb24c3a78ad6d959,
+        type: 3}
+      propertyPath: json
+      value: '{"Options":[],"SpeechNodes":[{"EditorInfo":{"isRoot":true,"xPos":306,"yPos":22},"ID":1,"TMPFontGUID":null,"Text":"Good.
+        It seems you have a basic enough understanding of Eligans Impar for us to
+        continue.","parentUIDs":[],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":null,"IconGUID":null,"Name":"Juno","OptionUIDs":[],"SpeechUID":2,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":306,"yPos":122},"ID":2,"TMPFontGUID":null,"Text":"Follow
+        me to the next encounter, and we''ll begin to touch on some of the finer
+        points of multi-species enclosures.","parentUIDs":[1,1],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":null,"IconGUID":null,"Name":"Juno","OptionUIDs":[],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false}]}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 8082859328175029697, guid: 62ae0d55ca14e374fb24c3a78ad6d959,
+        type: 3}
+      propertyPath: TMPFont
+      value: 
+      objectReference: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994,
+        type: 2}
     - target: {fileID: 9127313590845932403, guid: 62ae0d55ca14e374fb24c3a78ad6d959,
         type: 3}
       propertyPath: m_Name
@@ -336,11 +379,31 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4465222326715808587, guid: d5a4538500586794ca6808b681f0003f,
+        type: 3}
+      propertyPath: TMPFont
+      value: 
+      objectReference: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994,
+        type: 2}
+    - target: {fileID: 5196409734275517805, guid: d5a4538500586794ca6808b681f0003f,
+        type: 3}
+      propertyPath: json
+      value: '{"Options":[],"SpeechNodes":[{"EditorInfo":{"isRoot":true,"xPos":306,"yPos":22},"ID":1,"TMPFontGUID":null,"Text":"Good.
+        It seems you have taken this opportunity to redouble your observational efforts.
+        That is precisely what was intended.","parentUIDs":[],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":null,"IconGUID":null,"Name":"Juno","OptionUIDs":[],"SpeechUID":2,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":306,"yPos":121},"ID":2,"TMPFontGUID":null,"Text":"Come
+        along. There is much more work to do.","parentUIDs":[1,1],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":null,"IconGUID":null,"Name":"Juno","OptionUIDs":[],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false}]}'
+      objectReference: {fileID: 0}
     - target: {fileID: 7008501185880513402, guid: d5a4538500586794ca6808b681f0003f,
         type: 3}
       propertyPath: m_Name
       value: Level2E2QuizExcellent
       objectReference: {fileID: 0}
+    - target: {fileID: 8288483971743389981, guid: d5a4538500586794ca6808b681f0003f,
+        type: 3}
+      propertyPath: TMPFont
+      value: 
+      objectReference: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994,
+        type: 2}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: d5a4538500586794ca6808b681f0003f, type: 3}
@@ -370,6 +433,18 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 8683394279205861942}
     m_Modifications:
+    - target: {fileID: 463231040694315742, guid: 438fa1cfb9eeb484682e98f139bf8bd3,
+        type: 3}
+      propertyPath: TMPFont
+      value: 
+      objectReference: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994,
+        type: 2}
+    - target: {fileID: 3290631413319434279, guid: 438fa1cfb9eeb484682e98f139bf8bd3,
+        type: 3}
+      propertyPath: TMPFont
+      value: 
+      objectReference: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994,
+        type: 2}
     - target: {fileID: 4043655527514804133, guid: 438fa1cfb9eeb484682e98f139bf8bd3,
         type: 3}
       propertyPath: m_RootOrder
@@ -425,11 +500,27 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4272431979114928493, guid: 438fa1cfb9eeb484682e98f139bf8bd3,
+        type: 3}
+      propertyPath: json
+      value: '{"Options":[],"SpeechNodes":[{"EditorInfo":{"isRoot":true,"xPos":306,"yPos":22},"ID":1,"TMPFontGUID":null,"Text":"These
+        responses are becoming worrisome, newbie. Let''s head back to the first enclosure,
+        where you will repeat your previous efforts in their entirety.","parentUIDs":[],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":null,"IconGUID":null,"Name":"Juno","OptionUIDs":[],"SpeechUID":2,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":306,"yPos":122},"ID":2,"TMPFontGUID":null,"Text":"Please
+        endeavor to either take more detailed notes, or use whatever method of information
+        retention works best for you this time.","parentUIDs":[1,1],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":null,"IconGUID":null,"Name":"Juno","OptionUIDs":[],"SpeechUID":3,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":306,"yPos":222},"ID":3,"TMPFontGUID":null,"Text":"I
+        would hate for us to have to repeat these lessons yet again.","parentUIDs":[2,2],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":null,"IconGUID":null,"Name":"Juno","OptionUIDs":[],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false}]}'
+      objectReference: {fileID: 0}
     - target: {fileID: 7079322261930259966, guid: 438fa1cfb9eeb484682e98f139bf8bd3,
         type: 3}
       propertyPath: m_Name
       value: Level2E2QuizFailed
       objectReference: {fileID: 0}
+    - target: {fileID: 7855076171059302988, guid: 438fa1cfb9eeb484682e98f139bf8bd3,
+        type: 3}
+      propertyPath: TMPFont
+      value: 
+      objectReference: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994,
+        type: 2}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 438fa1cfb9eeb484682e98f139bf8bd3, type: 3}

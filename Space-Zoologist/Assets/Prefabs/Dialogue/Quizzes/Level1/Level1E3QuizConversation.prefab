@@ -49,7 +49,8 @@ MonoBehaviour:
   template: {fileID: 11400000, guid: aab7bbf38adf3964d8fa9e20f5dba718, type: 2}
   npcIcon: {fileID: 21300000, guid: 8c883f4201b912f4881839e372a91750, type: 3}
   npcName: Star
-  npcFont: {fileID: 0}
+  npcTextFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
+  quizOptionFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
   openingConversation: {fileID: 2397069553824602220}
   endOfQuizText: Alright, give me a minute to process your answers...
   response:
@@ -103,6 +104,16 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 2397069554445979011}
     m_Modifications:
+    - target: {fileID: 3587006351264644545, guid: fc17ddbbf7e48d649957db2619675acc,
+        type: 3}
+      propertyPath: json
+      value: '{"Options":[],"SpeechNodes":[{"EditorInfo":{"isRoot":true,"xPos":306,"yPos":22},"ID":0,"TMPFontGUID":null,"Text":"Well,
+        you could stand to pay a bit more attention to the Zeig''s water needs in
+        the future, but it seems like you know enough to proceed.","parentUIDs":[],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":null,"IconGUID":null,"Name":"Star","OptionUIDs":[],"SpeechUID":1,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":309,"yPos":143},"ID":1,"TMPFontGUID":null,"Text":"
+        Follow me over to the last Zeig enclosure. This is the home stretch now,
+        kid! We''ve learned almost everything we need to in order to save these little
+        guys!","parentUIDs":[0,0],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":null,"IconGUID":null,"Name":"Star","OptionUIDs":[],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false}]}'
+      objectReference: {fileID: 0}
     - target: {fileID: 3587006351264644546, guid: fc17ddbbf7e48d649957db2619675acc,
         type: 3}
       propertyPath: m_RootOrder
@@ -163,6 +174,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Level1E3QuizAcceptable
       objectReference: {fileID: 0}
+    - target: {fileID: 3816682662517886663, guid: fc17ddbbf7e48d649957db2619675acc,
+        type: 3}
+      propertyPath: TMPFont
+      value: 
+      objectReference: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994,
+        type: 2}
+    - target: {fileID: 7634134291852199596, guid: fc17ddbbf7e48d649957db2619675acc,
+        type: 3}
+      propertyPath: TMPFont
+      value: 
+      objectReference: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994,
+        type: 2}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: fc17ddbbf7e48d649957db2619675acc, type: 3}
@@ -192,6 +215,27 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 2397069554445979011}
     m_Modifications:
+    - target: {fileID: 853783441090252974, guid: 338bbe834ef8fd1438f63708283f8c98,
+        type: 3}
+      propertyPath: TMPFont
+      value: 
+      objectReference: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994,
+        type: 2}
+    - target: {fileID: 5699842825745095969, guid: 338bbe834ef8fd1438f63708283f8c98,
+        type: 3}
+      propertyPath: TMPFont
+      value: 
+      objectReference: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994,
+        type: 2}
+    - target: {fileID: 7095487409541169546, guid: 338bbe834ef8fd1438f63708283f8c98,
+        type: 3}
+      propertyPath: json
+      value: '{"Options":[],"SpeechNodes":[{"EditorInfo":{"isRoot":true,"xPos":306,"yPos":21},"ID":0,"TMPFontGUID":null,"Text":"Sorry,
+        kid, but your answers conflict with the research data we''ve collected so
+        far a bit too much for comfort.","parentUIDs":[],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":null,"IconGUID":null,"Name":"Star","OptionUIDs":[],"SpeechUID":1,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":303,"yPos":153},"ID":1,"TMPFontGUID":null,"Text":"Let''s
+        head back to the last enclosure, and spend some more time taking detailed
+        notes about the Zeig''s needs. ","parentUIDs":[0,0],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":null,"IconGUID":null,"Name":"Star","OptionUIDs":[],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false}]}'
+      objectReference: {fileID: 0}
     - target: {fileID: 7095487409541169588, guid: 338bbe834ef8fd1438f63708283f8c98,
         type: 3}
       propertyPath: m_Name
@@ -281,6 +325,18 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 2397069553644409659}
     m_Modifications:
+    - target: {fileID: 954110042656302788, guid: 7de5decfd99baad419ddb7d9297c4b75,
+        type: 3}
+      propertyPath: TMPFont
+      value: 
+      objectReference: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994,
+        type: 2}
+    - target: {fileID: 1480313573945497963, guid: 7de5decfd99baad419ddb7d9297c4b75,
+        type: 3}
+      propertyPath: TMPFont
+      value: 
+      objectReference: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994,
+        type: 2}
     - target: {fileID: 7242347093179811148, guid: 7de5decfd99baad419ddb7d9297c4b75,
         type: 3}
       propertyPath: m_RootOrder
@@ -336,6 +392,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7242347093179811149, guid: 7de5decfd99baad419ddb7d9297c4b75,
+        type: 3}
+      propertyPath: json
+      value: '{"Options":[],"SpeechNodes":[{"EditorInfo":{"isRoot":true,"xPos":306,"yPos":22},"ID":0,"TMPFontGUID":null,"Text":"Whoo!
+        Looks like we were right to put these Zeigs in your hands!.","parentUIDs":[],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":null,"IconGUID":null,"Name":"Star","OptionUIDs":[],"SpeechUID":1,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":305,"yPos":153},"ID":1,"TMPFontGUID":null,"Text":"Before
+        we ship you off to meet some new Zeig friends, we''ve got to establish your
+        findings with the report-back. Question #1...","parentUIDs":[0,0],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":null,"IconGUID":null,"Name":"Star","OptionUIDs":[],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false}]}'
+      objectReference: {fileID: 0}
     - target: {fileID: 7242347093179811151, guid: 7de5decfd99baad419ddb7d9297c4b75,
         type: 3}
       propertyPath: m_Name
@@ -370,6 +434,30 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 2397069554445979011}
     m_Modifications:
+    - target: {fileID: 466319068071867337, guid: 372c7af443946654a8432e7082360e31,
+        type: 3}
+      propertyPath: TMPFont
+      value: 
+      objectReference: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994,
+        type: 2}
+    - target: {fileID: 2449225173534107639, guid: 372c7af443946654a8432e7082360e31,
+        type: 3}
+      propertyPath: TMPFont
+      value: 
+      objectReference: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994,
+        type: 2}
+    - target: {fileID: 5145402983062429792, guid: 372c7af443946654a8432e7082360e31,
+        type: 3}
+      propertyPath: json
+      value: '{"Options":[],"SpeechNodes":[{"EditorInfo":{"isRoot":true,"xPos":306,"yPos":22},"ID":0,"TMPFontGUID":null,"Text":"Well,
+        how about that! You got them all right! I''m not sure we''ve ever had a recruit
+        manage that!","parentUIDs":[],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":null,"IconGUID":null,"Name":"Star","OptionUIDs":[],"SpeechUID":1,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":308,"yPos":166},"ID":1,"TMPFontGUID":null,"Text":"It
+        looks like you''ve given us enough data to have an almost perfect picture
+        of what it takes to keep the Zeig''s alive! You''ve saved them!","parentUIDs":[0,0],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":null,"IconGUID":null,"Name":"Star","OptionUIDs":[],"SpeechUID":2,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":309,"yPos":283},"ID":2,"TMPFontGUID":null,"Text":"But
+        there''s no time to relax. PlanetX had a ton of species on it. Head over
+        to the next wing, and we''ll introduce you to the next species you''ll be
+        trying to save!","parentUIDs":[1,1],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":null,"IconGUID":null,"Name":"Star","OptionUIDs":[],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false}]}'
+      objectReference: {fileID: 0}
     - target: {fileID: 5145402983062429793, guid: 372c7af443946654a8432e7082360e31,
         type: 3}
       propertyPath: m_RootOrder
@@ -430,6 +518,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Level1E3QuizExcellent
       objectReference: {fileID: 0}
+    - target: {fileID: 8362399208108598130, guid: 372c7af443946654a8432e7082360e31,
+        type: 3}
+      propertyPath: TMPFont
+      value: 
+      objectReference: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994,
+        type: 2}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 372c7af443946654a8432e7082360e31, type: 3}
