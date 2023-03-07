@@ -1,5 +1,7 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
+using DG.Tweening;
+using DG.Tweening.Core.Easing;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -45,6 +47,8 @@ namespace DialogueEditor
         public string AdvanceInput = "Submit";
         public RectTransform Background;
         public GameObject SkipConversationButton;
+        [Tooltip("UI For indicating when dialogue can continue")]
+        public RectTransform dialogueContinueIndicator;
         public Button ProgressConversationButton;
         // Non-User facing 
         // Not exposed via custom inspector
@@ -87,6 +91,8 @@ namespace DialogueEditor
         private bool isFrozen = false;
         private bool progressUIButtonDown = false;
 
+        private Tween dialogueIndicatorTween;
+
         private SpeechNode m_pendingDialogue;
         private OptionNode m_selectedOption;
         private SpeechNode m_currentSpeech;
@@ -127,6 +133,7 @@ namespace DialogueEditor
         private void OnDestroy()
         {
             Instance = null;
+            DOTween.Kill(dialogueIndicatorTween);
         }
 
         //--------------------------------------
@@ -359,6 +366,9 @@ namespace DialogueEditor
                     SetColorAlpha(NpcIcon, 1);
                     SetColorAlpha(NameText, 1);
                     break;
+                case eState.Idle:
+                    SetConversationContinueIndicator(false);
+                    break;
             }
 
             m_state = newState;
@@ -398,6 +408,10 @@ namespace DialogueEditor
                             m_uiOptions[i].gameObject.SetActive(true);
                         }
                     }
+                    break;
+                case eState.Idle:
+                    if(m_currentSpeech.Options.Count == 0)
+                        SetConversationContinueIndicator(true);
                     break;
             }     
         }
@@ -735,6 +749,7 @@ namespace DialogueEditor
             NpcIcon.gameObject.SetActive(false);
             SetState(eState.Off);
             gameObject.SetActive(false);
+            SetConversationContinueIndicator(false);
 #if UNITY_EDITOR
             // Debug.Log("[ConversationManager]: Conversation UI off.");
 #endif
@@ -800,6 +815,35 @@ namespace DialogueEditor
         {
             if(SkipConversationButton.activeSelf != val)
                 SkipConversationButton.SetActive(val);
+        }
+        
+        private void SetConversationContinueIndicator(bool isShown)
+        {
+            dialogueContinueIndicator.gameObject.SetActive(isShown);
+            if (isShown)
+            {
+                float bounceDist = 15f;
+                Vector2 pos = dialogueContinueIndicator.anchoredPosition;
+                if (dialogueIndicatorTween == null)
+                {
+                    dialogueIndicatorTween = DOTween.To(
+                        a =>
+                        {
+                            if (dialogueContinueIndicator)
+                                dialogueContinueIndicator.anchoredPosition = new Vector2(pos.x, a);
+                        },
+                        pos.y,
+                        pos.y - bounceDist,
+                        0.4f
+                    ).SetLoops(-1, LoopType.Yoyo);
+                }
+
+                DOTween.Play(dialogueIndicatorTween);
+            }
+            else
+            {
+                DOTween.Pause(dialogueIndicatorTween);
+            }
         }
 
         /*
