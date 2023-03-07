@@ -51,7 +51,7 @@ public class TileStoreSection : StoreSection
     /// </summary>
     private void FinishPlacing()
     {
-        Debug.Log("Finish placing");
+        //Debug.Log("Finish placing");
         isPlacing = false;
         foreach (Vector3Int pos in this.tilePlacementController.addedTiles)
         {
@@ -109,7 +109,7 @@ public class TileStoreSection : StoreSection
         if (!UIBlockerSettings.OperationIsAvailable ("Build")) {
             return;
         }
-        print ("Place tiles...");
+        //print ("Place tiles...");
         if (Input.GetMouseButtonDown (0) && !isPlacing) {
             this.StartPlacing ();
         }
