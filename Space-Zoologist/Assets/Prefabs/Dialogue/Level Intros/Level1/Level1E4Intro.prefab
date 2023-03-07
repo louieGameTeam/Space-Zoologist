@@ -52,7 +52,7 @@ MonoBehaviour:
   Event:
     m_PersistentCalls:
       m_Calls: []
-  TMPFont: {fileID: 0}
+  TMPFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
   Icon: {fileID: 21300000, guid: 7646c3955a414ac45b1dac5eaeb2bcfe, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &7456208118554245863
@@ -71,7 +71,7 @@ MonoBehaviour:
   Event:
     m_PersistentCalls:
       m_Calls: []
-  TMPFont: {fileID: 0}
+  TMPFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
   Icon: {fileID: 21300000, guid: ee9bb28aadb5c3d47898eab5ad58b4d6, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &63954385357572545
@@ -90,7 +90,7 @@ MonoBehaviour:
   Event:
     m_PersistentCalls:
       m_Calls: []
-  TMPFont: {fileID: 0}
+  TMPFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
   Icon: {fileID: 21300000, guid: 8c883f4201b912f4881839e372a91750, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &2085084546637474849
@@ -109,7 +109,7 @@ MonoBehaviour:
   Event:
     m_PersistentCalls:
       m_Calls: []
-  TMPFont: {fileID: 0}
+  TMPFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
   Icon: {fileID: 21300000, guid: 7646c3955a414ac45b1dac5eaeb2bcfe, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &662216357283292578
@@ -128,7 +128,7 @@ MonoBehaviour:
   Event:
     m_PersistentCalls:
       m_Calls: []
-  TMPFont: {fileID: 0}
+  TMPFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
   Icon: {fileID: 21300000, guid: ee9bb28aadb5c3d47898eab5ad58b4d6, type: 3}
   Audio: {fileID: 0}
 --- !u!1 &8669930187823351631
@@ -178,17 +178,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentIDCounter: 6
   json: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":333,\"yPos\":64},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Alright,
-    here it is! The last Zeig enclosure. Wrap this one up, and we\u2019ll be all
-    ready to move you on to the next species!\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":2,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":333,\"yPos\":164},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"This
-    time around, you should build on what you\u2019ve learned about their food preferences,
-    and make sure you investigate their terrain and water composition preferences.\",\"parentUIDs\":[1,1],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":3,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":333,\"yPos\":264},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"All
-    the other work we\u2019ve done to recreate the Zeig\u2019s natural habitat will
-    be for nothing if we don\u2019t nail the water, so make sure you pay close attention
-    to it.\",\"parentUIDs\":[2,2],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":4,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":333,\"yPos\":364},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"But
-    you know all that by now, don\u2019t you? I\u2019m sure you\u2019ll nail it this
-    time around, too.\",\"parentUIDs\":[3,3],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":5,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":333,\"yPos\":464},\"ID\":5,\"TMPFontGUID\":null,\"Text\":\"I\u2019ll
-    be back in 25 days to check on the enclosure and test what you\u2019ve learned!
-    This is the last stretch, so make sure you give it your all!\",\"parentUIDs\":[4,4],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false}]}"
+    here it is! The last Zeig enclosure. Wrap this one up, and we'll be all
+    ready to move you on to the next species!\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":2,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":333,\"yPos\":164},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"This
+    time around, you should build on what you've learned about their food preferences,
+    and make sure you investigate their terrain and water composition preferences.\",\"parentUIDs\":[1,1],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":3,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":333,\"yPos\":264},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"All
+    the other work we've done to recreate the Zeig's natural habitat will
+    be for nothing if we don't nail the water, so make sure you pay close attention
+    to it.\",\"parentUIDs\":[2,2],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":4,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":333,\"yPos\":364},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"But
+    you know all that by now, don't you? I'm sure you'll nail it this
+    time around, too.\",\"parentUIDs\":[3,3],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":5,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":333,\"yPos\":464},\"ID\":5,\"TMPFontGUID\":null,\"Text\":\"I'll
+    be back in 25 days to check on the enclosure and test what you've learned!
+    This is the last stretch, so make sure you give it your all!\",\"parentUIDs\":[4,4],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false}]}"
   saveVersion: 103
   DefaultName: 
   DefaultSprite: {fileID: 0}

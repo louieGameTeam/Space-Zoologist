@@ -168,12 +168,12 @@ public class NotebookUI : MonoBehaviour
         {
             if (isOpen)
             {
-                GameManager.Instance.TryToPause("Notebook");
+                //GameManager.Instance.TryToPause("Notebook");
                 AudioManager.instance.PlayOneShot(SFXType.NotebookOpen);                
             }               
             else
             {
-                GameManager.Instance.TryToUnpause("Notebook");
+                //GameManager.Instance.TryToUnpause("Notebook");
                 AudioManager.instance.PlayOneShot(SFXType.NotebookClose);               
             }
         }
@@ -186,6 +186,7 @@ public class NotebookUI : MonoBehaviour
         else
             onEnableInspectorToggle.Invoke(true);
     }
+    
     public void NavigateToBookmark(Bookmark bookmark)
     {
         if (!isOpen) SetIsOpen(true);
