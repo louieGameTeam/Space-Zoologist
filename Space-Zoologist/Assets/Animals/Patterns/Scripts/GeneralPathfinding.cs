@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 public class GeneralPathfinding : BehaviorPattern
 {
@@ -21,20 +23,36 @@ public class GeneralPathfinding : BehaviorPattern
             if (animalCallbackData.animal.PopulationInfo.AccessibleLocationsExist)
                 destination = animalCallbackData.animal.PopulationInfo.AccessibleLocations[locationIndex];
         }
-        AnimalPathfinding.PathRequestManager.RequestPath(base.TileDataController.WorldToCell(gameObject.transform.position), destination, animalCallbackData.animal.MovementController.AssignPath, animalCallbackData.animal.PopulationInfo.Grid);
+        AnimalPathfinding.PathRequestManager.RequestPath(
+            base.TileDataController.WorldToCell(gameObject.transform.position), 
+            destination, 
+            animalCallbackData.animal.MovementController.AssignPath, 
+            animalCallbackData.animal.PopulationInfo.Grid);
     }
     protected override bool IsPatternFinishedAfterUpdate(GameObject animal, AnimalCallbackData animalCallbackData)
     {
-        if (animalCallbackData.animal.MovementController.HasPath)
+        MovementController animalMovementController = animalCallbackData.animal.MovementController;
+        
+        if (animalMovementController.HasPath)
         {
-            if (animalCallbackData.animal.MovementController.DestinationCancelled)
+            // First move
+            Vector3 moveStep = animalMovementController.MoveTowardsDestination();
+            
+            // Check if moved onto an invalid tile
+            var target = animalMovementController.transform.position;
+            var targetTileData = GameManager.Instance.m_tileDataController.GetGameTileAt(target);
+            if (!animalCallbackData.animal.PopulationInfo.species.AccessibleTerrain.Contains(targetTileData.type))
             {
-                return true;
+                // If so, then undo the movestep and cancel the entire behavior 
+                // TODO: Maybe have the pathfinding try again?
+                animalMovementController.MoveVector(-moveStep);
+                animalMovementController.TryToCancelDestination();
+                return false;
             }
-            animalCallbackData.animal.MovementController.MoveTowardsDestination();
-            if (animalCallbackData.animal.MovementController.DestinationReached)
+
+            if (animalMovementController.DestinationReached)
             {
-                animalCallbackData.animal.MovementController.ResetPathfindingConditions();
+                animalMovementController.ResetPathfindingConditions();
                 //Debug.Log(animal.name + " has reached their destination of " + this.Destination.ToString());
                 return true;
             }
@@ -43,15 +61,24 @@ public class GeneralPathfinding : BehaviorPattern
         return true;
     }
 
+    private static float timeList = 0f;
+
+    /// <summary>
+    /// If the path is cancelled, such as due to tiles being placed in the way, then kick out of the entire pop behavior.
+    /// </summary>
+    /// <param name="animal"></param>
+    /// <param name="animalCallbackData"></param>
+    /// <returns></returns>
     protected override bool IsAlternativeConditionSatisfied(GameObject animal, AnimalCallbackData animalCallbackData)
     {
-        //if (animalData.animal.MovementController.HasPath)
-        //{
-        //    if (animalData.animal.MovementController.DestinationCancelled)
-        //    {
-        //        return true;
-        //    }
-        //}
+        MovementController animalMovementController = animalCallbackData.animal.MovementController;
+        if (animalMovementController.HasPath)
+        {
+            if (animalMovementController.DestinationCancelled)
+            {
+                return true;
+            }
+        }
         return false;
     }
 }

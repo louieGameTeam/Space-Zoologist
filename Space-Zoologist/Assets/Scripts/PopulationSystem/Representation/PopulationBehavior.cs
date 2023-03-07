@@ -55,6 +55,11 @@ public class PopulationBehavior : ScriptableObject
         ProceedToNext(animal);
     }
 
+    private void ForceExitPopulationBehavior(GameObject animal)
+    {
+        ExitBehavior(animal);
+    }
+
     protected void CallForceExitCallback(GameObject animal)
     {
         animalsToForceExitCallbacks[animal]?.Invoke(animal);
@@ -68,7 +73,11 @@ public class PopulationBehavior : ScriptableObject
     {
         if (animalsToSteps[animal] < behaviorPatterns.Count) // exit behavior when all steps are completed
         {
-            animal.GetComponent<AnimalBehaviorManager>().AddBehaviorPattern(behaviorPatterns[animalsToSteps[animal]], stepCompletedCallback, ExitBehavior);
+            // If the alternative condition is met, then exit the entire population behavior
+            animal.GetComponent<AnimalBehaviorManager>().AddBehaviorPattern(
+                behaviorPatterns[animalsToSteps[animal]], 
+                stepCompletedCallback, 
+                ExitBehavior);
         }
         else
         {
