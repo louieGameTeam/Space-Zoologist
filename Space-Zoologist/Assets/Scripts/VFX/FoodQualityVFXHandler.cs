@@ -110,7 +110,9 @@ public class FoodQualityVFXHandler : MonoBehaviour
             if (eatingData.IsEating)
             {
                 // EdibleFoods = GetEdibleFoods(SelectedSpecies.Needs.FindFoodNeeds());
+#if UNITY_EDITOR
                 Debug.Log($"FOOD CONSUMED: {eatingData.FoodBeingEaten}");
+#endif 
                 // If food being eaten is edible for the selected species
                 if (EdibleFoods.ContainsKey(eatingData.FoodBeingEaten))
                 {

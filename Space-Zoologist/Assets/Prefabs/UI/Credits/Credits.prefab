@@ -196,7 +196,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: X
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: fc03621bdcb78864ebe8333f49849b37, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -260,7 +260,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &6469087366818376798
@@ -405,6 +405,16 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 6469087364943292270}
     m_Modifications:
+    - target: {fileID: 6968273228260780812, guid: 564906f41880d4c4ca265ec080fcb06b,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 6968273228260780812, guid: 564906f41880d4c4ca265ec080fcb06b,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 60
+      objectReference: {fileID: 0}
     - target: {fileID: 6968273228260780813, guid: 564906f41880d4c4ca265ec080fcb06b,
         type: 3}
       propertyPath: m_Pivot.x
@@ -443,12 +453,12 @@ PrefabInstance:
     - target: {fileID: 6968273228260780813, guid: 564906f41880d4c4ca265ec080fcb06b,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 1664
+      value: 1176.83
       objectReference: {fileID: 0}
     - target: {fileID: 6968273228260780813, guid: 564906f41880d4c4ca265ec080fcb06b,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 432
+      value: 563.51
       objectReference: {fileID: 0}
     - target: {fileID: 6968273228260780813, guid: 564906f41880d4c4ca265ec080fcb06b,
         type: 3}

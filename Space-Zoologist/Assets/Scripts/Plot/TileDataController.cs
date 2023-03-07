@@ -547,7 +547,7 @@ public class TileDataController : MonoBehaviour
     private void UpdateUI(bool onOff)
     {
         GameManager.Instance.m_playerController.CanUseIngameControls = onOff;
-        NextDayButton.interactable = onOff;
+        //NextDayButton.interactable = onOff;
     }
     #endregion
 
