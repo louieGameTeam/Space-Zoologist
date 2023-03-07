@@ -5,15 +5,9 @@ using UnityEngine;
 public static class Texture2DExtensions
 {
     #region Public Extension Methods
-    public static Texture2D SetAllPixels(this Texture2D tex, Color c)
+    public static Texture2D SetAllPixels(this Texture2D tex, Color32[] c)
     {
-        for(int x = 0; x < tex.width; x++)
-        {
-            for(int y = 0; y < tex.height; y++)
-            {
-                tex.SetPixel(x, y, c);
-            }
-        }
+        tex.SetPixels32(c);
         return tex;
     }
     public static Texture2D FillCircle(this Texture2D texture, int x, int y, int r, Color c)
