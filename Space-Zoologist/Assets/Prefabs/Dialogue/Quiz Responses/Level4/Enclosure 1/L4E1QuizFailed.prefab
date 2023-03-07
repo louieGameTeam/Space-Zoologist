@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentIDCounter: 4
-  json: '{"Options":[],"SpeechNodes":[{"EditorInfo":{"isRoot":true,"xPos":306,"yPos":22},"ID":1,"TMPFontGUID":null,"Text":"Hmmmm
+  json: '{"Options":[],"SpeechNodes":[{"EditorInfo":{"isRoot":true,"xPos":306,"yPos":21},"ID":1,"TMPFontGUID":null,"Text":"Hmmmm
     those answers don''t quite line up with what I have here. Better luck on the
     reportback next time I guess...","parentUIDs":[],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":"Neutral","IconGUID":null,"Name":"Barry","OptionUIDs":[],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false}]}'
   saveVersion: 103
@@ -106,6 +106,6 @@ MonoBehaviour:
   Event:
     m_PersistentCalls:
       m_Calls: []
-  TMPFont: {fileID: 0}
+  TMPFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
   Icon: {fileID: 21300000, guid: ba7da11aff8543047b3d19b7d629c282, type: 3}
   Audio: {fileID: 0}

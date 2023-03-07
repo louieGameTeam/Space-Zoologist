@@ -40,7 +40,10 @@ public class QuizConversation : MonoBehaviour
     private string npcName = "Star";
     [SerializeField]
     [Tooltip("Font to use when saying each speech node")]
-    private TMP_FontAsset npcFont = null;
+    private TMP_FontAsset npcTextFont = null;
+    [SerializeField]
+    [Tooltip("Font to use when displaying option nodes")]
+    private TMP_FontAsset quizOptionFont = null;
 
     [Space]
 
@@ -250,7 +253,7 @@ public class QuizConversation : MonoBehaviour
             Text = text,
             Name = npcName,
             Icon = npcIcon,
-            TMPFont = npcFont,
+            TMPFont = npcTextFont,
             ID = conversation.CurrentIDCounter,
             EditorInfo = new EditableConversationNode.EditorArgs()
             {
@@ -263,7 +266,7 @@ public class QuizConversation : MonoBehaviour
         // Setup the node event.
         NodeEventHolder nodeEvent = conversation.GetNodeData(conversation.CurrentIDCounter);
         nodeEvent.Icon = npcIcon;
-        nodeEvent.TMPFont = npcFont;
+        nodeEvent.TMPFont = npcTextFont;
 
         // If the callback is not null that add it to the event
         if (callback != null) nodeEvent.Event.AddListener(callback);
@@ -283,7 +286,7 @@ public class QuizConversation : MonoBehaviour
         EditableOptionNode optionNode = new EditableOptionNode()
         {
             Text = text,
-            TMPFont = npcFont,
+            TMPFont = quizOptionFont,
             ID = conversation.CurrentIDCounter,
             EditorInfo = new EditableConversationNode.EditorArgs()
             {
