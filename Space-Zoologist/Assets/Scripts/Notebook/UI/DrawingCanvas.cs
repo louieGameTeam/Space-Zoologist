@@ -74,6 +74,7 @@ public class DrawingCanvas : MonoBehaviour,  IBeginDragHandler, IDragHandler
     {
         if(drawingTexture != null)
         {
+            // SummaryManager is backend, should not be used in editor
             SummaryManager summaryManager = (SummaryManager)FindObjectOfType(typeof(SummaryManager));
             if(summaryManager)
                 summaryManager.CurrentSummaryTrace.NumDrawToolUsed += 1;
