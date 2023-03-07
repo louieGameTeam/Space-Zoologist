@@ -51,10 +51,17 @@ public class StoreItemCell : MonoBehaviour, IPointerClickHandler, IPointerEnterH
 
         if (!GameManager.Instance) { return; }
 
-        // Disable request button in tutorial or if item has price
+        // Disable request button in tutorial or if item is unrequestable, or show display price instead
         levelName = GameManager.Instance.LevelData.Level.Name;
-        if (levelName != "Tutorial") {
-            RequestButton.gameObject.SetActive (!displayPrice);
+        
+        bool hideRequestButton = (levelName == "Tutorial") 
+                                 || displayPrice 
+                                 || (item.Type == ItemRegistry.Category.Species);
+        
+        if (!hideRequestButton)
+        {
+            
+            RequestButton.gameObject.SetActive (true);
 
             RequestButton.onClick.AddListener (() =>
             {
