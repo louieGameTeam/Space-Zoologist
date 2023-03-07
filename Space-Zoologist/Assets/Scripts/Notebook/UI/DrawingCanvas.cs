@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -65,6 +66,7 @@ public class DrawingCanvas : MonoBehaviour,  IBeginDragHandler, IDragHandler
     #region Private Fields
     private Texture2D drawingTexture = null;
     private Vector2 previousTexturePosition = Vector2.zero;
+    private Color32[] clearTextureColorArray;
     #endregion
 
     #region Public Methods
@@ -115,7 +117,7 @@ public class DrawingCanvas : MonoBehaviour,  IBeginDragHandler, IDragHandler
     {
         if(drawingTexture != null)
         {
-            drawingTexture.SetAllPixels(backgroundColor).Apply();
+            drawingTexture.SetAllPixels(clearTextureColorArray).Apply();
         }
     }
     #endregion
@@ -128,12 +130,26 @@ public class DrawingCanvas : MonoBehaviour,  IBeginDragHandler, IDragHandler
         {
             StartCoroutine(InitializeTextureOnceRectIsValid());
         }
+        else
+        {
+            // Recreate the clear color array
+            CreateClearColorArray();
+        }
     }
+
+    private void OnDisable()
+    {
+        // When not drawing, free up memory
+        clearTextureColorArray = null;
+    }
+
     #endregion
 
     #region Private Methods
     private IEnumerator InitializeTextureOnceRectIsValid()
     {
+        // Set the raw image to be clear at first
+        rawImage.color = Color.clear;
         // Wait until the rect area is valid. This is necessary because the rect is invalid while
         // we are waiting for Unity's layouting system to update
         yield return new WaitUntil(() => rectTransform.rect.width > 0f && rectTransform.rect.height > 0f);
@@ -141,11 +157,35 @@ public class DrawingCanvas : MonoBehaviour,  IBeginDragHandler, IDragHandler
         // Create the texture
         drawingTexture = new Texture2D((int)rectTransform.rect.width, (int)rectTransform.rect.height);
         drawingTexture.wrapMode = TextureWrapMode.Clamp;
-        drawingTexture.SetAllPixels(backgroundColor).Apply();
+        
+        // Create clear color array to allow for faster clearing later
+        CreateClearColorArray();
+        
+        drawingTexture.SetAllPixels(clearTextureColorArray).Apply();
 
+        rawImage.color = Color.white;
         // Set the texture of the raw image
         rawImage.texture = drawingTexture;
+
     }
+
+    private void CreateClearColorArray()
+    {
+        int width = drawingTexture.width;
+        int height = drawingTexture.height;
+
+        Color32 bg = backgroundColor;
+        clearTextureColorArray = new Color32[width * height];
+
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                clearTextureColorArray[y * width + x] = bg;
+            }
+        }
+    }
+    
     private Vector2 MousePositionToPositionInTexture(Vector2 mousePosition)
     {
         // Get the position of the mouse inside the rect
