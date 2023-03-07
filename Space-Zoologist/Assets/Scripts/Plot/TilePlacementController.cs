@@ -250,13 +250,22 @@ public class TilePlacementController : MonoBehaviour
             if (!IsPositionFree (cellPosition)) {
                 return PlacementResult.Restricted;
             }
+            
+            // If you already started placing something here
+            if (addedTiles.Contains(cellPosition)) {
+                return PlacementResult.Restricted;
+            }
 
             // Check availability
             foreach (GameTile tile in referencedTiles)
             {
                 // If same tile, but not liquid
                 GameTile tileAtPos = gridSystemReference.GetGameTileAt(cellPosition);
-                if (tileAtPos == tile && tileAtPos.type != TileType.Liquid)
+                
+                bool isTile = tileAtPos == tile;
+                bool alreadyExists = tileAtPos.type != TileType.Liquid;
+                
+                if (isTile && alreadyExists)
                 {
                     this.triedToPlaceTiles.Add(cellPosition);
                     return PlacementResult.AlreadyExisted;

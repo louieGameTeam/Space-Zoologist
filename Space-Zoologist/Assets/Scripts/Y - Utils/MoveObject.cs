@@ -371,8 +371,7 @@ public class MoveObject : MonoBehaviour
                 {
                     LiquidbodyController.Instance.RemoveConstructingLiquidContent(gridSystem.WorldToCell(objectToMove.transform.position));
                 }
-
-
+                
                 GameManager.Instance.AddToBalance(sellBackCost);
                 TileData tileData = gridSystem.GetTileData(gridSystem.WorldToCell(objectToMove.transform.position));
                 tileData.Revert();
@@ -488,6 +487,12 @@ public class MoveObject : MonoBehaviour
         var currentGameTile = gridSystem.GetTileData(tilePos)?.currentTile;
         if (gridSystem.IsTilePlacementValid (tilePos, currentGameTile, initialTile.type))
         {
+            // Remove previous position constructing from liquid body
+            if (initialTile.type == TileType.Liquid)
+            {
+                LiquidbodyController.Instance.RemoveConstructingLiquidContent(gridSystem.WorldToCell(objectToMove.transform.position));
+            }
+            
             // undo current progress on existing tile
             gridSystem.GetTileData(initialTilePosition).Revert();
             gridSystem.RemoveBuffer((Vector2Int)initialTilePosition);
