@@ -28,11 +28,11 @@ MonoBehaviour:
         index: 2
       need: 7
     options:
-    - label: 'Yes, if kept balanced, the Strot population and Stroteater can live
+    - label: 'Yes, if kept balanced, the Strot and Stroteater population can live
         together without one completely destroying the other '
-      weight: 1
-    - label: No, the Stroteaters will always eat all of the Strots eventually
       weight: 0
+    - label: No, the Stroteaters will always eat all of the Strots eventually
+      weight: 1
   - question: Let's say Barry just finished doing research on Stroteaters, what should
       he do next?
     category:

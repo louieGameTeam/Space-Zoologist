@@ -54,7 +54,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
-  Icon: {fileID: 21300000, guid: bdf52160a0856f54b8af8ed579bd7a75, type: 3}
+  Icon: {fileID: 21300000, guid: b01f055a5a8c42041a3a17161e277de6, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &1074722265897152032
 MonoBehaviour:
@@ -149,7 +149,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
-  Icon: {fileID: 21300000, guid: 8c883f4201b912f4881839e372a91750, type: 3}
+  Icon: {fileID: 21300000, guid: b01f055a5a8c42041a3a17161e277de6, type: 3}
   Audio: {fileID: 0}
 --- !u!1 &4539689340290387487
 GameObject:
@@ -197,16 +197,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentIDCounter: 7
-  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":180,\"yPos\":496},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Ha-ha,
-    sportsball. I love sportsball!\",\"parentUIDs\":[0,0],\"SpeechUID\":5},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":430,\"yPos\":489},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"You
-    bet. Keep putting me in, and I'll knock your expectations out of the park!\\r\",\"parentUIDs\":[0,0],\"SpeechUID\":5}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":292,\"yPos\":322},\"ID\":0,\"TMPFontGUID\":null,\"Text\":\"Whoa,
-    you actually pulled it off! Not many new recruits can pull off a job this tough.
-    Looks like you're our new pinch hitter, kid!\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[1,2],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":306,\"yPos\":613},\"ID\":5,\"TMPFontGUID\":null,\"Text\":\"It's
-    time for your report-back, like I mentioned when you first got here. I'll
-    be asking a series of questions to gauge your learning.\",\"parentUIDs\":[1,2,1,2],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":6,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":300,\"yPos\":736},\"ID\":6,\"TMPFontGUID\":null,\"Text\":\"Don't
-    worry. There's no trick questions here. Just remember the work you did,
-    and you'll be fine. If you can handle the enclosure, you can handle the
-    report-back.\",\"parentUIDs\":[5,5],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false}]}"
+  json: '{"Options":[],"SpeechNodes":[{"EditorInfo":{"isRoot":true,"xPos":292,"yPos":322},"ID":0,"TMPFontGUID":null,"Text":"Hey,
+    nice job you did it! Look those happy little Zeigs!","parentUIDs":[],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":"Happy","IconGUID":null,"Name":"Star","OptionUIDs":[],"SpeechUID":5,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":296,"yPos":481},"ID":5,"TMPFontGUID":null,"Text":"Now,
+    it''s time for your report-back like I mentioned before.","parentUIDs":[0,0],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":"Neutral","IconGUID":null,"Name":"Star","OptionUIDs":[],"SpeechUID":6,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":282,"yPos":638},"ID":6,"TMPFontGUID":null,"Text":"This
+    one will be somewhat of a practice report-back, so don''t worry if you get something
+    wrong. Just remember to check your notes and you should be fine!","parentUIDs":[5,5],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":"Happy","IconGUID":null,"Name":"Star","OptionUIDs":[],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false}]}'
   saveVersion: 103
   DefaultName: Star
   DefaultSprite: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
