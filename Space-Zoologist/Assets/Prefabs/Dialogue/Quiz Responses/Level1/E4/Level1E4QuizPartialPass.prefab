@@ -70,7 +70,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
-  Icon: {fileID: 21300000, guid: ee9bb28aadb5c3d47898eab5ad58b4d6, type: 3}
+  Icon: {fileID: 21300000, guid: b01f055a5a8c42041a3a17161e277de6, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &625891055038512704
 MonoBehaviour:
@@ -89,7 +89,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
-  Icon: {fileID: 21300000, guid: 7646c3955a414ac45b1dac5eaeb2bcfe, type: 3}
+  Icon: {fileID: 21300000, guid: b01f055a5a8c42041a3a17161e277de6, type: 3}
   Audio: {fileID: 0}
 --- !u!1 &9133556043098799884
 GameObject:
@@ -138,12 +138,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentIDCounter: 4
   json: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":305,\"yPos\":22},\"ID\":0,\"TMPFontGUID\":null,\"Text\":\"Well,
-    that's a definite \u201Cgood enough\u201D if I ever saw one. Might want
-    to give the notebook another quick read in the future, but for now you're
-    doing just fine.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":2,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":308,\"yPos\":133},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"You've
+    that's a definite \u201Cgood enough\u201D if I ever saw one. Might want to give
+    the notebook another quick read in the future, but for now you're doing just
+    fine.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":2,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":308,\"yPos\":133},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"You've
     confirmed all we need to keep CapraX Zeigrun happy and thriving! Congrats, kid.
-    You've been a huge help!\",\"parentUIDs\":[0,0],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":3,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":316,\"yPos\":262},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"It's
-    time for us to move onto the next endangered species!\",\"parentUIDs\":[2,2],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false}]}"
+    You've been a huge help!\",\"parentUIDs\":[0,0],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Happy\",\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":3,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":316,\"yPos\":262},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"It's
+    time for us to move onto the next endangered species!\",\"parentUIDs\":[2,2],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Happy\",\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false}]}"
   saveVersion: 103
   DefaultName: Star
   DefaultSprite: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}

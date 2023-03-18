@@ -50,7 +50,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
-  Icon: {fileID: 21300000, guid: ec61f7fa5c422ee4e9cc90099b3ec209, type: 3}
+  Icon: {fileID: 21300000, guid: bd6ba6916b4a41f4eadb84d5a2eb6205, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &1127460571464967603
 MonoBehaviour:
@@ -118,12 +118,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentIDCounter: 3
-  json: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":394,\"yPos\":-60},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Your
+  json: '{"Options":[],"SpeechNodes":[{"EditorInfo":{"isRoot":true,"xPos":394,"yPos":-60},"ID":1,"TMPFontGUID":null,"Text":"Your
     responses indicate that your knowledge of both water and terrain needs for CapraX
-    Zeigrun deviates slightly from our anticipated observed results from other engineers.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":2,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":394,\"yPos\":40},\"ID\":2,\"TMPFontGUID\":null,\"Text\":\"Based
-    on these results, I'd like to set you up with another group of CapraX Zeigrun,
-    where I'll ask you to focus on collecting data again, to confirm or deny
-    your deviation from our expectations.\",\"parentUIDs\":[1,1],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false}]}"
+    Zeigrun deviates slightly from our anticipated observed results from other engineers.","parentUIDs":[],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":"Sad","IconGUID":null,"Name":"Star","OptionUIDs":[],"SpeechUID":2,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":394,"yPos":40},"ID":2,"TMPFontGUID":null,"Text":"Based
+    on these results, I''d like to set you up with another group of CapraX Zeigrun,
+    where I''ll ask you to focus on collecting data again, to confirm or deny your
+    deviation from our expectations.","parentUIDs":[1,1],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":"Neutral","IconGUID":null,"Name":"Star","OptionUIDs":[],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false}]}'
   saveVersion: 103
   DefaultName: 
   DefaultSprite: {fileID: 0}
