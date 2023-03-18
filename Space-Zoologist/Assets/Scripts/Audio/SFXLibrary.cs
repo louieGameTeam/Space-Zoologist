@@ -13,6 +13,7 @@ public enum SFXType
     NotebookOpen, NotebookClose, NotebookDropdown, NotebookTabSwitch,
     GoodFood, NeutralFood, BadFood,
     AnimalDespawn,
+    LevelFinishWin, LevelFinishFail, Fireworks,
     NumTypes
 }
 

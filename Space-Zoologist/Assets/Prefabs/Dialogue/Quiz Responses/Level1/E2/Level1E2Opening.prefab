@@ -49,13 +49,13 @@ MonoBehaviour:
   json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":516,\"yPos\":281},\"ID\":8,\"TMPFontGUID\":null,\"Text\":\"I
     was born ready!\",\"parentUIDs\":[7,7],\"SpeechUID\":12},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":92,\"yPos\":282},\"ID\":10,\"TMPFontGUID\":null,\"Text\":\"Would
     it change anything if I said no?\",\"parentUIDs\":[7,7],\"SpeechUID\":13}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":306,\"yPos\":22},\"ID\":0,\"TMPFontGUID\":null,\"Text\":\"Great
-    job, kid. Keep this up, and we're going to have to find something special
-    to do with you! \\r\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":7,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":298,\"yPos\":199},\"ID\":7,\"TMPFontGUID\":null,\"Text\":\"It's
-    time for another report-back. Are you ready? It'll just be a few questions
-    this time.\",\"parentUIDs\":[0,0],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[10,8],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":515,\"yPos\":359},\"ID\":12,\"TMPFontGUID\":null,\"Text\":\"That's
-    the spirit! Let's get into it, then.\\r\\n\",\"parentUIDs\":[8,8],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":87,\"yPos\":370},\"ID\":13,\"TMPFontGUID\":null,\"Text\":\"My
+    job, kid. Keep this up, and we're going to have to find something special to
+    do with you! \\r\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Happy\",\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":7,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":324,\"yPos\":146},\"ID\":7,\"TMPFontGUID\":null,\"Text\":\"It's
+    time for another report-back. Are you ready? It'll just be a few questions this
+    time.\",\"parentUIDs\":[0,0],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[10,8],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":515,\"yPos\":359},\"ID\":12,\"TMPFontGUID\":null,\"Text\":\"That's
+    the spirit! Let's get into it, then.\\r\\n\",\"parentUIDs\":[8,8],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Happy\",\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":87,\"yPos\":370},\"ID\":13,\"TMPFontGUID\":null,\"Text\":\"My
     guilt level, maybe\u2026 But management says we gotta grill the recruits, so
-    you're getting grilled whether you like it or not.\\r\\n\",\"parentUIDs\":[10,10],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false}]}"
+    you're getting grilled whether you like it or not.\\r\\n\",\"parentUIDs\":[10,10],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Sad\",\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false}]}"
   saveVersion: 103
   DefaultName: Star
   DefaultSprite: {fileID: 21300000, guid: 96170432883ab48089e877eca147cb31, type: 3}
@@ -130,7 +130,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
-  Icon: {fileID: 21300000, guid: bdf52160a0856f54b8af8ed579bd7a75, type: 3}
+  Icon: {fileID: 21300000, guid: b01f055a5a8c42041a3a17161e277de6, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &3664430829622366030
 MonoBehaviour:
@@ -244,7 +244,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
-  Icon: {fileID: 21300000, guid: 7646c3955a414ac45b1dac5eaeb2bcfe, type: 3}
+  Icon: {fileID: 21300000, guid: b01f055a5a8c42041a3a17161e277de6, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &4961531373147506023
 MonoBehaviour:
@@ -263,7 +263,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
-  Icon: {fileID: 21300000, guid: ec61f7fa5c422ee4e9cc90099b3ec209, type: 3}
+  Icon: {fileID: 21300000, guid: bd6ba6916b4a41f4eadb84d5a2eb6205, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &897208665615401782
 MonoBehaviour:

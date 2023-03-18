@@ -25,6 +25,9 @@ public class GenericSpriteAnimWindow : MonoBehaviour
     [Tooltip("Rect transform for the window that shrinks in and out of view")]
     private RectTransform window = null;
 
+    [SerializeField]
+    private UnityEvent OnWindowOpened;
+
     [Space]
 
     [SerializeField]
@@ -93,6 +96,8 @@ public class GenericSpriteAnimWindow : MonoBehaviour
                 openDelegate?.Invoke();
                 animator.SetTrigger(triggerParam);
             });
+        
+        OnWindowOpened?.Invoke();
     }
     
     public virtual void Close(UnityAction action = null)

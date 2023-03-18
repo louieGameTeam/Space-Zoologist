@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6177203089330192265}
   - component: {fileID: 3251605324372603463}
   - component: {fileID: 3962213513185100600}
+  - component: {fileID: 9027003253110206499}
   m_Layer: 5
   m_Name: FireworkUI
   m_TagString: Untagged
@@ -92,6 +93,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 3962213513185100600}
   variantsCount: 8
+  OnEffectPlayed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 9027003253110206499}
+        m_TargetAssemblyTypeName: SimpleSFXPlayer, Assembly-CSharp
+        m_MethodName: PlayAudioOneshot
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!95 &3962213513185100600
 Animator:
   serializedVersion: 4
@@ -112,3 +128,17 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &9027003253110206499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5323336896914112095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c1b9b29e37907e4eae7d414db997c04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioType: 26
+  playOnEnable: 0
