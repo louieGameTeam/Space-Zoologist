@@ -133,7 +133,7 @@ public class FoodQualityVFXHandler : MonoBehaviour
                 if(!SelectedSpecies.EatingSFX)
                     Debug.LogError("Species is missing eating SFX, please assign in editor", SelectedSpecies);
                     
-                AudioManager.instance.PlayOneShot(SelectedSpecies.EatingSFX);
+                AudioManager.instance.PlayOneShot(SelectedSpecies.EatingSFX, 0.8f);
 
                 // Once VFX has been played, start cooldown before next VFX can be played
                 StartCoroutine(FoodQualityFXCooldown(FoodQualityVFXInterval));
