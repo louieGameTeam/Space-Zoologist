@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 /// <summary>
@@ -14,6 +15,8 @@ public class FireworkEffect : MonoBehaviour
     [Tooltip("Total number of firework variants (used for randomize range)")]
     [SerializeField] private int variantsCount;
 
+    [SerializeField] private UnityEvent OnEffectPlayed;
+
     private void OnEnable()
     {
         // Randomize position
@@ -24,7 +27,9 @@ public class FireworkEffect : MonoBehaviour
             Random.Range(-heightExt, heightExt), 
             0f);
         
-        // Play random firework animation (states must be named after numbers)
+        // Play random firework animation (anim clips must be named  index numbers)
         animator.Play(UnityEngine.Random.Range(0,variantsCount).ToString());
+        
+        OnEffectPlayed?.Invoke();
     }
 }
