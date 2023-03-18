@@ -370,6 +370,7 @@ GameObject:
   - component: {fileID: 5323336896914112066}
   - component: {fileID: 5323336896914112065}
   - component: {fileID: 5108999260503700898}
+  - component: {fileID: 2198955526311856668}
   m_Layer: 5
   m_Name: Fail Window
   m_TagString: Untagged
@@ -449,6 +450,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   window: {fileID: 5323336897604432209}
+  OnWindowOpened:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2198955526311856668}
+        m_TargetAssemblyTypeName: SimpleSFXPlayer, Assembly-CSharp
+        m_MethodName: PlayAudioOneshot
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   overlay: {fileID: 5323336896914112065}
   fadeTime: 0.3
   animator: {fileID: 7223389999175077705}
@@ -456,6 +472,20 @@ MonoBehaviour:
   primaryButton: {fileID: 5574195038931459247}
   hasSecondaryButton: 1
   secondaryButton: {fileID: 1202878180778823228}
+--- !u!114 &2198955526311856668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5323336896914112095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c1b9b29e37907e4eae7d414db997c04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioType: 25
+  playOnEnable: 0
 --- !u!1 &5323336897604432208
 GameObject:
   m_ObjectHideFlags: 0
