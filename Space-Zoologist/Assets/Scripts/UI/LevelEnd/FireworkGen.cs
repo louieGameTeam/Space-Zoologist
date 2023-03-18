@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = System.Random;
 
 /// <summary>
 /// Level end screen firework vfx generator.
@@ -10,10 +11,12 @@ using UnityEngine;
 public class FireworkGen : MonoBehaviour
 {
     [SerializeField] private GameObject fireworkPrefab;
-    [SerializeField] private float spawnInterval;
+    [SerializeField] private Vector2 spawnInterval;
     [SerializeField] private float lifeTime;
     [SerializeField] private Transform fireworkParentTransform;
 
+    private float nextSpawnDelay;
+    
     class FireworkInstance
     {
         public GameObject firework;
@@ -21,7 +24,7 @@ public class FireworkGen : MonoBehaviour
     }
 
     private Queue<FireworkInstance> fireworkInstances = new();
-    private float spawnTime = 0f;
+    private float prevSpawnTime = 0f;
     private bool isSpawning;
 
     public void SetIsSpawning(bool val)
@@ -42,10 +45,11 @@ public class FireworkGen : MonoBehaviour
         }
         
         // Spawn new fireworks
-        if (isSpawning && Time.time - spawnTime >= spawnInterval)
+        if (isSpawning && Time.time - prevSpawnTime >= nextSpawnDelay)
         {
-            spawnTime = Time.time;
+            prevSpawnTime = Time.time;
             SpawnFirework();
+            nextSpawnDelay = UnityEngine.Random.Range(spawnInterval.x, spawnInterval.y);
         }
     }
 
