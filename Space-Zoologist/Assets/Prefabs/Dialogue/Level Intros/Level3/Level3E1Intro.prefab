@@ -46,21 +46,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentIDCounter: 42
-  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":120.5,\"yPos\":429},\"ID\":9,\"TMPFontGUID\":null,\"Text\":\"Strot\",\"parentUIDs\":[7,7],\"SpeechUID\":10},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":682.5,\"yPos\":538},\"ID\":11,\"TMPFontGUID\":null,\"Text\":\"Flan\",\"parentUIDs\":[10,7,7],\"SpeechUID\":40},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":167,\"yPos\":-21},\"ID\":35,\"TMPFontGUID\":null,\"Text\":\"Q-quiz?!\",\"parentUIDs\":[4,4],\"SpeechUID\":38},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":400,\"yPos\":-16},\"ID\":37,\"TMPFontGUID\":null,\"Text\":\"Got
-    it, boss.\",\"parentUIDs\":[4,4],\"SpeechUID\":6}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":273.5,\"yPos\":-534},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Hey
-    again. Congrats on not messing up the previous enclosures.\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":3,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":280.5,\"yPos\":-402.000061},\"ID\":3,\"TMPFontGUID\":null,\"Text\":\"This
-    time, you'll be working with Eligans Impar, Thalassius Succo, and Ligurio
-    Vermis.\",\"parentUIDs\":[1,1],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":41,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":288.5,\"yPos\":-121},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"Go
-    over your research in the notebook before I quiz you.\",\"parentUIDs\":[3,41,41],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[35,37],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":true},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":289.5,\"yPos\":111},\"ID\":6,\"TMPFontGUID\":null,\"Text\":\"Alright,let's
-    begin.\",\"parentUIDs\":[4,37,38,38,37],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":7,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":289.5,\"yPos\":209},\"ID\":7,\"TMPFontGUID\":null,\"Text\":\"The
-    Stroteater is a predator to what species?\",\"parentUIDs\":[6,40,6,40],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[9,11],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":114.5,\"yPos\":525},\"ID\":10,\"TMPFontGUID\":null,\"Text\":\"Yeah,
-    that's right.\",\"parentUIDs\":[9,9],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":12,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":289.5,\"yPos\":709},\"ID\":12,\"TMPFontGUID\":null,\"Text\":\"You've
-    got 30 days to increase the Lumoos' population to 10, the Stroteaters' population
-    to 16, and the Strots' population to 24.\",\"parentUIDs\":[10,11,10],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":47,\"yPos\":48},\"ID\":38,\"TMPFontGUID\":null,\"Text\":\"I
-    can't just let you play with species for fun. You have to know what you're
-    doing...\",\"parentUIDs\":[35,35],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":6,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":416.5,\"yPos\":521},\"ID\":40,\"TMPFontGUID\":null,\"Text\":\"I
-    told you to read, didn't I?! This is serious!\",\"parentUIDs\":[11,11],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":null,\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":7,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":280.5,\"yPos\":-294},\"ID\":41,\"TMPFontGUID\":null,\"Text\":\"Otherwise
-    known as the Lumoo, Strot and Stroteater.\",\"parentUIDs\":[3,3],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":4,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false}]}"
+  json: '{"Options":[{"EditorInfo":{"isRoot":false,"xPos":120.5,"yPos":429},"ID":9,"TMPFontGUID":null,"Text":"Strot","parentUIDs":[7,7],"SpeechUID":10},{"EditorInfo":{"isRoot":false,"xPos":682.5,"yPos":538},"ID":11,"TMPFontGUID":null,"Text":"Flan","parentUIDs":[10,7,7],"SpeechUID":40},{"EditorInfo":{"isRoot":false,"xPos":167,"yPos":-21},"ID":35,"TMPFontGUID":null,"Text":"Q-quiz?!","parentUIDs":[4,4],"SpeechUID":38},{"EditorInfo":{"isRoot":false,"xPos":400,"yPos":-16},"ID":37,"TMPFontGUID":null,"Text":"Got
+    it, boss.","parentUIDs":[4,4],"SpeechUID":6}],"SpeechNodes":[{"EditorInfo":{"isRoot":true,"xPos":273.5,"yPos":-534},"ID":1,"TMPFontGUID":null,"Text":"Hey
+    again. Congrats on not messing up the previous enclosures.","parentUIDs":[],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":"Happy","IconGUID":null,"Name":"Juno","OptionUIDs":[],"SpeechUID":3,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":280.5,"yPos":-402.000061},"ID":3,"TMPFontGUID":null,"Text":"This
+    time, you''ll be working with Eligans Impar, Thalassius Succo, and Ligurio Vermis.","parentUIDs":[1,1],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":"Neutral","IconGUID":null,"Name":"Juno","OptionUIDs":[],"SpeechUID":41,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":288.5,"yPos":-121},"ID":4,"TMPFontGUID":null,"Text":"Go
+    over your research in the notebook before I quiz you.","parentUIDs":[3,41,41],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":"Neutral","IconGUID":null,"Name":"Juno","OptionUIDs":[35,37],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":true},{"EditorInfo":{"isRoot":false,"xPos":289.5,"yPos":111},"ID":6,"TMPFontGUID":null,"Text":"Alright,let''s
+    begin.","parentUIDs":[4,37,38,38,37],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":"Neutral","IconGUID":null,"Name":"Juno","OptionUIDs":[],"SpeechUID":7,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":289.5,"yPos":209},"ID":7,"TMPFontGUID":null,"Text":"The
+    Stroteater is a predator to what species?","parentUIDs":[6,40,6,40],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":"Neutral","IconGUID":null,"Name":"Juno","OptionUIDs":[9,11],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":113.5,"yPos":527},"ID":10,"TMPFontGUID":null,"Text":"Yeah,
+    that''s right. That info should be helpful for completing this enclosure so keep
+    it in mind.","parentUIDs":[9,9],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":"Happy","IconGUID":null,"Name":"Juno","OptionUIDs":[],"SpeechUID":12,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":289.5,"yPos":709},"ID":12,"TMPFontGUID":null,"Text":"You''ve
+    got 30 days to increase the Lumoos'' population to 10, the Stroteaters'' population
+    to 16, and the Strots'' population to 24. Good luck.","parentUIDs":[10,11,10],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":"Neutral","IconGUID":null,"Name":"Juno","OptionUIDs":[],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":47,"yPos":48},"ID":38,"TMPFontGUID":null,"Text":"I
+    can''t just let you play with species for fun. You have to know what you''re
+    doing...","parentUIDs":[35,35],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":"Sad","IconGUID":null,"Name":"Juno","OptionUIDs":[],"SpeechUID":6,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":416.5,"yPos":521},"ID":40,"TMPFontGUID":null,"Text":"I
+    told you to read, didn''t I?! This is serious!","parentUIDs":[11,11],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":"Sad","IconGUID":null,"Name":"Juno","OptionUIDs":[],"SpeechUID":7,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":280.5,"yPos":-294},"ID":41,"TMPFontGUID":null,"Text":"Otherwise
+    known as the Lumoo, Strot and Stroteater.","parentUIDs":[3,3],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":"Neutral","IconGUID":null,"Name":"Juno","OptionUIDs":[],"SpeechUID":4,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false}]}'
   saveVersion: 103
   DefaultName: 
   DefaultSprite: {fileID: 0}
@@ -171,7 +171,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
-  Icon: {fileID: 21300000, guid: fabf7af1c8cb79f45a1449c35f52a4a9, type: 3}
+  Icon: {fileID: 21300000, guid: b9913db9aeff1104e93c3049a1d1f9c2, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &492502005737519802
 MonoBehaviour:
@@ -266,7 +266,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
-  Icon: {fileID: 21300000, guid: fabf7af1c8cb79f45a1449c35f52a4a9, type: 3}
+  Icon: {fileID: 21300000, guid: b9913db9aeff1104e93c3049a1d1f9c2, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &492502005737519776
 MonoBehaviour:
@@ -589,7 +589,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
-  Icon: {fileID: 21300000, guid: fabf7af1c8cb79f45a1449c35f52a4a9, type: 3}
+  Icon: {fileID: 21300000, guid: bbb5407c2362a8c4f8ea8dd773561f47, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &492502005737519789
 MonoBehaviour:
@@ -627,7 +627,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
-  Icon: {fileID: 21300000, guid: fabf7af1c8cb79f45a1449c35f52a4a9, type: 3}
+  Icon: {fileID: 21300000, guid: bbb5407c2362a8c4f8ea8dd773561f47, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &-1756006756689419574
 MonoBehaviour:

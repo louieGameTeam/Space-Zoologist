@@ -89,9 +89,9 @@ MonoBehaviour:
   endOfQuizText: And that's it. Give me a moment to look over your answers.
   response:
     responses:
-    - {fileID: 6281416792096004552}
-    - {fileID: 5504918477696139214}
-    - {fileID: 1882551549476987228}
+    - {fileID: 3475025234489852325, guid: 84cd2d84f87a02e4ebbe80f22cb97e49, type: 3}
+    - {fileID: 8191602925442665779, guid: 012544bc776949f40976ed08e654afec, type: 3}
+    - {fileID: 3238929020816931491, guid: b3e88a9767034654f94f9294182976a4, type: 3}
   requizOnFail: 0
   onConversationEnded:
     m_PersistentCalls:
@@ -298,18 +298,6 @@ PrefabInstance:
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 62ae0d55ca14e374fb24c3a78ad6d959, type: 3}
---- !u!114 &5504918477696139214 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7548781420697440964, guid: 62ae0d55ca14e374fb24c3a78ad6d959,
-    type: 3}
-  m_PrefabInstance: {fileID: 2641306775343770890}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83189876d4d389f43b7dd2e925aa112e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &6518082302288533244 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9138700661873556470, guid: 62ae0d55ca14e374fb24c3a78ad6d959,
@@ -407,18 +395,6 @@ PrefabInstance:
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: d5a4538500586794ca6808b681f0003f, type: 3}
---- !u!114 &1882551549476987228 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5196409734275517805, guid: d5a4538500586794ca6808b681f0003f,
-    type: 3}
-  m_PrefabInstance: {fileID: 5926017719361088561}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83189876d4d389f43b7dd2e925aa112e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &6073281459643422008 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 465507903029328137, guid: d5a4538500586794ca6808b681f0003f,
@@ -530,15 +506,3 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 7811116925460955301}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6281416792096004552 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4272431979114928493, guid: 438fa1cfb9eeb484682e98f139bf8bd3,
-    type: 3}
-  m_PrefabInstance: {fileID: 7811116925460955301}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83189876d4d389f43b7dd2e925aa112e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

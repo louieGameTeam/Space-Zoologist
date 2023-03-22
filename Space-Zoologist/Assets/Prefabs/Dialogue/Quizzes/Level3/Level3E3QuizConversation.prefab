@@ -89,9 +89,9 @@ MonoBehaviour:
   endOfQuizText: And that's it. Give me a moment to look over your answers.
   response:
     responses:
-    - {fileID: 7160778944611803443}
-    - {fileID: 7160778943740911805}
-    - {fileID: 7160778944499405386}
+    - {fileID: 3475025234489852325, guid: 84cd2d84f87a02e4ebbe80f22cb97e49, type: 3}
+    - {fileID: 8191602925442665779, guid: 012544bc776949f40976ed08e654afec, type: 3}
+    - {fileID: 3238929020816931491, guid: b3e88a9767034654f94f9294182976a4, type: 3}
   requizOnFail: 0
   onConversationEnded:
     m_PersistentCalls:
@@ -196,18 +196,6 @@ PrefabInstance:
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 3cf5c444aba4eb04b99756b833afd284, type: 3}
---- !u!114 &7160778944499405386 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7088595113351740344, guid: 3cf5c444aba4eb04b99756b833afd284,
-    type: 3}
-  m_PrefabInstance: {fileID: 89945756514757106}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83189876d4d389f43b7dd2e925aa112e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &7160778944499405387 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7088595113351740345, guid: 3cf5c444aba4eb04b99756b833afd284,
@@ -420,18 +408,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1074323768584827375}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7160778943740911805 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7892823621335765330, guid: 4937d7d36d35f5f4181d610ea41982fb,
-    type: 3}
-  m_PrefabInstance: {fileID: 1074323768584827375}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83189876d4d389f43b7dd2e925aa112e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1554863813458328605
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -545,15 +521,3 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1554863813458328605}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7160778944611803443 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8571421997817666862, guid: 12a01f3e7ce2eb14ea66d965a091a42b,
-    type: 3}
-  m_PrefabInstance: {fileID: 1554863813458328605}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83189876d4d389f43b7dd2e925aa112e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
