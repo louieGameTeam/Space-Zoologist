@@ -10,6 +10,7 @@ public class SummaryTrace
     // The player ID associated with this summary.
     [SerializeField] private string playerID;
     [SerializeField] private string playerName;
+    [SerializeField] private string playerClassID;
 
     // GENERAL TIME METRICS
     // The total time played for this player.
@@ -144,6 +145,7 @@ public class SummaryTrace
     {
         playerID = "";
         playerName = "";
+        playerClassID = "";
         totalPlayTime = 0f;
         tutorialTime = 0f;
         level1Time = 0f;
@@ -238,6 +240,12 @@ public class SummaryTrace
     {
         get { return playerName; }
         set { playerName = value; }
+    }
+
+    public string PlayerClassID
+    {
+        get { return playerClassID; }
+        set { playerClassID = value; }
     }
 
     public float TotalPlayTime
