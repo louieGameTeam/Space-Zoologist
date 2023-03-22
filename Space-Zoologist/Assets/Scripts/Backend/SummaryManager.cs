@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System;
+using TMPro;
 
 [RequireComponent(typeof(Encryption))]
 public class SummaryManager : MonoBehaviour
@@ -189,11 +190,23 @@ public class SummaryManager : MonoBehaviour
         }
     }
 
-    public void SetUpCurrentSummaryTrace(string id)
+    public void SetUpCurrentSummaryTrace(TMP_InputField[] userInformation)
     {
+
+        string id = userInformation[0].text;
+        string first_name = userInformation[1].text;
+        string last_name = userInformation[2].text;
+        string classID = userInformation[3].text;
+
+        string full_name = first_name + " " + last_name;
+
+        // Print out id, first name, last name, and class ID in one line
+        print(id + " " + first_name + " " + last_name + " " + classID);
+
         var encryption = GetComponent<Encryption>();
         var encryptedId = encryption.Encrypt(id);
-        var encryptedName = encryption.Encrypt(id);
+        var encryptedName = encryption.Encrypt(full_name);
+        var encryptedClassId = encryption.Encrypt(classID);
 
         // Check if current user has summary trace data in DB.
         StartCoroutine(GetSummaryTrace.TryGetSummaryTrace(encryptedId, (value) => {
@@ -210,6 +223,7 @@ public class SummaryManager : MonoBehaviour
                     currentSummaryTrace = new SummaryTrace();
                     currentSummaryTrace.PlayerID = encryptedId;
                     currentSummaryTrace.PlayerName = encryptedName;
+                    currentSummaryTrace.PlayerClassID = encryptedClassId;
                     currentSummaryTrace.DateStarted = DateTime.Now.ToString();
                 }
             } else
@@ -217,6 +231,7 @@ public class SummaryManager : MonoBehaviour
                 currentSummaryTrace = new SummaryTrace();
                 currentSummaryTrace.PlayerID = encryptedId;
                 currentSummaryTrace.PlayerName = encryptedName;
+                currentSummaryTrace.PlayerClassID = encryptedClassId;
                 currentSummaryTrace.DateStarted = DateTime.Now.ToString();
             }
         }));
@@ -224,10 +239,10 @@ public class SummaryManager : MonoBehaviour
 
     // Placeholder functions to gather basic information related to player info: playerID and sessionID.
     // Note: PlayerID is set later on if they choose to sign in with their email.
-    private string GetPlayerID()
-    {
-        return "default_user";
-    }
+    // private string GetPlayerID()
+    // {
+    //     return "default_user";
+    // }
 
     // Probably no longer necessary
     // private string GetSessionID()
