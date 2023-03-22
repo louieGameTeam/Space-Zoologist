@@ -15,7 +15,7 @@ public class LoginHandler : MonoBehaviour
 
     #region Private Fields
     // Input field for user email
-    private TMP_InputField[] userInformationInput;
+    private TMP_InputField[] userInformationInput = new TMP_InputField[4];
     #endregion
 
     #region Public Methods
@@ -31,13 +31,21 @@ public class LoginHandler : MonoBehaviour
             print (i + " " + userInformationInput[i].text);
         }
         SummaryManager summaryManager = (SummaryManager)FindObjectOfType(typeof(SummaryManager));
-        // summaryManager.SetUpCurrentSummaryTrace(userInformationInput.text);
+        summaryManager.SetUpCurrentSummaryTrace(userInformationInput);
         SceneNavigator.LoadScene ("LevelMenu");
     }
 
     public void SkipLogin () {
+        print("Skip Login");
+
+        // Add in default user information
+        userInformationInput[0].text = "default_user";
+        userInformationInput[1].text = "default_first_name";
+        userInformationInput[2].text = "default_last_name";
+        userInformationInput[3].text = "default_class_ID";
+
         SummaryManager summaryManager = (SummaryManager)FindObjectOfType(typeof(SummaryManager));
-        summaryManager.SetUpCurrentSummaryTrace("default_user");
+        summaryManager.SetUpCurrentSummaryTrace(userInformationInput);
         SceneNavigator.LoadScene ("LevelMenu");
     }
     #endregion

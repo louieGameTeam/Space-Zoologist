@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System;
+using TMPro;
 
 [RequireComponent(typeof(Encryption))]
 public class SummaryManager : MonoBehaviour
@@ -189,8 +190,17 @@ public class SummaryManager : MonoBehaviour
         }
     }
 
-    public void SetUpCurrentSummaryTrace(string id)
+    public void SetUpCurrentSummaryTrace(TMP_InputField[] userInformation)
     {
+
+        string id = userInformation[0].text;
+        string first_name = userInformation[1].text;
+        string last_name = userInformation[2].text;
+        string classID = userInformation[3].text;
+
+        // Print out id, first name, last name, and class ID in one line
+        print(id + " " + first_name + " " + last_name + " " + classID);
+
         var encryption = GetComponent<Encryption>();
         var encryptedId = encryption.Encrypt(id);
         var encryptedName = encryption.Encrypt(id);
