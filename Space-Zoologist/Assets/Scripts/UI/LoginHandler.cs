@@ -15,7 +15,7 @@ public class LoginHandler : MonoBehaviour
 
     #region Private Fields
     // Input field for user email
-    private TMP_InputField emailInput;
+    private TMP_InputField[] userInformationInput;
     #endregion
 
     #region Public Methods
@@ -24,9 +24,14 @@ public class LoginHandler : MonoBehaviour
     }
 
     public void SubmitLogin () {
-        print (emailInput.text);
+        for (int i = 0; i < 4; i++) {
+            if (userInformationInput[i].text == "") {
+                return;
+            }
+            print (i + " " + userInformationInput[i].text);
+        }
         SummaryManager summaryManager = (SummaryManager)FindObjectOfType(typeof(SummaryManager));
-        summaryManager.SetUpCurrentSummaryTrace(emailInput.text);
+        // summaryManager.SetUpCurrentSummaryTrace(userInformationInput.text);
         SceneNavigator.LoadScene ("LevelMenu");
     }
 
@@ -50,7 +55,7 @@ public class LoginHandler : MonoBehaviour
         }
 
         // Assign email input field
-        emailInput = window.gameObject.GetComponentInChildren<TMP_InputField> ();
+        userInformationInput = window.gameObject.GetComponentsInChildren<TMP_InputField> ();
 
         // Open the window
         window.Open ();
