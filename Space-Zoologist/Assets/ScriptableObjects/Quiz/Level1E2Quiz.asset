@@ -18,9 +18,11 @@ MonoBehaviour:
       index: 0
     need: 3
   fixedQuestions:
-  - question: "Alright, let's get this party started! First off, from the perspective
-      of the Zeigs, what's the difference between Space Maples and Golden Space
-      Maples?\r\n"
+  - question: 'Alright, let''s get this party started! First off, from the perspective
+      of the Zeigs, what''s the difference between Space Maples and Golden Space
+      Maples?
+
+'
     category:
       item:
         category: 0
@@ -32,8 +34,8 @@ MonoBehaviour:
     - label: They prefer to eat the Gilded Astral Maple fruit over the normal Astral
         Maple fruit
       weight: 2
-    - label: "They'll eat the Gilded Astral Maple fruit, but only after eating
-        all of the available normal Astral Maple fruit."
+    - label: They'll eat the Gilded Astral Maple fruit, but only after eating all
+        of the available normal Astral Maple fruit.
       weight: 0
   - question: Alright. Now, on what type of terrain do Zeigs feel most comfortable?
     category:
@@ -65,7 +67,7 @@ MonoBehaviour:
   randomQuestionPool:
     questionsToPick: 0
     questionPool: []
-  gradingRubric: {fileID: 11400000, guid: 452081780eb603242ad7429c61063876, type: 2}
+  gradingRubric: {fileID: 11400000, guid: 344067f1f522fc04e864c62c3a27ed18, type: 2}
   exampleQuiz:
     template: {fileID: 11400000}
     answers: 010000000200000002000000
