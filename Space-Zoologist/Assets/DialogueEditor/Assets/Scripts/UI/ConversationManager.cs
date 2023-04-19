@@ -44,6 +44,7 @@ namespace DialogueEditor
         public Sprite OptionImage;
         public bool OptionImageSliced;
         public bool AllowMouseInteraction;
+        public bool UseAdvanceInput;
         public string AdvanceInput = "Submit";
         public RectTransform Background;
         public GameObject SkipConversationButton;
@@ -855,7 +856,7 @@ namespace DialogueEditor
             bool buttonClickAdvanceInput = progressUIButtonDown && UIBlockerSettings.OperationIsAvailable("Dialogue");
 
             // Only use the advance input if some typing UI object is not currently selected
-            bool keyAdvanceInput = Input.GetButtonDown(AdvanceInput);
+            bool keyAdvanceInput = UseAdvanceInput && Input.GetButtonDown(AdvanceInput);
 
             // Progress if the advance button was clicked or the button in the input axes was just pressed
             return buttonClickAdvanceInput || keyAdvanceInput;
