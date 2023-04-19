@@ -128,7 +128,8 @@ namespace DialogueEditor
             m_uiOptions = new List<UIConversationButton>();
 
             // Set the state when progress button is clicked (the state is cleared at the end of update)
-            ProgressConversationButton.onClick.AddListener(() => progressUIButtonDown = true);
+            // The state probably shouldn't be update driven
+            ProgressConversationButton.onClick.AddListener(OnProgressButtonPressed);
         }
 
         private void OnDestroy()
@@ -411,7 +412,7 @@ namespace DialogueEditor
                     }
                     break;
                 case eState.Idle:
-                    if(m_currentSpeech.Options.Count == 0)
+                    if(m_currentSpeech.Options.Count == 0 && !isFrozen)
                         SetConversationContinueIndicator(true);
                     break;
             }     
@@ -703,9 +704,16 @@ namespace DialogueEditor
             GameManager.Instance.m_menuManager.ToggleUISingleButton(speech.enableNotebookUI, "notebook");
             SetState(eState.ScrollingText);
         }
+        
+        //--------------------------------------
+        // Button callbacks
+        //--------------------------------------
 
-
-
+        private void OnProgressButtonPressed()
+        {
+            progressUIButtonDown = true;
+        }
+        
         //--------------------------------------
         // Option Selected
         //--------------------------------------
@@ -715,9 +723,6 @@ namespace DialogueEditor
             m_selectedOption = option;
             SetState(eState.TransitioningOptionsOff);
         }
-
-
-
 
         //--------------------------------------
         // Util
