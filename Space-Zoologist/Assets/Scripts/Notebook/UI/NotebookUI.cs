@@ -57,7 +57,7 @@ public class NotebookUI : MonoBehaviour
 
     #region Private Fields
     // Data that the player edits as they play with the notebook
-    private NotebookData data;
+    [SerializeField] private NotebookData data;
     // Reference to the resource request editor
     private ResourceRequestEditor resourceRequestEditor;
     // Maps the names of the category pickers to the components for fast lookup
@@ -95,10 +95,10 @@ public class NotebookUI : MonoBehaviour
         GameManager instance = GameManager.Instance;
 
         // Unlock everything by default
-        foreach (var item in ItemRegistry.GetAllItems())
+        /*foreach (var item in ItemRegistry.GetAllItems())
         {
             data.UnlockItem(item.ShopItem.ID);
-        }
+        }*/
 
         // Setup the tab picker first of all children
         tabPicker.Setup();

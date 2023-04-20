@@ -58,6 +58,8 @@ public class ItemDropdown : NotebookUIChild
         // Clear any existing data
         dropdown.ClearOptions();
         optionCategoryMap.Clear(); 
+        
+        
         foreach(ItemID id in GetItemIDs(currentSource))
         {
             // Get the current option
