@@ -10,8 +10,8 @@ public class Item : ScriptableObject
     private class NotebookUnlockConfig
     {
         public bool unlockByDefault = true;
-        [Header("If not unlocked by default")]
-        public LevelID unlockID;
+        [Header("If Not UnlockByDefault")]
+        public LevelID unlockLevelID;
     }
     
     public ItemID ID => ItemRegistry.FindShopItem(this);
@@ -23,7 +23,7 @@ public class Item : ScriptableObject
     public List<AudioClip> AudioClips => audio;
     public int buildTime => BuildTime;
 
-    public LevelID UnlockLevelID => notebookUnlockConfig.unlockID;
+    public LevelID UnlockLevelID => notebookUnlockConfig.unlockLevelID;
     public bool unlockByDefault => notebookUnlockConfig.unlockByDefault;
 
     [SerializeField] private string itemName = default;
