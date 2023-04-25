@@ -6,6 +6,14 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Items/Item")]
 public class Item : ScriptableObject
 {
+    [System.Serializable]
+    private class NotebookUnlockConfig
+    {
+        public bool unlockByDefault = true;
+        [Header("If not unlocked by default")]
+        public LevelID unlockID;
+    }
+    
     public ItemID ID => ItemRegistry.FindShopItem(this);
     public ItemRegistry.Category Type => ID.Category;
     public string ItemName => itemName;
@@ -15,12 +23,16 @@ public class Item : ScriptableObject
     public List<AudioClip> AudioClips => audio;
     public int buildTime => BuildTime;
 
+    public LevelID UnlockLevelID => notebookUnlockConfig.unlockID;
+    public bool unlockByDefault => notebookUnlockConfig.unlockByDefault;
+
     [SerializeField] private string itemName = default;
     [SerializeField] private int price = default;
     [SerializeField] private string description = default;
     [SerializeField] private Sprite icon = default;
     [SerializeField] private List<AudioClip> audio = default;
     [SerializeField] private int BuildTime = default;
+    [SerializeField] private NotebookUnlockConfig notebookUnlockConfig;
 
     public void SetupData(string name, int price)
     {
