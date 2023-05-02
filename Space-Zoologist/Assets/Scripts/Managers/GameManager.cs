@@ -287,6 +287,9 @@ public class GameManager : MonoBehaviour
         {
             Debug.LogError("FoodQualityVFXHandler Instance not found");
         }
+        
+        // Load notebook UI
+        notebookUI.InitializeNotebookData();
     }
 
     private void SetManagers()

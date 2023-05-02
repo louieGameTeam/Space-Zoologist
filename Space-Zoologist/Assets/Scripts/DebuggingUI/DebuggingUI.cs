@@ -34,6 +34,9 @@ public class DebuggingUI : MonoBehaviour
     [Tooltip("Button that toggles the verbose inspector")]
     private Button toggleVerboseInspectorButton = null;
     [SerializeField]
+    [Tooltip("Button that unlocks notebook entries")]
+    private Button unlockNotebookEntriesButton = null;
+    [SerializeField]
     [Tooltip("Reference to a verbose inspector")]
     private VerboseInspector verboseInspector = null;
     #endregion
@@ -53,6 +56,7 @@ public class DebuggingUI : MonoBehaviour
         winButton.onClick.AddListener(Win);
         toggleLevelOverrideButton.onClick.AddListener(ToggleLevelSelectOverride);
         toggleVerboseInspectorButton.onClick.AddListener(ToggleVerboseInspector);
+        unlockNotebookEntriesButton.onClick.AddListener(UnlockNotebookEntries);
 #if UNITY_EDITOR
         mainPanel.SetActive (true);
         active = true;
@@ -134,6 +138,18 @@ public class DebuggingUI : MonoBehaviour
             GameManager.Instance.DebugWin();
         }
     }
+
+    private void UnlockNotebookEntries()
+    {
+        if (GameManager.Instance)
+        {
+            foreach (var item in ItemRegistry.GetAllItems())
+            {
+                GameManager.Instance.NotebookUI.Data.UnlockItem(item.ShopItem.ID);
+            }
+        }
+    }
+    
     private void ToggleLevelSelectOverride()
     {
         LevelNavigator navigator = FindObjectOfType<LevelNavigator>();

@@ -57,7 +57,7 @@ public class NotebookUI : MonoBehaviour
 
     #region Private Fields
     // Data that the player edits as they play with the notebook
-    private NotebookData data;
+    [SerializeField] private NotebookData data;
     // Reference to the resource request editor
     private ResourceRequestEditor resourceRequestEditor;
     // Maps the names of the category pickers to the components for fast lookup
@@ -82,24 +82,6 @@ public class NotebookUI : MonoBehaviour
     #region Monobehaviour Messages
     private void Start()
     {
-        // Load the notebook from save, or create a new one if save data doesn't exist
-        data = GameManager.Instance.LoadNotebook() ?? new NotebookData(config);
-
-        // Set the configuration of the notebook data
-        data.SetConfig(config);
-
-        // Add the current level
-        data.OnLevelEncountered(LevelID.Current());
-
-        // Try to get an instance of the game manager
-        GameManager instance = GameManager.Instance;
-
-        // Unlock everything by default
-        foreach (var item in ItemRegistry.GetAllItems())
-        {
-            data.UnlockItem(item.ShopItem.ID);
-        }
-
         // Setup the tab picker first of all children
         tabPicker.Setup();
         tabPicker.OnTabSelect += UpdateInspectorHiddenByChild;
@@ -149,6 +131,33 @@ public class NotebookUI : MonoBehaviour
     #endregion
 
     #region Public Methods
+
+    public void InitializeNotebookData()
+    {
+        // Load the notebook from save, or create a new one if save data doesn't exist
+        data = GameManager.Instance.LoadNotebook() ?? new NotebookData(config);
+
+        // Set the configuration of the notebook data
+        data.SetConfig(config);
+
+        // Add the current level
+        data.OnLevelEncountered(LevelID.Current());
+
+        // Try to get an instance of the game manager
+        GameManager instance = GameManager.Instance;
+
+        // Unlock default unlocks as well as level unlocks
+        foreach (var item in ItemRegistry.GetAllItems())
+        {
+            bool shouldUnlock =
+                item.ShopItem.unlockByDefault ||
+                item.ShopItem.UnlockLevelID <= GameManager.Instance.LevelData.Level.ID;
+            
+            if(shouldUnlock)
+                data.UnlockItem(item.ShopItem.ID);
+        }
+    }
+    
     // Directly referenced by the button in the scene
     public void Toggle()
     {
