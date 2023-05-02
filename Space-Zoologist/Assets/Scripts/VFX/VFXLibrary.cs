@@ -20,6 +20,7 @@ public class VFXLibrary : ScriptableObject
     public class VFXObject
     {
         public VFXType type;
+        public bool playSFX;
         public SFXType sfxType = SFXType.NumTypes;
         public VisualEffectPlayer effect;
     }

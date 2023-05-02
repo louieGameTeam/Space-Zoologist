@@ -128,6 +128,12 @@ public class FoodQualityVFXHandler : MonoBehaviour
                 // If the food being eaten is not edible for the selected species
                 else
                     VFXManager.Instance.DisplayVFX(SelectedAnimal.transform.position, VFXType.BadFood);
+                
+                // Play the animal-specific audio
+                if(!SelectedSpecies.EatingSFX)
+                    Debug.LogError("Species is missing eating SFX, please assign in editor", SelectedSpecies);
+                    
+                AudioManager.instance.PlayOneShot(SelectedSpecies.EatingSFX, 0.8f);
 
                 // Once VFX has been played, start cooldown before next VFX can be played
                 StartCoroutine(FoodQualityFXCooldown(FoodQualityVFXInterval));
