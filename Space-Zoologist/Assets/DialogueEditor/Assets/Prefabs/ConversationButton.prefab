@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 5050794836074544223}
   - component: {fileID: 4846386483246689317}
   - component: {fileID: 6120265339105655453}
+  - component: {fileID: 1306281332550860055}
+  - component: {fileID: 1864347275710862436}
   m_Layer: 5
   m_Name: ConversationButton
   m_TagString: Untagged
@@ -181,6 +183,10 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!114 &6120265339105655453
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -195,6 +201,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TextMesh: {fileID: 7926221421229046063}
   OptionBackgroundImage: {fileID: 170691663405415626}
+--- !u!114 &1306281332550860055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3216007433143529145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c1b9b29e37907e4eae7d414db997c04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioType: 27
+  playOnEnable: 0
+--- !u!114 &1864347275710862436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3216007433143529145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c1b9b29e37907e4eae7d414db997c04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioType: 28
+  playOnEnable: 0
 --- !u!1 &4188412588296704849
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,14 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   visualEffects:
   - type: 0
+    playSFX: 1
     sfxType: 20
     effect: {fileID: 1484973427122081476, guid: eede69d1f9a7078448302142a731a8b6,
       type: 3}
   - type: 1
-    sfxType: 21
+    playSFX: 0
+    sfxType: 27
     effect: {fileID: 1846545021929688559, guid: eac7311ce6156f740bb50a96c1f3261c,
       type: 3}
   - type: 2
+    playSFX: 1
     sfxType: 22
     effect: {fileID: 5333538197160219773, guid: 5cc1709f761f276498c4feb2d9313ea8,
       type: 3}
