@@ -17,19 +17,20 @@ MonoBehaviour:
   minFoodRequired: 3
   maxFoodRequired: 5
   treesRequired: 0
-  friendsRequired: {x: 0, y: 0}
   waterTilesRequired: 1
   growthRate: 1
   decayRate: 1
   moveCost: 0
   size: 1
   icon: {fileID: -2984124832550384540, guid: 5015206299b8e40848efa2bad0e91dd4, type: 3}
+  eatingSFX: {fileID: 8300000, guid: c0557300daa860340811610d32156ea6, type: 3}
   needs:
     needData:
       needArrays:
       - needs:
         - needed: 0
           speciesNeedType: 0
+          speciesFriendNeedCount: {x: 0, y: 0}
           useAsTerrainNeed: 0
           traversableOnly: 0
           foodNeedType: 0
@@ -42,6 +43,7 @@ MonoBehaviour:
             index: 0
         - needed: 0
           speciesNeedType: 0
+          speciesFriendNeedCount: {x: 0, y: 0}
           useAsTerrainNeed: 0
           traversableOnly: 0
           foodNeedType: 0
@@ -54,6 +56,7 @@ MonoBehaviour:
             index: 1
         - needed: 1
           speciesNeedType: 0
+          speciesFriendNeedCount: {x: 0, y: 0}
           useAsTerrainNeed: 0
           traversableOnly: 0
           foodNeedType: 0
@@ -66,6 +69,7 @@ MonoBehaviour:
             index: 2
         - needed: 0
           speciesNeedType: 0
+          speciesFriendNeedCount: {x: 0, y: 0}
           useAsTerrainNeed: 0
           traversableOnly: 0
           foodNeedType: 0
@@ -78,6 +82,7 @@ MonoBehaviour:
             index: 3
         - needed: 1
           speciesNeedType: 0
+          speciesFriendNeedCount: {x: 0, y: 0}
           useAsTerrainNeed: 0
           traversableOnly: 0
           foodNeedType: 0
@@ -90,6 +95,7 @@ MonoBehaviour:
             index: 4
         - needed: 0
           speciesNeedType: 0
+          speciesFriendNeedCount: {x: 0, y: 0}
           useAsTerrainNeed: 0
           traversableOnly: 0
           foodNeedType: 0
@@ -103,6 +109,7 @@ MonoBehaviour:
       - needs:
         - needed: 0
           speciesNeedType: 0
+          speciesFriendNeedCount: {x: 0, y: 0}
           useAsTerrainNeed: 0
           traversableOnly: 0
           foodNeedType: 0
@@ -115,6 +122,7 @@ MonoBehaviour:
             index: 0
         - needed: 0
           speciesNeedType: 0
+          speciesFriendNeedCount: {x: 0, y: 0}
           useAsTerrainNeed: 0
           traversableOnly: 0
           foodNeedType: 0
@@ -127,6 +135,7 @@ MonoBehaviour:
             index: 1
         - needed: 0
           speciesNeedType: 0
+          speciesFriendNeedCount: {x: 0, y: 0}
           useAsTerrainNeed: 0
           traversableOnly: 0
           foodNeedType: 0
@@ -139,6 +148,7 @@ MonoBehaviour:
             index: 2
         - needed: 1
           speciesNeedType: 0
+          speciesFriendNeedCount: {x: 0, y: 0}
           useAsTerrainNeed: 0
           traversableOnly: 0
           foodNeedType: 0
@@ -151,6 +161,7 @@ MonoBehaviour:
             index: 3
         - needed: 0
           speciesNeedType: 0
+          speciesFriendNeedCount: {x: 0, y: 0}
           useAsTerrainNeed: 0
           traversableOnly: 0
           foodNeedType: 0
@@ -163,6 +174,7 @@ MonoBehaviour:
             index: 4
         - needed: 1
           speciesNeedType: 0
+          speciesFriendNeedCount: {x: 0, y: 0}
           useAsTerrainNeed: 0
           traversableOnly: 0
           foodNeedType: 0
@@ -176,6 +188,7 @@ MonoBehaviour:
       - needs:
         - needed: 1
           speciesNeedType: 0
+          speciesFriendNeedCount: {x: 0, y: 0}
           useAsTerrainNeed: 0
           traversableOnly: 1
           foodNeedType: 0
@@ -188,6 +201,7 @@ MonoBehaviour:
             index: 0
         - needed: 1
           speciesNeedType: 0
+          speciesFriendNeedCount: {x: 0, y: 0}
           useAsTerrainNeed: 0
           traversableOnly: 0
           foodNeedType: 0
@@ -200,6 +214,7 @@ MonoBehaviour:
             index: 1
         - needed: 1
           speciesNeedType: 0
+          speciesFriendNeedCount: {x: 0, y: 0}
           useAsTerrainNeed: 0
           traversableOnly: 1
           foodNeedType: 0
@@ -212,6 +227,7 @@ MonoBehaviour:
             index: 2
         - needed: 1
           speciesNeedType: 0
+          speciesFriendNeedCount: {x: 0, y: 0}
           useAsTerrainNeed: 0
           traversableOnly: 0
           foodNeedType: 0
@@ -224,6 +240,7 @@ MonoBehaviour:
             index: 3
         - needed: 1
           speciesNeedType: 0
+          speciesFriendNeedCount: {x: 0, y: 0}
           useAsTerrainNeed: 0
           traversableOnly: 0
           foodNeedType: 0
@@ -236,6 +253,7 @@ MonoBehaviour:
             index: 4
         - needed: 0
           speciesNeedType: 0
+          speciesFriendNeedCount: {x: 0, y: 0}
           useAsTerrainNeed: 0
           traversableOnly: 0
           foodNeedType: 0
@@ -248,6 +266,7 @@ MonoBehaviour:
             index: 5
         - needed: 1
           speciesNeedType: 0
+          speciesFriendNeedCount: {x: 0, y: 0}
           useAsTerrainNeed: 0
           traversableOnly: 0
           foodNeedType: 0
@@ -260,6 +279,7 @@ MonoBehaviour:
             index: 6
         - needed: 1
           speciesNeedType: 0
+          speciesFriendNeedCount: {x: 0, y: 0}
           useAsTerrainNeed: 0
           traversableOnly: 0
           foodNeedType: 0
@@ -272,6 +292,7 @@ MonoBehaviour:
             index: 7
         - needed: 0
           speciesNeedType: 0
+          speciesFriendNeedCount: {x: 0, y: 0}
           useAsTerrainNeed: 0
           traversableOnly: 0
           foodNeedType: 0
