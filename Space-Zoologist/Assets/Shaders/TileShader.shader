@@ -429,22 +429,22 @@
                     col = tex2D(_WallTileAtlas, localUVTile + tileUVUnit3.xz * 3);
 
                     // front facing wall
-                    if ((ttm[1][0] == TILE_TYPE_WALL || ttm[1][2] == TILE_TYPE_WALL) &&
+                    if (//(ttm[1][0] == TILE_TYPE_WALL || ttm[1][2] == TILE_TYPE_WALL) &&
                         (ttm[0][1] != TILE_TYPE_WALL)) {
                         col = tex2D(_WallTileAtlas, localUVTile + tileUVUnit3.zy + tileUVUnit3.xz * (int)(tileNoise * 5));
                     }
 
                     // top left
                     if ((ttm[1][2] == TILE_TYPE_WALL && ttm[0][1] == TILE_TYPE_WALL &&
-                        ttm[2][1] != TILE_TYPE_WALL && ttm[1][0] != TILE_TYPE_WALL) ||
-                        (tilePos.x == 0 && tilePos.y == _GridTexDim.y - 2)) {
+                        ttm[2][1] != TILE_TYPE_WALL && ttm[1][0] != TILE_TYPE_WALL && ttm[0][2] != TILE_TYPE_WALL) ||
+                        (tilePos.x == 0 && tilePos.y == _GridTexDim.y - 1)) {
                         col = tex2D(_WallTileAtlas, localUVTile);
                     }
 
                     // top right
                     if ((ttm[1][0] == TILE_TYPE_WALL && ttm[0][1] == TILE_TYPE_WALL &&
-                        ttm[2][1] != TILE_TYPE_WALL && ttm[1][2] != TILE_TYPE_WALL) ||
-                        (tilePos.x == _GridTexDim.x - 1 && tilePos.y == _GridTexDim.y - 2)) {
+                        ttm[2][1] != TILE_TYPE_WALL && ttm[1][2] != TILE_TYPE_WALL && ttm[0][0] != TILE_TYPE_WALL) ||
+                        (tilePos.x == _GridTexDim.x - 1 && tilePos.y == _GridTexDim.y - 1)) {
                         col = tex2D(_WallTileAtlas, localUVTile);
                     }
                 }

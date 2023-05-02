@@ -99,21 +99,18 @@ public class QuizInstance
     public static bool ComputeCompleted(QuizRuntimeTemplate runtimeTemplate, int[] answers) => ComputeQuestionsAnswered(runtimeTemplate, answers) >= runtimeTemplate.Questions.Length;
     public static QuizGrade ComputeGrade(QuizRuntimeTemplate runtimeTemplate, int[] answers)
     {
-        // Determine if you pass or fail important categories
-        bool passImportant = PassedImportantQuestions(runtimeTemplate, answers);
+        int importantScore = ComputeScoreInImportantCategories(runtimeTemplate, answers);
+        int importantMaxScore = runtimeTemplate.GetMaximumPossibleScoreInImportantCategories();
 
-        // If you pass important, go on to check if you pass unimportant too
-        if (passImportant)
-        {
-            bool passUnimportant = PassedUnimportantQuestions(runtimeTemplate, answers);
+        int unimportantScore = ComputeScoreInUnimportantCategories(runtimeTemplate, answers);
+        int unimportantMaxScore = runtimeTemplate.GetMaximumPossibleScoreInUnimportantCategories();
 
-            // If you pass both, your score is excellent
-            if (passUnimportant) return QuizGrade.Excellent;
-            // If you pass only important categories your score is acceptable
-            else return QuizGrade.Acceptable;
-        }
-        // If you fail important categories your grade is poor
-        else return QuizGrade.Poor;
+        return runtimeTemplate.Template.GradingRubric.EvaluateGrade(
+            importantScore, 
+            importantMaxScore, 
+            unimportantScore, 
+            unimportantMaxScore);
+        
     }
     public static int ComputeScoreInImportantCategories(QuizRuntimeTemplate runtimeTemplate, int[] answers)
     {
@@ -128,18 +125,11 @@ public class QuizInstance
         }
         return score;
     }
-    public static bool PassedImportantQuestions(QuizRuntimeTemplate runtimeTemplate, int[] answers) => runtimeTemplate.Template.GradingRubric
-        .PassedImportantQuestions(
-            ComputeScoreInImportantCategories(runtimeTemplate, answers), 
-            runtimeTemplate.GetMaximumPossibleScoreInImportantCategories());
     public static int ComputeScoreInUnimportantCategories(QuizRuntimeTemplate runtimeTemplate, int[] answers)
     {
         return ComputeItemizedScore(runtimeTemplate, answers).TotalScore - ComputeScoreInImportantCategories(runtimeTemplate, answers);
     }
-    public static bool PassedUnimportantQuestions(QuizRuntimeTemplate runtimeTemplate, int[] answers) => runtimeTemplate.Template.GradingRubric
-        .PassedUnimportantQuestions(
-            ComputeScoreInUnimportantCategories(runtimeTemplate, answers),
-            runtimeTemplate.GetMaximumPossibleScoreInUnimportantCategories());
+    
     public static ItemizedQuizScore ComputeItemizedScore(QuizRuntimeTemplate runtimeTemplate, int[] answers)
     {
         ItemizedQuizScore itemizedScore = new ItemizedQuizScore();

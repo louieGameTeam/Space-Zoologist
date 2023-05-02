@@ -102,25 +102,57 @@ public class QuizInstanceDrawer : PropertyDrawer
                     // Indent the next part and disable it
                     EditorGUI.indentLevel++;
                     GUI.enabled = false;
+                    
+                    int importantScore = QuizInstance.ComputeScoreInImportantCategories(runtimeTemplate, answersArray);
+                    int importantMaxScore = runtimeTemplate.GetMaximumPossibleScoreInImportantCategories();
+                    
+                    int unImportantScore = QuizInstance.ComputeScoreInUnimportantCategories(runtimeTemplate, answersArray);
+                    int unImportantMaxScore = runtimeTemplate.GetMaximumPossibleScoreInUnimportantCategories();
 
-                    // Compute if the important questions passed, what the score is, and what the max score was
-                    bool passed = QuizInstance.PassedImportantQuestions(runtimeTemplate, answersArray);
-                    int score = QuizInstance.ComputeScoreInImportantCategories(runtimeTemplate, answersArray);
-                    int maxScore = runtimeTemplate.GetMaximumPossibleScoreInImportantCategories();
-                    string scoreString = $"{score} / {maxScore} - {(passed ? "Pass" : "Fail")}";
+                    var rubric = runtimeTemplate.Template.GradingRubric;
 
-                    // Show the score on important questions
-                    EditorGUIAuto.PrefixedLabelField(ref position, new GUIContent("Score on Important Questions"), scoreString);
+                    var importantQuestionsRubric = rubric as QuizImportantQuestionsRubric;
 
-                    // Compute if the unimportant questions passed, what the score is, and what the max score was
-                    passed = QuizInstance.PassedUnimportantQuestions(runtimeTemplate, answersArray);
-                    score = QuizInstance.ComputeScoreInUnimportantCategories(runtimeTemplate, answersArray);
-                    maxScore = runtimeTemplate.GetMaximumPossibleScoreInUnimportantCategories();
-                    scoreString = $"{score} / {maxScore} - {(passed ? "Pass" : "Fail")}";
+                    int Percentage(int a, int b) => (int)((float)a / b * 100);
+                    
+                    if (importantQuestionsRubric)
+                    {
+                        EditorGUIAuto.LabelField(ref position, "Important Questions Included Rubric");
+                        
+                        // Compute if the important questions passed, what the score is, and what the max score was
+                        bool importantPassed = importantQuestionsRubric.PassedImportantQuestions(importantScore, importantMaxScore);
+                        string scoreString = $"{importantScore} / {importantMaxScore} " +
+                                             $"- {Percentage(importantScore, importantMaxScore)}% " +
+                                             $"- {(importantPassed ? "Pass" : "Fail")}";
 
-                    // Show the score on unimportant questions
-                    EditorGUIAuto.PrefixedLabelField(ref position, new GUIContent("Score on Unimportant Questions"), scoreString);
+                        // Show the score on important questions
+                        EditorGUIAuto.PrefixedLabelField(ref position, new GUIContent("Important Q:"), scoreString);
 
+                        // Compute if the unimportant questions passed, what the score is, and what the max score was
+                        bool unimportantPassed = importantQuestionsRubric.PassedUnimportantQuestions(unImportantScore, unImportantMaxScore);
+                        scoreString = $"{unImportantScore} / {unImportantMaxScore} " +
+                                      $"- {Percentage(unImportantScore, unImportantMaxScore)}% " +
+                                      $"- {(unimportantPassed ? "Pass" : "Fail")}";
+
+                        // Show the score on unimportant questions
+                        EditorGUIAuto.PrefixedLabelField(ref position, new GUIContent("Unimportant Q:"), scoreString);
+                    }
+
+                    var simpleRubric = rubric as QuizSimpleRubric;
+                    if (simpleRubric)
+                    {
+                        EditorGUIAuto.LabelField(ref position, "Simple Rubric");
+
+                        int totalScore = importantScore + unImportantScore;
+                        int totalMaxScore = importantMaxScore + unImportantMaxScore;
+
+                        string scoreString = $"{totalScore}/{totalMaxScore} " +
+                                             $"- {Percentage(totalScore, totalMaxScore)}%";
+
+                        // Show the score on unimportant questions
+                        EditorGUIAuto.PrefixedLabelField(ref position, new GUIContent("Final Score"), scoreString);
+                    }
+                    
                     // Show the final grade
                     EditorGUIAuto.PrefixedLabelField(ref position, new GUIContent("Final Grade"), 
                         QuizInstance.ComputeGrade(runtimeTemplate, answersArray).ToString());
@@ -163,7 +195,7 @@ public class QuizInstanceDrawer : PropertyDrawer
                 height += EditorExtensions.StandardControlHeight;
 
                 // Add space for three more controls if the results are folded out
-                if (resultsFoldout) height += EditorExtensions.StandardControlHeight * 3f;
+                if (resultsFoldout) height += EditorExtensions.StandardControlHeight * 5f;
             }
         }
 

@@ -1,9 +1,13 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
-[CreateAssetMenu]
-public class QuizGradingRubric : ScriptableObject
+/// <summary>
+/// Type of rubric that considers important questions into grading scheme
+/// </summary>
+[CreateAssetMenu(menuName = "Quiz Rubric/Important Questions Included Rubric", fileName = "ImportantQuestionsRubric")]
+public class QuizImportantQuestionsRubric : QuizGradingRubric
 {
     #region Private Editor Fields
     [SerializeField]
@@ -15,13 +19,30 @@ public class QuizGradingRubric : ScriptableObject
     [Range(0f, 1f)]
     private float percentageToPassUnimportantQuestions = 0.65f;
     #endregion
+    
+    public override QuizGrade EvaluateGrade(int importantScore, int importantMaxScore, int unimportantScore, int unimportantMaxScore)
+    {
+        if (PassedImportantQuestions(importantScore, importantMaxScore))
+        {
+            if (PassedUnimportantQuestions(unimportantScore, unimportantMaxScore))
+            {
+                return QuizGrade.Excellent;
+            }
 
-    #region Public Methods
+            return QuizGrade.Acceptable;
+        }
+        else
+        {
+            return QuizGrade.Poor;
+        }
+    }
+    
     public bool PassedImportantQuestions(int score, int maxScore) => Grade(score, maxScore, percentageToPassImportantQuestions);
     public bool PassedUnimportantQuestions(int score, int maxScore) => Grade(score, maxScore, percentageToPassUnimportantQuestions);
-    #endregion
 
     #region Private Methods
+    
+
     private bool Grade(int score, int maxScore, float percentageToPass)
     {
         if (maxScore > 0)
@@ -33,4 +54,5 @@ public class QuizGradingRubric : ScriptableObject
         else return true;
     }
     #endregion
+
 }
