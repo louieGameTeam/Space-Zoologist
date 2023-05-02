@@ -44,6 +44,7 @@ namespace DialogueEditor
         public Sprite OptionImage;
         public bool OptionImageSliced;
         public bool AllowMouseInteraction;
+        public bool UseAdvanceInput;
         public string AdvanceInput = "Submit";
         public RectTransform Background;
         public GameObject SkipConversationButton;
@@ -127,7 +128,8 @@ namespace DialogueEditor
             m_uiOptions = new List<UIConversationButton>();
 
             // Set the state when progress button is clicked (the state is cleared at the end of update)
-            ProgressConversationButton.onClick.AddListener(() => progressUIButtonDown = true);
+            // The state probably shouldn't be update driven
+            ProgressConversationButton.onClick.AddListener(OnProgressButtonPressed);
         }
 
         private void OnDestroy()
@@ -410,7 +412,7 @@ namespace DialogueEditor
                     }
                     break;
                 case eState.Idle:
-                    if(m_currentSpeech.Options.Count == 0)
+                    if(m_currentSpeech.Options.Count == 0 && !isFrozen)
                         SetConversationContinueIndicator(true);
                     break;
             }     
@@ -702,9 +704,16 @@ namespace DialogueEditor
             GameManager.Instance.m_menuManager.ToggleUISingleButton(speech.enableNotebookUI, "notebook");
             SetState(eState.ScrollingText);
         }
+        
+        //--------------------------------------
+        // Button callbacks
+        //--------------------------------------
 
-
-
+        private void OnProgressButtonPressed()
+        {
+            progressUIButtonDown = true;
+        }
+        
         //--------------------------------------
         // Option Selected
         //--------------------------------------
@@ -714,9 +723,6 @@ namespace DialogueEditor
             m_selectedOption = option;
             SetState(eState.TransitioningOptionsOff);
         }
-
-
-
 
         //--------------------------------------
         // Util
@@ -855,7 +861,7 @@ namespace DialogueEditor
             bool buttonClickAdvanceInput = progressUIButtonDown && UIBlockerSettings.OperationIsAvailable("Dialogue");
 
             // Only use the advance input if some typing UI object is not currently selected
-            bool keyAdvanceInput = Input.GetButtonDown(AdvanceInput);
+            bool keyAdvanceInput = UseAdvanceInput && Input.GetButtonDown(AdvanceInput);
 
             // Progress if the advance button was clicked or the button in the input axes was just pressed
             return buttonClickAdvanceInput || keyAdvanceInput;
