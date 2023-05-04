@@ -22,6 +22,7 @@ public class AnimalSpecies : ScriptableObject
     public NeedData[] RequiredTreeNeeds => needs.FindTreeNeeds();
     public Sprite Icon => icon;
     public Sprite Sprite => icon;
+    public AudioClip EatingSFX => eatingSFX;
     public int MoveCost => moveCost;
     public Sprite Representation => representation;
     // TODO setup tile weights for species
@@ -42,6 +43,7 @@ public class AnimalSpecies : ScriptableObject
 
     [SerializeField] private float size = default;
     [SerializeField] private Sprite icon = default;
+    [SerializeField] private AudioClip eatingSFX = default;
 
     [SerializeField]
     [Tooltip("Registry of all the animal's needs")]

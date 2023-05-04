@@ -88,6 +88,7 @@ namespace DialogueEditor
             if (hovering)
             {
                 ConversationManager.Instance.AlertHover(this);
+                AudioManager.instance.PlayOneShot(SFXType.DialogueHover);
             }
             else
             {
@@ -102,7 +103,10 @@ namespace DialogueEditor
             if (m_action != null)
                 ConversationManager.Instance.DoSpeech(m_action);
             else
+            {
                 ConversationManager.Instance.OptionSelected(m_option);
+                AudioManager.instance.PlayOneShot(SFXType.DialogueSelect);
+            }
         }
 
 

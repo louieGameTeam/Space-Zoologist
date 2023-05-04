@@ -93,7 +93,7 @@ public class StoreSection : MonoBehaviour
             Item item = itemData.ShopItem;
             if (item)
             {
-                if (item.Type.Equals(itemType))
+                if (item.Type.Equals(itemType) && GameManager.Instance.NotebookUI.Data.ItemIsUnlocked(item.ID))
                 {
                     this.AddItem(item);
                 }

@@ -36,10 +36,10 @@ MonoBehaviour:
       weight: 0
     - label: B, A, C
       weight: 2
-  - question: "When Juno was designing an enclosure she realized the Zeig's food
-      need wasn't being satisfied at all, so she went ahead and placed more
-      of the food that was already present. In which of the following situations
-      would what Juno did make the most sense?"
+  - question: When Juno was designing an enclosure she realized the Zeig's food need
+      wasn't being satisfied at all, so she went ahead and placed more of the food
+      that was already present. In which of the following situations would what Juno
+      did make the most sense?
     category:
       item:
         category: 0
@@ -48,11 +48,9 @@ MonoBehaviour:
     options:
     - label: If there was another species nearby that ate the same food as the Zeigs
       weight: 2
-    - label: "If the currently present food wasn't close enough to any water
-        sources."
+    - label: If the currently present food wasn't close enough to any water sources.
       weight: 0
-    - label: "If the currently placed food wasn't on traversable terrain for
-        the Zeigs."
+    - label: If the currently placed food wasn't on traversable terrain for the Zeigs.
       weight: 0
   - question: 'If Flan were introduced to a natural swamp habitat on Earth, there
       would likely be many impacts on that habitat. Order these choices from most
@@ -75,10 +73,10 @@ MonoBehaviour:
   randomQuestionPool:
     questionsToPick: 0
     questionPool: []
-  gradingRubric: {fileID: 11400000, guid: 452081780eb603242ad7429c61063876, type: 2}
+  gradingRubric: {fileID: 11400000, guid: 344067f1f522fc04e864c62c3a27ed18, type: 2}
   exampleQuiz:
     template: {fileID: 11400000}
-    answers: 00000000
+    answers: 000000000000000000000000
     runtimeTemplate:
       template: {fileID: 0}
       questions: []

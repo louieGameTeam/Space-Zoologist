@@ -43,7 +43,7 @@ public class VFXManager : MonoBehaviour
         visualEffect.transform.position = pos;
 
         // TODO: Decouple VFX from SFX
-        if (vfx.sfxType != SFXType.NumTypes)
+        if (vfx.playSFX && vfx.sfxType != SFXType.NumTypes)
         {
             AudioManager.instance.PlayOneShot(vfx.sfxType, 0.6f);
         }

@@ -14,6 +14,7 @@ public enum SFXType
     GoodFood, NeutralFood, BadFood,
     AnimalDespawn,
     LevelFinishWin, LevelFinishFail, Fireworks,
+    DialogueHover, DialogueSelect,
     NumTypes
 }
 
