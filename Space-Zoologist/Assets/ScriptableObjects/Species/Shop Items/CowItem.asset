@@ -14,9 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Lumoo
   price: 0
-  canBeRequested: 0
   description: 
   icon: {fileID: 5784731289588789516, guid: 600fefc09a2074874b190dbac4733e61, type: 3}
   audio:
   - {fileID: 8300000, guid: c41c958d1dcff9441998fb7884e80296, type: 3}
   BuildTime: 0
+  notebookUnlockConfig:
+    unlockByDefault: 0
+    unlockLevelID:
+      levelNumber: 2
+      enclosureNumber: 1
