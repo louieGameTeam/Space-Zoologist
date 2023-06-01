@@ -702,6 +702,7 @@ namespace DialogueEditor
                 GameManager.Instance.NotebookUI.Toggle();
             // magic string, should refactor if this becomes an issue later
             GameManager.Instance.m_menuManager.ToggleUISingleButton(speech.enableNotebookUI, "notebook");
+            AudioManager.instance.PlayOneShotRandom(SFXType.NeutralExplain);
             SetState(eState.ScrollingText);
         }
         
