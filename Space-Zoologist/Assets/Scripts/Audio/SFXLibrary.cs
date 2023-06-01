@@ -15,6 +15,7 @@ public enum SFXType
     AnimalDespawn,
     LevelFinishWin, LevelFinishFail, Fireworks,
     DialogueHover, DialogueSelect,
+    Sell,
     NumTypes
 }
 

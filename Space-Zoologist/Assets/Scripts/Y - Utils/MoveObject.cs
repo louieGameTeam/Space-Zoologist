@@ -393,6 +393,7 @@ public class MoveObject : MonoBehaviour
             default:
                 break;
         }
+        AudioManager.instance.PlayOneShot(SFXType.Sell);
         Reset();
     }
 
