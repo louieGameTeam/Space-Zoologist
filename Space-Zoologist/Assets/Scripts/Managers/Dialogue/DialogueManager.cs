@@ -18,6 +18,8 @@ public class DialogueManager : MonoBehaviour
         public float nameTextYPos;
         public RectOffset speechTextRectOffsets;
 
+        public Vector2 npcIconPosition;
+
         // Set the conversation UI to the data in this structure
         public void SetConversationUI(ConversationManager manager)
         {
@@ -27,6 +29,8 @@ public class DialogueManager : MonoBehaviour
 
             manager.NameText.rectTransform.anchoredPosition = new Vector2(manager.NameText.rectTransform.anchoredPosition.x, nameTextYPos);
             manager.DialogueText.rectTransform.SetOffsets(speechTextRectOffsets);
+
+            manager.NpcIcon.rectTransform.anchoredPosition = npcIconPosition;
         }
     }
     #endregion
@@ -167,7 +171,7 @@ public class DialogueManager : MonoBehaviour
     public void SetNPCActive(bool active)
     {
         ConversationManager manager = ConversationManager.Instance;
-        manager.NpcIcon.enabled = active;
+        //manager.NpcIcon.enabled = active;
 
         if (active) npcActive.SetConversationUI(manager);
         else npcInactive.SetConversationUI(manager);
