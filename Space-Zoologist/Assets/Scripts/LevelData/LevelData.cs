@@ -44,10 +44,16 @@ public class LevelData : ScriptableObject
         }
     }
 
+    [Header("Balance Config")]
     [SerializeField] public float startingBalance = default;
+    
+    [Header("Affordances Config")]
+    [SerializeField] public bool WallBreakable = default;
+    [SerializeField] public bool NoSelling = default;
+    
+    [Header("Map Config")]
     [SerializeField] public int MapWidth = default;
     [SerializeField] public int MapHeight = default;
-    [SerializeField] public bool WallBreakable = default;
     [Expandable] public LevelObjectiveData LevelObjectiveData = default;
     [Expandable] public List<FoodSourceSpecies> foodSources = default;
     [Expandable] public List<AnimalSpecies> animalSpecies = default;

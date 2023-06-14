@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -80,6 +82,16 @@ public class MoveObject : MonoBehaviour
             tileToDelete.tag = "tiletodelete";
             tileToDelete.name = "Tile To Delete (Helper for MoveObject.cs)";
         }
+        
+        // Disable if current level does not allow selling
+        DeleteButton.GetComponentInChildren<Button>().interactable = !GameManager.Instance.LevelData.NoSelling;
+    }
+
+    private void UpdateMoveUIEnabled()
+    {
+        bool canMove = moveCost <= GameManager.Instance.Balance;
+        MoveButton.GetComponentInChildren<Button>().interactable = canMove;
+        MoveButton.GetComponentInChildren<TMP_Text>().color = canMove ? Color.black: Color.red;
     }
 
     public void StartMovement()
@@ -270,6 +282,8 @@ public class MoveObject : MonoBehaviour
         }
         MoveButton.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = $"-${moveCost}";
         DeleteButton.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = $"+${sellBackCost}";
+        
+        UpdateMoveUIEnabled();
     }
 
     private void UpdateMoveUIPosition()
