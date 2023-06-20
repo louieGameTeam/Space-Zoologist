@@ -16,6 +16,7 @@ public enum SFXType
     LevelFinishWin, LevelFinishFail, Fireworks,
     DialogueHover, DialogueSelect,
     NeutralExplain,
+    Sell,
     NumTypes
 }
 

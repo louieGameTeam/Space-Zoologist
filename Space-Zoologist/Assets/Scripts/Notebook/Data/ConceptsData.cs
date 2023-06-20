@@ -65,12 +65,14 @@ public class ConceptsData : NotebookDataModule
         ReviewedResourceRequestList list = GetEntryWithLatestAttempt(levelID).reviews;
 
         // Check if the game manager exists and the review was not denied
-        if(GameManager.Instance && review.CurrentStatus != ReviewedResourceRequest.Status.Denied)
+        if(GameManager.Instance && review.CurrentStatus != ReviewedResourceRequest.Status.Denied && review.QuantityGranted > 0)
         {
             // Add the item to the resource manager and subtract the total cost
             Item itemObjectGranted = ItemRegistry.Get(review.Request.ItemRequested).ShopItem;
             GameManager.Instance.m_resourceManager.ChangeItemQuantity(itemObjectGranted.ID, review.QuantityGranted);
             GameManager.Instance.SubtractFromBalance(review.TotalCost);
+            // SFX
+            AudioManager.instance.PlayOneShot(SFXType.Sell);
         }
 
         list.Reviews.Add(review);
