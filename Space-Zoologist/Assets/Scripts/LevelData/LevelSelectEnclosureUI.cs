@@ -35,6 +35,12 @@ public class LevelSelectEnclosureUI : MonoBehaviour, IPointerEnterHandler, IPoin
     [Tooltip("Component used to display the image of the level")]
     private Image image = null;
     [SerializeField]
+    [Tooltip("Image indicating level is locked or not")]
+    private GameObject levelLockedOverlay = null;
+    [SerializeField]
+    [Tooltip("Image indicating level is a spacer")]
+    private GameObject levelSpacerOverlay = null;
+    [SerializeField]
     [Tooltip("Outline object that appears when the button is hovered over")]
     private GameObject outline = null;
 
@@ -65,17 +71,21 @@ public class LevelSelectEnclosureUI : MonoBehaviour, IPointerEnterHandler, IPoin
             outline.SetActive (false);
             ratingUI.Disable ();
             Destroy (this);
+            levelSpacerOverlay.SetActive(true);
             return;
         }
 
         // Set the title and rating text
-        title.text = enclosure.Level.Name;
+        title.text = enclosure.Level.ID.EnclosureNumber.ToString();
 
         // Disable the outline
         outline.SetActive(false);
 
         // Setup the rating ui with this enclosure
         ratingUI.Setup(enclosure);
+        
+        // Show if level is unlocked or not
+        levelLockedOverlay.SetActive(!Interactable);
     }
     public void LoadLevel() => LevelDataLoader.LoadLevel(enclosure);
     public void SetOverride(LevelID levelOverride)
@@ -84,6 +94,7 @@ public class LevelSelectEnclosureUI : MonoBehaviour, IPointerEnterHandler, IPoin
         this.levelOverride = levelOverride;
 
         // Disable outline in case this makes the ui not interactable anymore
+        levelLockedOverlay.SetActive(false);
         outline.SetActive(false);
     }
     public void ClearOverride()
@@ -91,6 +102,7 @@ public class LevelSelectEnclosureUI : MonoBehaviour, IPointerEnterHandler, IPoin
         overridden = false;
 
         // Disable outline in case this makes the ui not interactable anymore
+        levelLockedOverlay.SetActive(false);
         outline.SetActive(false);
     }
     #endregion
