@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1666162499727703867}
   - component: {fileID: 1490480151776893422}
   m_Layer: 0
-  m_Name: L5E1QuizFailed 1
+  m_Name: L5E1QuizPartial
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,62 +45,75 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83189876d4d389f43b7dd2e925aa112e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentIDCounter: 49
-  json: '{"Options":[{"EditorInfo":{"isRoot":false,"xPos":-699,"yPos":5484},"ID":4,"TMPFontGUID":null,"Text":"We
-    can go share our research with Dr. Star?","parentUIDs":[1,46,46],"SpeechUID":5},{"EditorInfo":{"isRoot":false,"xPos":-700,"yPos":5732},"ID":6,"TMPFontGUID":null,"Text":"What''s
-    wrong?","parentUIDs":[5,5],"SpeechUID":7},{"EditorInfo":{"isRoot":false,"xPos":-901,"yPos":5956},"ID":8,"TMPFontGUID":null,"Text":"What!?","parentUIDs":[7,7],"SpeechUID":9},{"EditorInfo":{"isRoot":false,"xPos":-541,"yPos":5949},"ID":10,"TMPFontGUID":null,"Text":"Yea
-    I figured...","parentUIDs":[7,7],"SpeechUID":11},{"EditorInfo":{"isRoot":false,"xPos":-733,"yPos":6485},"ID":13,"TMPFontGUID":null,"Text":"So
-    why didn''t you tell Star?","parentUIDs":[12,12],"SpeechUID":14},{"EditorInfo":{"isRoot":false,"xPos":-5172,"yPos":29586},"ID":15,"TMPFontGUID":null,"Text":"I''m
-    sure Dr. Star will understand.","parentUIDs":[14,14],"SpeechUID":16},{"EditorInfo":{"isRoot":false,"xPos":-4834,"yPos":29590},"ID":17,"TMPFontGUID":null,"Text":"Barry,
-    I''m going to have to tell Dr. Star.","parentUIDs":[14,14],"SpeechUID":18},{"EditorInfo":{"isRoot":false,"xPos":-5005,"yPos":30053},"ID":20,"TMPFontGUID":null,"Text":"How
-    about we go tell Dr. Star together?","parentUIDs":[19,19],"SpeechUID":21},{"EditorInfo":{"isRoot":false,"xPos":-5011,"yPos":31057},"ID":28,"TMPFontGUID":null,"Text":"Barry
-    found a new species from Planet X and we raised it without you knowing.","parentUIDs":[27,27],"SpeechUID":29}],"SpeechNodes":[{"EditorInfo":{"isRoot":true,"xPos":-729,"yPos":5134},"ID":1,"TMPFontGUID":null,"Text":"Hmmmm,
-    these answers don''t really line up, but hey you still met this enclosure''s
-    requirements! I''d probably have done just as bad on the report back too...","parentUIDs":[],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":"Sad","IconGUID":null,"Name":"Barry","OptionUIDs":[],"SpeechUID":46,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":-699,"yPos":5605},"ID":5,"TMPFontGUID":null,"Text":"Oh,
-    uh yeah! Well, I don''t know...","parentUIDs":[4,4],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":"Sad","IconGUID":null,"Name":"Barry","OptionUIDs":[6],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":-699,"yPos":5834},"ID":7,"TMPFontGUID":null,"Text":"Well...
+  CurrentIDCounter: 56
+  json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-699,\"yPos\":5484},\"ID\":4,\"TMPFontGUID\":null,\"Text\":\"We
+    can go share our research with Dr. Star?\",\"parentUIDs\":[1,46,46],\"SpeechUID\":5},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-700,\"yPos\":5732},\"ID\":6,\"TMPFontGUID\":null,\"Text\":\"What's
+    wrong?\",\"parentUIDs\":[5,5],\"SpeechUID\":7},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-901,\"yPos\":5956},\"ID\":8,\"TMPFontGUID\":null,\"Text\":\"What!?\",\"parentUIDs\":[7,7],\"SpeechUID\":9},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-492,\"yPos\":5940},\"ID\":10,\"TMPFontGUID\":null,\"Text\":\"Yea
+    I figured...\",\"parentUIDs\":[7,7],\"SpeechUID\":11},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-5179,\"yPos\":29594},\"ID\":15,\"TMPFontGUID\":null,\"Text\":\"I'm
+    sure Dr. Star will understand.\",\"parentUIDs\":[54,54],\"SpeechUID\":16},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-4833,\"yPos\":29590},\"ID\":17,\"TMPFontGUID\":null,\"Text\":\"Barry,
+    I'm going to have to tell Dr. Star.\",\"parentUIDs\":[54,54],\"SpeechUID\":18},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-5001,\"yPos\":30088},\"ID\":20,\"TMPFontGUID\":null,\"Text\":\"How
+    about we go tell Dr. Star together?\",\"parentUIDs\":[19,55,55],\"SpeechUID\":21},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-5011,\"yPos\":31060},\"ID\":28,\"TMPFontGUID\":null,\"Text\":\"Barry
+    found a surviving rare species and we raised it without telling you.\",\"parentUIDs\":[27,27],\"SpeechUID\":29},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-858,\"yPos\":6597},\"ID\":49,\"TMPFontGUID\":null,\"Text\":\"But
+    then where did these new Mimi's come from?\",\"parentUIDs\":[47,47],\"SpeechUID\":50},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-920,\"yPos\":6915},\"ID\":51,\"TMPFontGUID\":null,\"Text\":\"Then
+    why didn't you tell Dr. Star when you found out the Mimi was Okay?\",\"parentUIDs\":[50,50],\"SpeechUID\":52},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-1011,\"yPos\":7211},\"ID\":53,\"TMPFontGUID\":null,\"Text\":\"So
+    you waited until a new hire showed up?\",\"parentUIDs\":[52,52],\"SpeechUID\":54}],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":-740,\"yPos\":5101},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Hey
+    you did pretty good! Still a bit of room for improvement but good job!\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Happy\",\"IconGUID\":null,\"Name\":\"Barry\",\"OptionUIDs\":[],\"SpeechUID\":46,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-699,\"yPos\":5606},\"ID\":5,\"TMPFontGUID\":null,\"Text\":\"Oh,
+    uh yeah! Well, I don't know...\",\"parentUIDs\":[4,4],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Barry\",\"OptionUIDs\":[6],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-699,\"yPos\":5834},\"ID\":7,\"TMPFontGUID\":null,\"Text\":\"Well...
     can I tell you something? You might have pieced this together already, but no
-    one else actually knows about the Mimis...","parentUIDs":[6,6],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":"Neutral","IconGUID":null,"Name":"Barry","OptionUIDs":[8,10],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":-910,"yPos":6049},"ID":9,"TMPFontGUID":null,"Text":"Yea...","parentUIDs":[8,8],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":"Sad","IconGUID":null,"Name":"Barry","OptionUIDs":[],"SpeechUID":12,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":-539,"yPos":6056},"ID":11,"TMPFontGUID":null,"Text":"I
-    guess I didn''t do a great job hiding it...","parentUIDs":[10,10],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":"Neutral","IconGUID":null,"Name":"Barry","OptionUIDs":[],"SpeechUID":12,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":-718,"yPos":6254},"ID":12,"TMPFontGUID":null,"Text":"Well,
-    I originally found Mimi hiding in the back of a Flan stasis chamber. After doing
-    some testing and looking at those notes from Dr. Star I realized it must have
-    been the final species that we failed to retrieve from Planet X.","parentUIDs":[11,9,9,11],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":"Neutral","IconGUID":null,"Name":"Barry","OptionUIDs":[13],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":-734,"yPos":6604},"ID":14,"TMPFontGUID":null,"Text":"I
-    messed up an enclosure real bad this one time and ended up making a species go
-    extinct. I''ve been trying to live that down ever since and I was thinking this
-    would be my chance to redeem myself. But now it just feels wrong.","parentUIDs":[13,13],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":"Sad","IconGUID":null,"Name":"Barry","OptionUIDs":[15,17],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":-5178,"yPos":29702},"ID":16,"TMPFontGUID":null,"Text":"Do
-    you really think so?\r\n","parentUIDs":[15,15],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":"Neutral","IconGUID":null,"Name":"Barry","OptionUIDs":[],"SpeechUID":19,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":-4823,"yPos":29719},"ID":18,"TMPFontGUID":null,"Text":"No,
-    wait I don''t know.","parentUIDs":[17,17],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":"Neutral","IconGUID":null,"Name":"Barry","OptionUIDs":[],"SpeechUID":19,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":-5001,"yPos":29867},"ID":19,"TMPFontGUID":null,"Text":"I
-    shouldn''t have done this, I especially shouldn''t have involved you of all people!
-    You''re still a new recruit! Though I guess you still did a pretty good job handling
-    the Mimis and you''re handling this whole situation pretty well.","parentUIDs":[18,16,16,18],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":"Sad","IconGUID":null,"Name":"Barry","OptionUIDs":[20],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":-5012,"yPos":30215},"ID":21,"TMPFontGUID":null,"Text":"I...","parentUIDs":[20,20],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":"Neutral","IconGUID":null,"Name":"Barry","OptionUIDs":[],"SpeechUID":22,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":-5021,"yPos":30374},"ID":22,"TMPFontGUID":null,"Text":"Okay.","parentUIDs":[21,21],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":"Sad","IconGUID":null,"Name":"Barry","OptionUIDs":[],"SpeechUID":24,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":-5022,"yPos":30527},"ID":24,"TMPFontGUID":null,"Text":"...","parentUIDs":[22,22],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":"Sad","IconGUID":null,"Name":"Barry","OptionUIDs":[],"SpeechUID":25,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":-5009,"yPos":30672},"ID":25,"TMPFontGUID":null,"Text":"Aurora?","parentUIDs":[24,24],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":"Neutral","IconGUID":null,"Name":"Barry","OptionUIDs":[],"SpeechUID":26,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":-5009,"yPos":30804},"ID":26,"TMPFontGUID":null,"Text":"Yeah
-    Barry?","parentUIDs":[25,25],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":"Neutral","IconGUID":null,"Name":"Star","OptionUIDs":[],"SpeechUID":27,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":-5006,"yPos":30927},"ID":27,"TMPFontGUID":null,"Text":"I...
-    I messed up. I...","parentUIDs":[26,26],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":"Sad","IconGUID":null,"Name":"Barry","OptionUIDs":[28],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":-5004,"yPos":31174},"ID":29,"TMPFontGUID":null,"Text":"You
-    what? How?","parentUIDs":[28,28],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":"Sad","IconGUID":null,"Name":"Star","OptionUIDs":[],"SpeechUID":30,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":-5001,"yPos":31309},"ID":30,"TMPFontGUID":null,"Text":"There
-    was a Mimi hiding in one of the-","parentUIDs":[29,29],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":"Neutral","IconGUID":null,"Name":"Barry","OptionUIDs":[],"SpeechUID":31,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":-4999,"yPos":31447},"ID":31,"TMPFontGUID":null,"Text":"Mimi!
-    You mean that final species we weren''t able to find!?","parentUIDs":[30,30],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":"Neutral","IconGUID":null,"Name":"Star","OptionUIDs":[],"SpeechUID":32,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":-4999,"yPos":31583},"ID":32,"TMPFontGUID":null,"Text":"Yeah
-    that one. Aurora I''m really sorry I should''ve told you I just felt so bad for
-    the last time I messed up and I wanted to make up for it.","parentUIDs":[31,31],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":"Sad","IconGUID":null,"Name":"Barry","OptionUIDs":[],"SpeechUID":33,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":-4999,"yPos":31717},"ID":33,"TMPFontGUID":null,"Text":"Are
-    the Mimis okay?","parentUIDs":[32,32],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":"Neutral","IconGUID":null,"Name":"Star","OptionUIDs":[],"SpeechUID":34,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":-4998,"yPos":31855},"ID":34,"TMPFontGUID":null,"Text":"Yeah,
-    our new researcher did a great job with them actually. And they weren''t part
-    of me keeping it a secret at all, they didn''t know. If anything it''s thanks
-    to them that I''m coming clean now.","parentUIDs":[33,33],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":"Sad","IconGUID":null,"Name":"Barry","OptionUIDs":[],"SpeechUID":35,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":-5001,"yPos":31981},"ID":35,"TMPFontGUID":null,"Text":"*Phew*
-    okay good.","parentUIDs":[34,34],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":"Happy","IconGUID":null,"Name":"Star","OptionUIDs":[],"SpeechUID":36,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":-4998,"yPos":32119},"ID":36,"TMPFontGUID":null,"Text":"Barry,
-    our research isn''t about what we achieve, it''s about working together to preserve
+    one else actually knows that the Mimis are alive...\",\"parentUIDs\":[6,6],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Sad\",\"IconGUID\":null,\"Name\":\"Barry\",\"OptionUIDs\":[8,10],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-899,\"yPos\":6049},\"ID\":9,\"TMPFontGUID\":null,\"Text\":\"Yea...\",\"parentUIDs\":[8,8],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Barry\",\"OptionUIDs\":[],\"SpeechUID\":12,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-539,\"yPos\":6056},\"ID\":11,\"TMPFontGUID\":null,\"Text\":\"I
+    guess I didn't do a great job hiding it...\",\"parentUIDs\":[10,10],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Sad\",\"IconGUID\":null,\"Name\":\"Barry\",\"OptionUIDs\":[],\"SpeechUID\":12,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-1005,\"yPos\":6222},\"ID\":12,\"TMPFontGUID\":null,\"Text\":\"Well,
+    those notes I gave you about how I originally found a Mimi hiding in the back
+    of a Flan stasis chamber are actually from a while ago. After doing some testing
+    and looking at those notes from Dr. Star I realized it must have been the final
+    species that we failed to retrieve form planet X.\",\"parentUIDs\":[9,11,9,11],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Sad\",\"IconGUID\":null,\"Name\":\"Barry\",\"OptionUIDs\":[],\"SpeechUID\":47,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-5183,\"yPos\":29708},\"ID\":16,\"TMPFontGUID\":null,\"Text\":\"Do
+    you really think so?\\r\\n\",\"parentUIDs\":[15,15],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Barry\",\"OptionUIDs\":[],\"SpeechUID\":19,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-4825,\"yPos\":29715},\"ID\":18,\"TMPFontGUID\":null,\"Text\":\"No,
+    wait I don't know.\",\"parentUIDs\":[17,17],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Sad\",\"IconGUID\":null,\"Name\":\"Barry\",\"OptionUIDs\":[],\"SpeechUID\":19,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-5006,\"yPos\":29850},\"ID\":19,\"TMPFontGUID\":null,\"Text\":\"I
+    shouldn't have done this, I especially shouldn't have involved you of all people!
+    Despite your skills you\u2019re still a new recruit! You don\u2019t deserve this.\",\"parentUIDs\":[18,16,16,18],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Sad\",\"IconGUID\":null,\"Name\":\"Barry\",\"OptionUIDs\":[],\"SpeechUID\":55,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-5012,\"yPos\":30212},\"ID\":21,\"TMPFontGUID\":null,\"Text\":\"I...\",\"parentUIDs\":[20,20],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Barry\",\"OptionUIDs\":[],\"SpeechUID\":22,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-5022,\"yPos\":30374},\"ID\":22,\"TMPFontGUID\":null,\"Text\":\"Okay.\",\"parentUIDs\":[21,21],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Sad\",\"IconGUID\":null,\"Name\":\"Barry\",\"OptionUIDs\":[],\"SpeechUID\":24,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-5022,\"yPos\":30526},\"ID\":24,\"TMPFontGUID\":null,\"Text\":\"...\",\"parentUIDs\":[22,22],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Sad\",\"IconGUID\":null,\"Name\":\"Barry\",\"OptionUIDs\":[],\"SpeechUID\":25,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-5009,\"yPos\":30669},\"ID\":25,\"TMPFontGUID\":null,\"Text\":\"Aurora?\",\"parentUIDs\":[24,24],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Barry\",\"OptionUIDs\":[],\"SpeechUID\":26,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-5009,\"yPos\":30804},\"ID\":26,\"TMPFontGUID\":null,\"Text\":\"Yeah
+    Barry?\",\"parentUIDs\":[25,25],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":27,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-5009,\"yPos\":30927},\"ID\":27,\"TMPFontGUID\":null,\"Text\":\"I...
+    I messed up. I...\",\"parentUIDs\":[26,26],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Barry\",\"OptionUIDs\":[28],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-5004,\"yPos\":31174},\"ID\":29,\"TMPFontGUID\":null,\"Text\":\"You
+    what? How?\",\"parentUIDs\":[28,28],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Sad\",\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":30,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-5001,\"yPos\":31308},\"ID\":30,\"TMPFontGUID\":null,\"Text\":\"It
+    turned out that the Mimi I found all that time ago had just wandered-\",\"parentUIDs\":[29,29],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Barry\",\"OptionUIDs\":[],\"SpeechUID\":31,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-4999,\"yPos\":31447},\"ID\":31,\"TMPFontGUID\":null,\"Text\":\"Mimi!
+    You mean they aren't extinct!?\",\"parentUIDs\":[30,30],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":32,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-4999,\"yPos\":31584},\"ID\":32,\"TMPFontGUID\":null,\"Text\":\"Yeah...
+    Aurora I\u2019m really sorry. I should've told you but I just felt so bad for
+    nearly making them go extinct and I thought this could be a chance for me to
+    redeem myself.  \\r\",\"parentUIDs\":[31,31],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Sad\",\"IconGUID\":null,\"Name\":\"Barry\",\"OptionUIDs\":[],\"SpeechUID\":33,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-5000,\"yPos\":31721},\"ID\":33,\"TMPFontGUID\":null,\"Text\":\"Are
+    the Mimis okay?\",\"parentUIDs\":[32,32],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Sad\",\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":34,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-4998,\"yPos\":31857},\"ID\":34,\"TMPFontGUID\":null,\"Text\":\"Yeah,
+    our new researcher did a great job with them actually. And they weren't part
+    of me keeping it a secret at all, they didn't know. If anything it's thanks to
+    them that I'm coming clean now.\",\"parentUIDs\":[33,33],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Sad\",\"IconGUID\":null,\"Name\":\"Barry\",\"OptionUIDs\":[],\"SpeechUID\":35,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-5001,\"yPos\":31983},\"ID\":35,\"TMPFontGUID\":null,\"Text\":\"*Phew*
+    okay good.\",\"parentUIDs\":[34,34],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":36,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-4997,\"yPos\":32114},\"ID\":36,\"TMPFontGUID\":null,\"Text\":\"Barry,
+    our research isn't about what we achieve, it's about working together to preserve
     and study these creatures. You had already made up for what happened by continuing
-    to work and do research for the greater good of these animals.","parentUIDs":[35,35],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":"Neutral","IconGUID":null,"Name":"Star","OptionUIDs":[],"SpeechUID":37,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":-4995,"yPos":32237},"ID":37,"TMPFontGUID":null,"Text":"Really?","parentUIDs":[36,36],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":"Sad","IconGUID":null,"Name":"Barry","OptionUIDs":[],"SpeechUID":38,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":-4998,"yPos":32357},"ID":38,"TMPFontGUID":null,"Text":"Yes
+    to work and do research for the greater good of these animals.\",\"parentUIDs\":[35,35],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":37,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-4995,\"yPos\":32238},\"ID\":37,\"TMPFontGUID\":null,\"Text\":\"Really?\",\"parentUIDs\":[36,36],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Sad\",\"IconGUID\":null,\"Name\":\"Barry\",\"OptionUIDs\":[],\"SpeechUID\":38,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-4998,\"yPos\":32357},\"ID\":38,\"TMPFontGUID\":null,\"Text\":\"Yes
     Barry. Though I think I might make you work alongside Juno for a while so you
-    can remind yourself about how important teamwork is in this field.","parentUIDs":[37,37],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":"Neutral","IconGUID":null,"Name":"Star","OptionUIDs":[],"SpeechUID":39,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":-4998,"yPos":32482},"ID":39,"TMPFontGUID":null,"Text":"Aw
-    man, why do I have to get punished?","parentUIDs":[38,38],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":"Sad","IconGUID":null,"Name":"Juno","OptionUIDs":[],"SpeechUID":40,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":-4994,"yPos":32626},"ID":40,"TMPFontGUID":null,"Text":"Oh,
-    hi Juno I didn''t realize you were there. The fact that you view this a punishment
-    goes to show you have a thing or two to learn about teamwork too. ","parentUIDs":[39,39],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":"Sad","IconGUID":null,"Name":"Star","OptionUIDs":[],"SpeechUID":41,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":-4995,"yPos":32774},"ID":41,"TMPFontGUID":null,"Text":"Ughh.","parentUIDs":[40,40],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":"Neutral","IconGUID":null,"Name":"Juno","OptionUIDs":[],"SpeechUID":42,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":-4998,"yPos":32921},"ID":42,"TMPFontGUID":null,"Text":"Thank
-    you so much Aurora, I really appreciate it! Also sorry Juno.","parentUIDs":[41,41],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":"Happy","IconGUID":null,"Name":"Barry","OptionUIDs":[],"SpeechUID":43,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":-4995,"yPos":33041},"ID":43,"TMPFontGUID":null,"Text":"Yeah
-    whatever, we both have a bit more to learn I suppose.","parentUIDs":[42,42],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":"Neutral","IconGUID":null,"Name":"Juno","OptionUIDs":[],"SpeechUID":44,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":-4996,"yPos":33179},"ID":44,"TMPFontGUID":null,"Text":"And
-    you new recruit, good job getting Barry to come talk to me. I think it''s about
+    can remind yourself about how important teamwork is in this field.\",\"parentUIDs\":[37,37],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":39,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-4998,\"yPos\":32484},\"ID\":39,\"TMPFontGUID\":null,\"Text\":\"Aw
+    man, why do I have to get punished?\",\"parentUIDs\":[38,38],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Sad\",\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":40,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-4994,\"yPos\":32627},\"ID\":40,\"TMPFontGUID\":null,\"Text\":\"Oh,
+    hi Juno I didn't realize you were there. The fact that you view this a punishment
+    goes to show you have a thing or two to learn about teamwork too. \",\"parentUIDs\":[39,39],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":41,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-4995,\"yPos\":32775},\"ID\":41,\"TMPFontGUID\":null,\"Text\":\"Ughh.\",\"parentUIDs\":[40,40],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":42,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-4998,\"yPos\":32921},\"ID\":42,\"TMPFontGUID\":null,\"Text\":\"Thank
+    you so much Aurora, I really appreciate it! Also sorry Juno.\",\"parentUIDs\":[41,41],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Happy\",\"IconGUID\":null,\"Name\":\"Barry\",\"OptionUIDs\":[],\"SpeechUID\":43,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-4994,\"yPos\":33043},\"ID\":43,\"TMPFontGUID\":null,\"Text\":\"Yeah
+    whatever, we both have a bit more to learn I suppose.\",\"parentUIDs\":[42,42],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":44,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-4996,\"yPos\":33180},\"ID\":44,\"TMPFontGUID\":null,\"Text\":\"And
+    you new recruit, good job getting Barry to come talk to me. I think it's about
     time we stop referring to you as the newbie and start talking to you as who you
-    really are, an official xenobiology engineer!","parentUIDs":[43,43],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":"Happy","IconGUID":null,"Name":"Star","OptionUIDs":[],"SpeechUID":45,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":-4993,"yPos":33303},"ID":45,"TMPFontGUID":null,"Text":"You
+    really are, an official xenobiology engineer!\",\"parentUIDs\":[43,43],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Happy\",\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":45,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-4993,\"yPos\":33302},\"ID\":45,\"TMPFontGUID\":null,\"Text\":\"You
     clearly know all about engineering enclosures, researching animals and working
     together with your team members in order to make great new discoveries to help
-    better the lives of others. Welcome to the team!","parentUIDs":[44,44],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":"Happy","IconGUID":null,"Name":"Star","OptionUIDs":[],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":-729,"yPos":5311},"ID":46,"TMPFontGUID":null,"Text":"And
-    now...","parentUIDs":[1,1],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":"Neutral","IconGUID":null,"Name":"Barry","OptionUIDs":[4],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false}]}'
+    better the lives of others. Welcome to the team!\",\"parentUIDs\":[44,44],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Happy\",\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-719,\"yPos\":5293},\"ID\":46,\"TMPFontGUID\":null,\"Text\":\"And
+    now...\",\"parentUIDs\":[1,1],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Barry\",\"OptionUIDs\":[4],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-955,\"yPos\":6398},\"ID\":47,\"TMPFontGUID\":null,\"Text\":\"When
+    I realized I should go tell Dr. Star about it I left the Mimi unattended. I made
+    it an enclosure and everything and it seemed to be doing fine when I left but
+    when Dr. Star and I came back it was gone. That's the incident I'm sure you've
+    heard about from my colleagues. \",\"parentUIDs\":[12,12],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Sad\",\"IconGUID\":null,\"Name\":\"Barry\",\"OptionUIDs\":[49],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-918,\"yPos\":6742},\"ID\":50,\"TMPFontGUID\":null,\"Text\":\"Well,
+    we thought the Mimi had died and therefore the species had gone extinct, but
+    I later found it had somehow wandered into a stasis chamber.\",\"parentUIDs\":[49,49],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Barry\",\"OptionUIDs\":[51],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-946,\"yPos\":7040},\"ID\":52,\"TMPFontGUID\":null,\"Text\":\"Well,
+    when I found that the Mimi was fine it was a while after everyone thought I made
+    them go extinct. I could've just told them, I should've, but I thought that maybe
+    I could redeem myself by making a flourishing Mimi population and studying them
+    on my own. But I was too scared. I didn\u2019t want to mess up again.\\r\",\"parentUIDs\":[51,51],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Sad\",\"IconGUID\":null,\"Name\":\"Barry\",\"OptionUIDs\":[53],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-5029,\"yPos\":29326},\"ID\":54,\"TMPFontGUID\":null,\"Text\":\"I...
+    yes. I saw how well you were doing with all of the other species and I thought
+    this could be my chance to prove myself and fix what everyone thought I ruined.\",\"parentUIDs\":[53,53],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Sad\",\"IconGUID\":null,\"Name\":\"Barry\",\"OptionUIDs\":[15,17],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-5004,\"yPos\":29962},\"ID\":55,\"TMPFontGUID\":null,\"Text\":\"Though
+    I guess you still did a pretty good job handling the Mimis and you\u2019re handling
+    this whole situation pretty well.\",\"parentUIDs\":[19,19],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Barry\",\"OptionUIDs\":[20],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false}]}"
   saveVersion: 103
   DefaultName: 
   DefaultSprite: {fileID: 0}
@@ -116,7 +129,6 @@ MonoBehaviour:
   - {fileID: 1160948613309637846}
   - {fileID: 8058108365083026801}
   - {fileID: 6690966692395675026}
-  - {fileID: 518495631712572428}
   - {fileID: 4864869909361831719}
   - {fileID: 5760192476518860216}
   - {fileID: 5261679310529151208}
@@ -149,6 +161,14 @@ MonoBehaviour:
   - {fileID: 4771723438928194973}
   - {fileID: 7370473012046491751}
   - {fileID: 1608674012018463677}
+  - {fileID: 223234697483312320}
+  - {fileID: 538726955797914327}
+  - {fileID: 1452323877207310407}
+  - {fileID: 6303343454016126171}
+  - {fileID: 4063029105001080962}
+  - {fileID: 3135417660075921648}
+  - {fileID: 5024006897786390058}
+  - {fileID: 8688083754007741398}
   Event:
     m_PersistentCalls:
       m_Calls: []
@@ -171,7 +191,6 @@ GameObject:
   - component: {fileID: 1160948613309637846}
   - component: {fileID: 8058108365083026801}
   - component: {fileID: 6690966692395675026}
-  - component: {fileID: 518495631712572428}
   - component: {fileID: 4864869909361831719}
   - component: {fileID: 5760192476518860216}
   - component: {fileID: 5261679310529151208}
@@ -204,6 +223,14 @@ GameObject:
   - component: {fileID: 4771723438928194973}
   - component: {fileID: 7370473012046491751}
   - component: {fileID: 1608674012018463677}
+  - component: {fileID: 223234697483312320}
+  - component: {fileID: 538726955797914327}
+  - component: {fileID: 1452323877207310407}
+  - component: {fileID: 6303343454016126171}
+  - component: {fileID: 4063029105001080962}
+  - component: {fileID: 3135417660075921648}
+  - component: {fileID: 5024006897786390058}
+  - component: {fileID: 8688083754007741398}
   m_Layer: 0
   m_Name: ConversationEventInfo
   m_TagString: Untagged
@@ -243,7 +270,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
-  Icon: {fileID: 21300000, guid: 511836f350fbe8a4bab5130355a3ecfd, type: 3}
+  Icon: {fileID: 21300000, guid: 7fac99a4f5be5c4468602b59af8ac592, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &5506718642517653366
 MonoBehaviour:
@@ -262,7 +289,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
-  Icon: {fileID: 21300000, guid: 511836f350fbe8a4bab5130355a3ecfd, type: 3}
+  Icon: {fileID: 21300000, guid: ba7da11aff8543047b3d19b7d629c282, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &1376530769709050029
 MonoBehaviour:
@@ -281,7 +308,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
-  Icon: {fileID: 21300000, guid: ba7da11aff8543047b3d19b7d629c282, type: 3}
+  Icon: {fileID: 21300000, guid: 511836f350fbe8a4bab5130355a3ecfd, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &920344832307350742
 MonoBehaviour:
@@ -300,7 +327,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
-  Icon: {fileID: 21300000, guid: 511836f350fbe8a4bab5130355a3ecfd, type: 3}
+  Icon: {fileID: 21300000, guid: ba7da11aff8543047b3d19b7d629c282, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &8109426389109671081
 MonoBehaviour:
@@ -319,7 +346,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
-  Icon: {fileID: 21300000, guid: ba7da11aff8543047b3d19b7d629c282, type: 3}
+  Icon: {fileID: 21300000, guid: 511836f350fbe8a4bab5130355a3ecfd, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &8515988823370191320
 MonoBehaviour:
@@ -414,25 +441,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
-  Icon: {fileID: 21300000, guid: ba7da11aff8543047b3d19b7d629c282, type: 3}
-  Audio: {fileID: 0}
---- !u!114 &518495631712572428
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8975517945923358303}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NodeID: 14
-  Event:
-    m_PersistentCalls:
-      m_Calls: []
-  TMPFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
   Icon: {fileID: 21300000, guid: 511836f350fbe8a4bab5130355a3ecfd, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &4864869909361831719
@@ -490,7 +498,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
-  Icon: {fileID: 21300000, guid: ba7da11aff8543047b3d19b7d629c282, type: 3}
+  Icon: {fileID: 21300000, guid: 511836f350fbe8a4bab5130355a3ecfd, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &6892123965270414707
 MonoBehaviour:
@@ -623,7 +631,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
-  Icon: {fileID: 21300000, guid: 511836f350fbe8a4bab5130355a3ecfd, type: 3}
+  Icon: {fileID: 21300000, guid: ba7da11aff8543047b3d19b7d629c282, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &7201108092255913154
 MonoBehaviour:
@@ -718,7 +726,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
-  Icon: {fileID: 21300000, guid: 8c883f4201b912f4881839e372a91750, type: 3}
+  Icon: {fileID: 21300000, guid: bd6ba6916b4a41f4eadb84d5a2eb6205, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &5491440370763418743
 MonoBehaviour:
@@ -756,7 +764,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
-  Icon: {fileID: 21300000, guid: b01f055a5a8c42041a3a17161e277de6, type: 3}
+  Icon: {fileID: 21300000, guid: 8c883f4201b912f4881839e372a91750, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &3406392249768180319
 MonoBehaviour:
@@ -851,7 +859,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
-  Icon: {fileID: 21300000, guid: bd6ba6916b4a41f4eadb84d5a2eb6205, type: 3}
+  Icon: {fileID: 21300000, guid: 8c883f4201b912f4881839e372a91750, type: 3}
   Audio: {fileID: 0}
 --- !u!114 &2515737054589565496
 MonoBehaviour:
@@ -1037,6 +1045,158 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NodeID: 46
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
+  Icon: {fileID: 21300000, guid: ba7da11aff8543047b3d19b7d629c282, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &223234697483312320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 47
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
+  Icon: {fileID: 21300000, guid: 511836f350fbe8a4bab5130355a3ecfd, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &538726955797914327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 50
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
+  Icon: {fileID: 21300000, guid: ba7da11aff8543047b3d19b7d629c282, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &1452323877207310407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 52
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
+  Icon: {fileID: 21300000, guid: 511836f350fbe8a4bab5130355a3ecfd, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &6303343454016126171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 54
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
+  Icon: {fileID: 21300000, guid: 511836f350fbe8a4bab5130355a3ecfd, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &4063029105001080962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 49
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
+  Icon: {fileID: 0}
+  Audio: {fileID: 0}
+--- !u!114 &3135417660075921648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 51
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
+  Icon: {fileID: 0}
+  Audio: {fileID: 0}
+--- !u!114 &5024006897786390058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 53
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
+  Icon: {fileID: 0}
+  Audio: {fileID: 0}
+--- !u!114 &8688083754007741398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 55
   Event:
     m_PersistentCalls:
       m_Calls: []

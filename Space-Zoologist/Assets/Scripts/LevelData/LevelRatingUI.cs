@@ -10,8 +10,11 @@ public class LevelRatingUI : MonoBehaviour
     [Tooltip("Flavor text describing the rating of this level")]
     private TextMeshProUGUI ratingText = null;
     [SerializeField]
-    [Tooltip("Game object prefab to instantiate for each rating level")]
-    private GameObject ratingObjectPrefab = null;
+    [Tooltip("Game object prefab to instantiate to represent an achieved score point")]
+    private GameObject ratingObjectFilled = null;
+    [SerializeField]
+    [Tooltip("Game object prefab to instantiate to represent an unearned score point")]
+    private GameObject ratingObjectEmpty = null;
     [SerializeField]
     [Tooltip("Parent to instantiate the rating objects into")]
     private Transform ratingObjectParent = null;
@@ -33,12 +36,18 @@ public class LevelRatingUI : MonoBehaviour
             if (rating >= 0 || current.LevelNumber < SaveData.LatestLevelQualified.LevelNumber)
             {
                 // Setup the rating text and rating objects
-                ratingText.text = LevelRatingSystem.GetRatingText(rating);
+                // ratingText.text = LevelRatingSystem.GetRatingText(rating);
 
                 // Create a rating object for each rating level
                 for (int i = 0; i <= rating; i++)
                 {
-                    Instantiate(ratingObjectPrefab, ratingObjectParent);
+                    Instantiate(ratingObjectFilled, ratingObjectParent);
+                }
+
+                for (int i = rating; i < LevelRatingSystem.MaxRating; i++)
+                {
+                    Instantiate(ratingObjectEmpty, ratingObjectParent);
+
                 }
 
                 // Make this object enabled
