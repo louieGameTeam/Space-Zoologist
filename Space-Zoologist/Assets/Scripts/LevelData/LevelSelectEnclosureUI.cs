@@ -38,6 +38,9 @@ public class LevelSelectEnclosureUI : MonoBehaviour, IPointerEnterHandler, IPoin
     [Tooltip("Image indicating level is locked or not")]
     private GameObject levelLockedOverlay = null;
     [SerializeField]
+    [Tooltip("Image indicating level is a spacer")]
+    private GameObject levelSpacerOverlay = null;
+    [SerializeField]
     [Tooltip("Outline object that appears when the button is hovered over")]
     private GameObject outline = null;
 
@@ -68,6 +71,7 @@ public class LevelSelectEnclosureUI : MonoBehaviour, IPointerEnterHandler, IPoin
             outline.SetActive (false);
             ratingUI.Disable ();
             Destroy (this);
+            levelSpacerOverlay.SetActive(true);
             return;
         }
 
