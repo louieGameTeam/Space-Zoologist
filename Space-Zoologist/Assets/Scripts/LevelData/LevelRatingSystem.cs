@@ -5,7 +5,8 @@ using UnityEngine;
 
 public static class LevelRatingSystem
 {
-
+    public const int MaxRating = 2;
+    
     #region Public Fields
     public static readonly string noRatingText = "No rating - enclosure not yet designed";
     // TODO: Rewrite dialogue
