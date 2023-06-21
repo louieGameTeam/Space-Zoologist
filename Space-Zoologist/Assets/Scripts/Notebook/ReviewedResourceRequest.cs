@@ -69,15 +69,32 @@ public class ReviewedResourceRequest
             }
         }
     }
+
+    public string StatusLabel
+    {
+        get
+        {
+            switch (CurrentStatus)
+            {
+                case ReviewedResourceRequest.Status.Denied: return "Denied";
+                case ReviewedResourceRequest.Status.Granted:return "Granted";
+                case ReviewedResourceRequest.Status.Invalid: return "Invalid";
+                case ReviewedResourceRequest.Status.PartiallyGranted: return "Partially Granted";
+            }
+
+            return "";
+        }
+    }
+    
     // Current status of the review
     public Status CurrentStatus
     {
         get
         {
-            if(QuantityGranted <= 0) return Status.Invalid;
+            if(QuantityGranted <= 0) return Status.Denied;
             else if (QuantityGranted >= Request.QuantityRequested) return Status.Granted;
             else if (QuantityGranted > 0) return Status.PartiallyGranted;
-            else return Status.Denied;
+            else return Status.Invalid;
         }
     }
     #endregion
