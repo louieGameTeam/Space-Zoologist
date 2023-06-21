@@ -18,6 +18,18 @@ public class SimpleSFXPlayer : MonoBehaviour
 
     public void PlayAudioOneshot()
     {
-        AudioManager.instance.PlayOneShot(audioType);
+        AudioManager.instance.PlayOneShotRandom(audioType);
+    }
+
+    public void PlayAudioOneshotQual(bool qualifier)
+    {
+        if(qualifier)
+            AudioManager.instance.PlayOneShotRandom(audioType);
+    }
+    
+    public void PlayAudioOneshotQualInvert(bool qualifier)
+    {
+        if(!qualifier)
+            AudioManager.instance.PlayOneShotRandom(audioType);
     }
 }
