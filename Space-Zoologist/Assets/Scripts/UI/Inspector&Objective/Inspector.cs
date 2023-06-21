@@ -83,7 +83,7 @@ public class Inspector : MonoBehaviour
 
     public void OpenInspector()
     {
-        AudioManager.instance.PlayOneShot(SFXType.General);
+        AudioManager.instance.PlayOneShot(SFXType.GeneralAlt);
         this.inspectorWindow.SetActive(true);
         GameManager.Instance.m_tileDataController.UpdateAnimalCellGrid();
         //this.HUD.SetActive(false);

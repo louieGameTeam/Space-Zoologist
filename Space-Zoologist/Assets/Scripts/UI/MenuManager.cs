@@ -130,6 +130,7 @@ public class MenuManager : MonoBehaviour
         EventManager.Instance.InvokeEvent(EventType.StoreToggled, false);
     }
 
+    //Used for build menu tab switching 
     public void OpenMenu(int menu) {
 
         StoreMenus[curMenu]?.gameObject.SetActive(false);
@@ -138,7 +139,7 @@ public class MenuManager : MonoBehaviour
 
         StoreMenus[curMenu]?.gameObject.SetActive(true);
 
-        AudioManager.instance.PlayOneShot(SFXType.TabSwitch);
+        AudioManager.instance.PlayOneShot(SFXType.GeneralAlt);
     }
 
     // Currently this function is only called by the dialogue system
