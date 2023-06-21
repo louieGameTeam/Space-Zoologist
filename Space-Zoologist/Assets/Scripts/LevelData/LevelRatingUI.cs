@@ -26,14 +26,14 @@ public class LevelRatingUI : MonoBehaviour
         // Get the id for this level
         LevelID current = LevelID.FromSceneName(enclosure.Level.SceneName);
 
-        if (current < SaveData.LatestLevelQualified)
+        if (current <= SaveData.LatestLevelQualified)
         {
             // Get the rating for this level
             int rating = SaveData.GetLevelRating(current);
 
             // Only display rating if this level has a rating
             // or if it is one whole level before the latest level qualified
-            if (rating >= 0 || current.LevelNumber < SaveData.LatestLevelQualified.LevelNumber)
+            if (rating >= 0 || current.LevelNumber <= SaveData.LatestLevelQualified.LevelNumber)
             {
                 // Setup the rating text and rating objects
                 // ratingText.text = LevelRatingSystem.GetRatingText(rating);
