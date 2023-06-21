@@ -41,8 +41,8 @@ public class LevelSelectUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     [Tooltip("Outline that appears when the ui is hovered over")]
     private GameObject outline = null;
     [SerializeField]
-    [Tooltip("Object that creates a dull overlay when the level is not clickable")]
-    private GameObject overlay = null;
+    [Tooltip("Sector Number Text")]
+    private TMP_Text sectorNumberText;
     #endregion
 
     #region Private Fields
@@ -66,21 +66,15 @@ public class LevelSelectUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         for(int i = 0; i < enclosures.Length; i++)
         {
             enclosureUIs[i] = Instantiate(enclosureUI, enclosureUIGroup.transform);
-            enclosureUIs[i].Setup(enclosures[i]);
+            enclosureUIs[i].Setup(
+                enclosures[i]);
         }
 
         // Disable the outline
         outline.SetActive(false);
         outline.transform.SetAsLastSibling();
 
-        // Set the disable overlay if we are not yet qualified to try this level
-        /*#if UNITY_EDITOR
-        overlay.SetActive(false);
-        #else*/
-        overlay.SetActive(LatestLevelQualified.LevelNumber < levelNumber || levelNumber > Statics.LatestUnlockableSector);
-        //print (levelNumber + ", " + LatestLevelQualified.LevelNumber);
-        //#endif
-        overlay.transform.SetAsLastSibling();
+        sectorNumberText.text = levelNumber.ToString();
     }
     public void SetOverride(LevelID levelOverride)
     {
@@ -89,10 +83,6 @@ public class LevelSelectUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
         // Disable outline in case this makes the ui not interactable anymore
         outline.SetActive(false);
-
-        // Update overlay based on if we are qualified to access this level
-        overlay.SetActive(LatestLevelQualified.LevelNumber < levelNumber);
-
         // Override the latest level qualified for all enclosure uis
         foreach(LevelSelectEnclosureUI ui in enclosureUIs)
         {
@@ -102,9 +92,6 @@ public class LevelSelectUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public void ClearOverride()
     {
         overridden = false;
-
-        // Update overlay based on if we are qualified to access this level
-        overlay.SetActive(LatestLevelQualified.LevelNumber < levelNumber);
 
         // Clear the overrides for all the uis
         foreach(LevelSelectEnclosureUI ui in enclosureUIs)

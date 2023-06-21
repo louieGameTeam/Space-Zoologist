@@ -19,7 +19,8 @@ public enum SFXType
     DropdownClose,
     NPCLeave,
     GeneralAlt,
-    NumTypes, 
+    Sell,
+    NumTypes
 }
 
 [CreateAssetMenu]
