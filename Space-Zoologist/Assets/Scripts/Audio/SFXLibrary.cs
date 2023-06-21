@@ -16,7 +16,10 @@ public enum SFXType
     LevelFinishWin, LevelFinishFail, Fireworks,
     DialogueHover, DialogueSelect,
     NeutralExplain,
-    NumTypes
+    DropdownClose,
+    NPCLeave,
+    GeneralAlt,
+    NumTypes, 
 }
 
 [CreateAssetMenu]
