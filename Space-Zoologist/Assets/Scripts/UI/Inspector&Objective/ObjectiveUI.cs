@@ -47,7 +47,7 @@ public class ObjectiveUI : MonoBehaviour
 
     public void TurnObjectivePanelOn()
     {
-        AudioManager.instance.PlayOneShot(SFXType.General);
+        AudioManager.instance.PlayOneShot(SFXType.GeneralAlt);
         objectivePanel.SetActive(true);
     }
 

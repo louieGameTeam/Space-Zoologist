@@ -77,7 +77,7 @@ public class InspectorObjectiveUI : MonoBehaviour
             wasInInspector = true;
             inspector.CloseInspector();
         }
-        AudioManager.instance.PlayOneShot(SFXType.General);
+        AudioManager.instance.PlayOneShot(SFXType.DropdownClose);
     }
 
     private void ShowInspectorObjectiveWindow()
@@ -88,7 +88,7 @@ public class InspectorObjectiveUI : MonoBehaviour
         if (wasInInspector)
             inspector.OpenInspector();
         wasInInspector = false;
-        AudioManager.instance.PlayOneShot(SFXType.General);
+        AudioManager.instance.PlayOneShot(SFXType.NotebookDropdown);
     }
 
     #region Public Methods

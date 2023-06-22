@@ -14,8 +14,6 @@ public class NotebookSoundManager : NotebookUIChild
     {
         public TMP_Dropdown dropdown;
         public bool previousExpandedState;
-
-        public void Update() => previousExpandedState = dropdown.IsExpanded;
     }
     #endregion
 
@@ -30,16 +28,22 @@ public class NotebookSoundManager : NotebookUIChild
         {
             // If the current expanded state is unequal to the previous expanded state
             // then play the dropdown sound
-            if(state.dropdown.IsExpanded != state.previousExpandedState)
+            if(state.dropdown.IsExpanded && !state.previousExpandedState)
             {
                 PlayDropdownSound();
             }
+            else if (!state.dropdown.IsExpanded && state.previousExpandedState)
+            {
+                PlayCloseDropdownSound();
+            }
+            
+            if(state.previousExpandedState)
+                print(state.dropdown.IsExpanded + " " + state.previousExpandedState);
+
+            state.previousExpandedState = state.dropdown.IsExpanded;
         }
     }
-    private void LateUpdate()
-    {
-        foreach(PreviousExpandedState state in expandedStates) state.Update();
-    }
+    
     #endregion
 
     #region Public Methods
@@ -67,5 +71,6 @@ public class NotebookSoundManager : NotebookUIChild
 
     #region Private Methods
     private void PlayDropdownSound() => AudioManager.instance.PlayOneShot(SFXType.NotebookDropdown);
+    private void PlayCloseDropdownSound() => AudioManager.instance.PlayOneShot(SFXType.DropdownClose);
     #endregion
 }
