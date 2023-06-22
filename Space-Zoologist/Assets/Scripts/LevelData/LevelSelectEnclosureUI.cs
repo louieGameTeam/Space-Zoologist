@@ -76,7 +76,12 @@ public class LevelSelectEnclosureUI : MonoBehaviour, IPointerEnterHandler, IPoin
         }
 
         // Set the title and rating text
-        title.text = enclosure.Level.ID.EnclosureNumber.ToString();
+
+        string overrideText = enclosure.Level.EnclosureButtonLabelOverride;
+        if (overrideText != string.Empty)
+            title.text = overrideText;
+        else
+            title.text = enclosure.Level.ID.EnclosureNumber.ToString();
 
         // Disable the outline
         outline.SetActive(false);

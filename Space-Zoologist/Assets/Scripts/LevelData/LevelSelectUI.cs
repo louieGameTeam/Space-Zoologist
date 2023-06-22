@@ -65,7 +65,15 @@ public class LevelSelectUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         // Create a UI to select each enclosure for this level
         for(int i = 0; i < enclosures.Length; i++)
         {
-            enclosureUIs[i] = Instantiate(enclosureUI, enclosureUIGroup.transform);
+            // If the level SO specifies a prefab override, use that inside
+            // This is used for specially formatted enclosure UI, like the tutorial enclosure
+            var overridePrefab = enclosures[i].Level.EnclosureUIPrefabOverride;
+            
+            if(overridePrefab)
+                enclosureUIs[i] = Instantiate(overridePrefab, enclosureUIGroup.transform);
+            else
+                enclosureUIs[i] = Instantiate(enclosureUI, enclosureUIGroup.transform);
+            
             enclosureUIs[i].Setup(
                 enclosures[i]);
         }
