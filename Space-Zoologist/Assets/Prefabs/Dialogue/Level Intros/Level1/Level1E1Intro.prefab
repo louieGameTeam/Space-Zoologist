@@ -1889,7 +1889,7 @@ MonoBehaviour:
     It looks like their food needs have improved a bit! Let's record the results
     of this test in the Test tab.\",\"parentUIDs\":[68],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Happy\",\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":79,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":true},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":131.5,\"yPos\":384},\"ID\":72,\"TMPFontGUID\":null,\"Text\":\"And
     that's it! That's the whole notebook. I know it can seem like a lot, but remember
-    that our job here is to collect research data on these animals.\",\"parentUIDs\":[82,82],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Happy\",\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":73,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":true},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":129.5,\"yPos\":500},\"ID\":73,\"TMPFontGUID\":null,\"Text\":\"It's
+    that our job here is to collect research data on these animals.\",\"parentUIDs\":[82,82],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Happy\",\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":73,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":true},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":129.5,\"yPos\":501},\"ID\":73,\"TMPFontGUID\":null,\"Text\":\"It's
     important that you fill in any information you come across into your notebook!
     Otherwise, how will anyone else know what you've learned?\",\"parentUIDs\":[72,72],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":74,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":true},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":136.5,\"yPos\":607},\"ID\":74,\"TMPFontGUID\":null,\"Text\":\"But
     look at me, rambling on and keeping you from your work. This time, your goal
@@ -1899,7 +1899,7 @@ MonoBehaviour:
     tab now.\",\"parentUIDs\":[66,66],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":67,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":true},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":174.5,\"yPos\":-3868},\"ID\":78,\"TMPFontGUID\":null,\"Text\":\"Remember,
     it's important to observe the current situation before making changes to your
     environment.\",\"parentUIDs\":[35,35],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":36,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":true},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":127.5,\"yPos\":-115},\"ID\":79,\"TMPFontGUID\":null,\"Text\":\"Lastly,
-    we have the Reports tab.\",\"parentUIDs\":[70,68,68,70],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":80,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":true},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":127.5,\"yPos\":1},\"ID\":80,\"TMPFontGUID\":null,\"Text\":\"Here
+    we have the Quizzes tab.\",\"parentUIDs\":[70,68,68,70],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":80,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":true},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":127.5,\"yPos\":-2},\"ID\":80,\"TMPFontGUID\":null,\"Text\":\"Here
     you can look at previous reportback questions and your answers to them. You can
     even look at the possible reportback questions for the current enclosure here!\",\"parentUIDs\":[79,79],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":81,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":true},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":124.5,\"yPos\":141},\"ID\":81,\"TMPFontGUID\":null,\"Text\":\"Oh
     by the way, if you do well on the reportback questions, you'll get a better rating
@@ -1995,7 +1995,43 @@ MonoBehaviour:
   - {fileID: 9129881805561824613}
   Event:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4040388096908403346}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: ClearHighlights
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 4040388096908403346}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: ToggleUISingleButton
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: DraftButton
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 4040388096908403346}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: ToggleUISingleButton
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: NextDay
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &4040388096908403346
 MonoBehaviour:
   m_ObjectHideFlags: 0
