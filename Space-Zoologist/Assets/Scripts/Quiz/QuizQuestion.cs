@@ -48,5 +48,16 @@ public class QuizQuestion
             $"cannot get a relative grade for index '{optionIndex}'. " +
             $"Total options: {options.Length}");
     }
+
+    public int ReceivedGrade(int optionIndex)
+    {
+        if (optionIndex >= 0 && optionIndex < options.Length)
+        {
+            return options[optionIndex].Weight;
+        }
+        else throw new System.IndexOutOfRangeException($"{nameof(QuizQuestion)}: " +
+                                                       $"cannot get a score for index '{optionIndex}'. " +
+                                                       $"Total options: {options.Length}");
+    }
     #endregion
 }

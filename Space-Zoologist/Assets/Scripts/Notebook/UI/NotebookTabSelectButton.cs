@@ -39,7 +39,7 @@ public class NotebookTabSelectButton : NotebookUIChild
         "Observe",
         "Concepts",
         "Test&Metrics",
-        "Reports"
+        "Quizzes"
     };
 
     // Notebook tab that this button navigates to

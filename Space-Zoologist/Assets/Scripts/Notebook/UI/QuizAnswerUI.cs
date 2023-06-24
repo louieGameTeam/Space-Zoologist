@@ -54,11 +54,14 @@ public class QuizAnswerUI : MonoBehaviour
             }
 
             // Compute the relative grade, and give flavor text for different grade levels
-            if (question.RelativeGrade(answerIndex) > 0.6f)
-            {
-                gradeText.text = "<color=green>Consistent with existing research!</color>";
-            }
-            else gradeText.text = "<color=red>Not consistent with existing research...</color>";
+            int receivedGrade = question.ReceivedGrade(answerIndex);
+            int maxScore = question.MaxPossibleScore;
+            if (receivedGrade == maxScore)
+                gradeText.text = $"<color=green>Consistent with existing research! {receivedGrade}/{maxScore} Points </color>";
+            else if(receivedGrade == 0)
+                gradeText.text = $"<color=red>Not consistent with existing research... {receivedGrade}/{maxScore} Points</color>";
+            else 
+                gradeText.text = $"<color=yellow>Partially consistent with existing research. {receivedGrade}/{maxScore} Points</color>";
         }
     }
     #endregion

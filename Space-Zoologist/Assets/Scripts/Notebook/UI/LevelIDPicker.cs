@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using TMPro;
@@ -80,7 +81,7 @@ public class LevelIDPicker : NotebookUIChild
         enclosureDropdown.ClearOptions();
 
         // Loop through all enclosure id's and add them to the list
-        foreach (LevelID id in UIParent.Data.Levels)
+        foreach (LevelID id in UIParent.Data.Levels.OrderBy(id => id))
         {
             TMP_Dropdown.OptionData option = LevelNumberToOptionData(id.LevelNumber);
             // If no option with the same text yet exists, then add it to the dropdown
@@ -109,7 +110,7 @@ public class LevelIDPicker : NotebookUIChild
 
         // Clear out the options in the enclosure dropdown
         enclosureDropdown.ClearOptions();
-        foreach (LevelID id in UIParent.Data.Levels)
+        foreach (LevelID id in UIParent.Data.Levels.OrderBy(id => id))
         {
             if (id.LevelNumber == selectedLevel) enclosureDropdown.options.Add(EnclosureNumberToOptionData(id.EnclosureNumber));
         }
