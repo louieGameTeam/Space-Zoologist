@@ -20,6 +20,7 @@ public enum SFXType
     NPCLeave,
     GeneralAlt,
     Sell,
+    QuizPoor, QuizAcceptable, QuizExcellent,
     NumTypes
 }
 

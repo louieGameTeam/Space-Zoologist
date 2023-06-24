@@ -1810,7 +1810,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5323336896615700284}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4514828257946185960}
+        m_TargetAssemblyTypeName: SimpleSFXPlayer, Assembly-CSharp
+        m_MethodName: PlayAudioOneshot
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &8409889881227997651
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1841,6 +1853,7 @@ GameObject:
   - component: {fileID: 5323336896914112066}
   - component: {fileID: 5323336896914112065}
   - component: {fileID: 5323336896914112067}
+  - component: {fileID: 4514828257946185960}
   m_Layer: 5
   m_Name: Login Popup Window
   m_TagString: Untagged
@@ -1932,6 +1945,20 @@ MonoBehaviour:
   primaryButton: {fileID: 1888673391369337093}
   hasSecondaryButton: 1
   secondaryButton: {fileID: 8409889881227997651}
+--- !u!114 &4514828257946185960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5323336896914112095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c1b9b29e37907e4eae7d414db997c04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioType: 0
+  playOnEnable: 0
 --- !u!1 &5323336897453572963
 GameObject:
   m_ObjectHideFlags: 0
@@ -2275,7 +2302,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5323336897755278690}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4514828257946185960}
+        m_TargetAssemblyTypeName: SimpleSFXPlayer, Assembly-CSharp
+        m_MethodName: PlayAudioOneshot
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1888673391369337093
 MonoBehaviour:
   m_ObjectHideFlags: 0

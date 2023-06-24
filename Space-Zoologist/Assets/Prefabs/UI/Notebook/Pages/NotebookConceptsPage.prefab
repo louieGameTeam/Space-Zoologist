@@ -2094,7 +2094,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 172.21945, y: -25}
+  m_AnchoredPosition: {x: 152.5, y: -25}
   m_SizeDelta: {x: 160, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4407649454805493895
@@ -4297,6 +4297,7 @@ GameObject:
   - component: {fileID: 2780774695860134354}
   - component: {fileID: 4576148975666526609}
   - component: {fileID: 7798613455539460971}
+  - component: {fileID: 1327543130238253911}
   m_Layer: 5
   m_Name: Cancel
   m_TagString: Untagged
@@ -4322,7 +4323,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 516.6583, y: -25}
+  m_AnchoredPosition: {x: 457.5, y: -25}
   m_SizeDelta: {x: 160, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2780774695860134354
@@ -4406,7 +4407,33 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4576148975666526609}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1327543130238253911}
+        m_TargetAssemblyTypeName: SimpleSFXPlayer, Assembly-CSharp
+        m_MethodName: PlayAudioOneshot
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1327543130238253911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3078309244993863636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c1b9b29e37907e4eae7d414db997c04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioType: 0
+  playOnEnable: 0
 --- !u!1 &3093581143282946809
 GameObject:
   m_ObjectHideFlags: 0
@@ -6176,8 +6203,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 294.4389, y: -80}
-  m_SizeDelta: {x: 588.8778, y: 0}
+  m_AnchoredPosition: {x: 255, y: -80}
+  m_SizeDelta: {x: 510, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &177488466672510789
 CanvasRenderer:
@@ -7691,6 +7718,7 @@ GameObject:
   - component: {fileID: 3244870031451792650}
   - component: {fileID: 6395039161985321476}
   - component: {fileID: 3336114968575890308}
+  - component: {fileID: 6810580887634995184}
   m_Layer: 5
   m_Name: SubmitResourceRequestButton
   m_TagString: Untagged
@@ -7800,7 +7828,33 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6395039161985321476}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6810580887634995184}
+        m_TargetAssemblyTypeName: SimpleSFXPlayer, Assembly-CSharp
+        m_MethodName: PlayAudioOneshot
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &6810580887634995184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5504014800218264902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c1b9b29e37907e4eae7d414db997c04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioType: 0
+  playOnEnable: 0
 --- !u!1 &5696726874974296759
 GameObject:
   m_ObjectHideFlags: 0
@@ -10095,8 +10149,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 294.4389, y: 0}
-  m_SizeDelta: {x: 588.8778, y: 0}
+  m_AnchoredPosition: {x: 255, y: 0}
+  m_SizeDelta: {x: 510, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &6919838962927334410
 CanvasRenderer:

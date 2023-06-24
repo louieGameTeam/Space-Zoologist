@@ -37,6 +37,8 @@ public class DialogueManager : MonoBehaviour
 
     #region Public Properties
     public int CountQueuedConversations => queuedConversations.Count;
+    public bool ConversationGameObjectActive => ConversationManagerGameObject.activeSelf;
+    
     #endregion
 
     #region Private Fields

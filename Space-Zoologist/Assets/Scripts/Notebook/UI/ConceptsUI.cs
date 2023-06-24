@@ -69,8 +69,12 @@ public class ConceptsUI : NotebookUIChild
     }
     private void SetRequestedItem(Item item)
     {
+        if (requestEditor.Request.ItemRequested == item.ID) 
+            return;
+        
         requestEditor.Request.ItemRequested = item.ID;
         requestEditor.UpdateUI();
+        AudioManager.instance.PlayOneShotRandom(SFXType.Valid);
     }
     #endregion
 }

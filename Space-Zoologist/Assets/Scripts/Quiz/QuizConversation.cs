@@ -80,6 +80,14 @@ public class QuizConversation : MonoBehaviour
         "Somewhat useful",
         "Very useful"
     };
+
+    private readonly SFXType[] QuizResultSFX =
+    {
+        SFXType.QuizPoor,
+        SFXType.QuizAcceptable,
+        SFXType.QuizExcellent,
+    };
+    
     #endregion
 
     #region Public Methods
@@ -113,6 +121,8 @@ public class QuizConversation : MonoBehaviour
             if (currentResponse) Destroy(currentResponse);
             // Instantiate a new response
             currentResponse = response.Get(CurrentQuiz.Grade).InstantiateAndSay();
+            
+            AudioManager.instance.PlayOneShotRandom(QuizResultSFX[(int)currentQuiz.Grade]);
 
             // If we should requiz when we fail, then we must say the quiz after the response
             if (requizOnFail && CurrentQuiz.Grade != QuizGrade.Excellent)

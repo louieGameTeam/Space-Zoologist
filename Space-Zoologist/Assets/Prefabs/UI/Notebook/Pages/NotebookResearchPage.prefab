@@ -4152,6 +4152,7 @@ GameObject:
   - component: {fileID: 5400170665078537144}
   - component: {fileID: 8160731782533094782}
   - component: {fileID: 3270940180321450281}
+  - component: {fileID: 8159082417641675421}
   m_Layer: 5
   m_Name: HighlightToggleGroup
   m_TagString: Untagged
@@ -4198,7 +4199,19 @@ MonoBehaviour:
   - {fileID: 4938715605613343314}
   onToggleStateChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8159082417641675421}
+        m_TargetAssemblyTypeName: SimpleSFXPlayer, Assembly-CSharp
+        m_MethodName: PlayAudioOneshot
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &8160731782533094782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4238,6 +4251,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AllowSwitchOff: 0
+--- !u!114 &8159082417641675421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8258178543518159817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c1b9b29e37907e4eae7d414db997c04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioType: 0
+  playOnEnable: 0
 --- !u!1 &8309391225826666165
 GameObject:
   m_ObjectHideFlags: 0
