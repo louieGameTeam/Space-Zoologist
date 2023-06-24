@@ -646,9 +646,9 @@ namespace DialogueEditor
                 
                 // Decrease spacing when many options are present to prevent options being too small
                 var layout = OptionsPanel.GetComponent<VerticalLayoutGroup>();
-                if (speech.Options.Count > 3)
+                if (speech.Options.Count > 2)
                 {
-                    layout.spacing = 10;
+                    layout.spacing = 8;
                 }
                 else {
                     layout.spacing = 20;
