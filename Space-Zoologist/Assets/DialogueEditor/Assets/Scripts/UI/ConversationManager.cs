@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 using DG.Tweening;
 using DG.Tweening.Core.Easing;
@@ -68,6 +69,10 @@ namespace DialogueEditor
         public UIConversationButton ButtonPrefab;
         // Default values
         public Sprite BlankSprite;
+
+        public float TalkingChirpSFXInterval;
+        public float TalkingChirpSFXDelay;
+        
         //Used for freezing
         private eState preFreezeState = eState.NONE;
 
@@ -100,6 +105,9 @@ namespace DialogueEditor
 
         // Selection options
         private int m_currentSelectedIndex = -1;
+        
+        // Talking SFX
+        private float talkingChirpSFXTimer;
 
         //public GameObject BacklogGameObject;
         //public Button BacklogButton;
@@ -182,6 +190,7 @@ namespace DialogueEditor
                 case eState.ScrollingText:
                     ProgressConversationButton.interactable = true;
                     UpdateScrollingText();
+                    TryTalkingChirpSFX();
                     break;
 
                 case eState.TransitioningOptionsOn:
@@ -219,6 +228,11 @@ namespace DialogueEditor
                         else
                         {
                             ProgressConversationButton.interactable = false;
+                        }
+
+                        if (TryTalkingChirpSFX())
+                        {
+                            talkingChirpSFXTimer = -1;
                         }
                     }
                     break;
@@ -329,6 +343,21 @@ namespace DialogueEditor
             }
         }
 
+        private bool TryTalkingChirpSFX()
+        {
+            if (talkingChirpSFXTimer < 0f) 
+                return false;
+            
+            talkingChirpSFXTimer -= Time.deltaTime;
+            if (talkingChirpSFXTimer <= 0f)
+            {
+                AudioManager.instance.PlayOneShotRandom(SFXType.NeutralExplain);
+                talkingChirpSFXTimer = TalkingChirpSFXInterval;
+                return true;
+            }
+
+            return false;
+        }
 
         //IEnumerator<int> ExpandDialogue() {
         //    while (Vector2.Distance(Background.sizeDelta, new Vector2(1400, Background.sizeDelta.y)) > 10){
@@ -394,7 +423,7 @@ namespace DialogueEditor
                 case eState.ScrollingText:
                     {
                         SetColorAlpha(DialogueText, 1);
-
+                        talkingChirpSFXTimer = TalkingChirpSFXDelay;
                         if (m_targetScrollTextCount == 0)
                         {
                             SetState(eState.TransitioningOptionsOn);
@@ -702,7 +731,7 @@ namespace DialogueEditor
                 GameManager.Instance.NotebookUI.Toggle();
             // magic string, should refactor if this becomes an issue later
             GameManager.Instance.m_menuManager.ToggleUISingleButton(speech.enableNotebookUI, "notebook");
-            AudioManager.instance.PlayOneShotRandom(SFXType.NeutralExplain);
+            
             SetState(eState.ScrollingText);
         }
         
