@@ -162,16 +162,44 @@ public class ConceptsCanvasUI : NotebookUIChild
         drawingCanvas.CurrentColor = colorPicker.FirstValuePicked;
 
         // Add listeners for groups that change the canvas parameters
-        modePicker.OnToggleStateChanged.AddListener(() => drawingCanvas.CurrentMode = modePicker.FirstValuePicked);
-        colorPicker.OnToggleStateChanged.AddListener(() => drawingCanvas.CurrentColor = colorPicker.FirstValuePicked);
-        strokeWeightPicker.OnToggleStateChanged.AddListener(() => drawingCanvas.CurrentWeight = strokeWeightPicker.FirstValuePicked);
+        modePicker.OnToggleStateChanged.AddListener(HandleModePicked);
+        colorPicker.OnToggleStateChanged.AddListener(HandleColorPicked);
+        strokeWeightPicker.OnToggleStateChanged.AddListener(HandleStrokeWeightPicked);
 
         // Clear canvas when clear button clicked
-        clearButton.onClick.AddListener(drawingCanvas.Clear);
+        clearButton.onClick.AddListener(HandleClearButtonClicked);
     }
     #endregion
 
     #region Private Methods
+
+    private void HandleClearButtonClicked()
+    {
+        drawingCanvas.Clear();
+        AudioManager.instance.PlayOneShotRandom(SFXType.MenuClose);
+    }
+
+    private void HandleStrokeWeightPicked()
+    {
+        if(drawingCanvas.CurrentWeight != strokeWeightPicker.FirstValuePicked)
+            AudioManager.instance.PlayOneShotRandom(SFXType.General);
+        
+        drawingCanvas.CurrentWeight = strokeWeightPicker.FirstValuePicked;
+    }
+
+    private void HandleModePicked()
+    {
+        if(drawingCanvas.CurrentMode != modePicker.FirstValuePicked)
+            AudioManager.instance.PlayOneShotRandom(SFXType.General);
+
+        drawingCanvas.CurrentMode = modePicker.FirstValuePicked;
+    }
+
+    private void HandleColorPicked()
+    {
+        drawingCanvas.CurrentColor = colorPicker.FirstValuePicked;
+    }
+    
     private void ApplyFoldoutState(bool state)
     {
         // Change the anchor to either the far right of the parent or the middle of the parent
@@ -191,6 +219,8 @@ public class ConceptsCanvasUI : NotebookUIChild
 
             // hide inspector
             TryAddBlockInspectorSet();
+            
+            AudioManager.instance.PlayOneShotRandom(SFXType.NotebookDropdown);
         }
         else
         {
@@ -201,6 +231,8 @@ public class ConceptsCanvasUI : NotebookUIChild
             GameManager instance = GameManager.Instance;
             if (instance) instance.m_cameraController.Unlock();
             TryRemoveBlockInspectorSet();
+
+            AudioManager.instance.PlayOneShotRandom(SFXType.DropdownClose);
         }
     }
     private void SetCameraPositionWithDialogue() => SetCameraPosition(true);
