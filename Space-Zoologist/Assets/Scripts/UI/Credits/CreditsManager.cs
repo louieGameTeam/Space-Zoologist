@@ -25,7 +25,7 @@ public class CreditsManager : MonoBehaviour
     /// <summary>
     /// Constant modifier to scroll speed to make it reasonable, simplifies the range of values ScrollSpeedMultiplier can take
     /// </summary>
-    private const int SCROLL_SPEED_CONSTANT = 50;
+    private const int SCROLL_SPEED_CONSTANT = 30;
 
 
 #region Private Fields
