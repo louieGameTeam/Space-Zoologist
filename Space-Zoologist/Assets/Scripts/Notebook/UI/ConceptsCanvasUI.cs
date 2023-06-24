@@ -197,6 +197,9 @@ public class ConceptsCanvasUI : NotebookUIChild
 
     private void HandleColorPicked()
     {
+        if(drawingCanvas.CurrentColor != colorPicker.FirstValuePicked)
+            AudioManager.instance.PlayOneShotRandom(SFXType.General);
+
         drawingCanvas.CurrentColor = colorPicker.FirstValuePicked;
     }
     

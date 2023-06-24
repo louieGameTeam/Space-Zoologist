@@ -88,8 +88,14 @@ public class ResearchEncyclopediaArticleInputField : NotebookUIChild, IEndDragHa
             }
 
             // Add/remove highlight depending on the state of the toggle
-            if (highlightPicker.FirstValuePicked) articleData.RequestHighlightAdd(start, end);
-            else articleData.RequestHighlightRemove(start, end);
+            if (highlightPicker.FirstValuePicked)
+            {
+                articleData.RequestHighlightAdd(start, end);
+            }
+            else
+            {
+                articleData.RequestHighlightRemove(start, end);
+            }
 
             // Udpate the text for this article
             UpdateArticleDisplay();
