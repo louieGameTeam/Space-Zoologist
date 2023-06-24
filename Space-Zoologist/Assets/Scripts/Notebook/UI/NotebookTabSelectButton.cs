@@ -31,6 +31,17 @@ public class NotebookTabSelectButton : NotebookUIChild
     [Tooltip("Event invoked when this button is selected")]
     private NotebookTabEvent selectedEvent = null;
 
+    //Used to set the name for each notebook tab button
+    private readonly string[] TabNames = new[]
+    {
+        "Home",
+        "Research",
+        "Observe",
+        "Concepts",
+        "Test&Metrics",
+        "Reports"
+    };
+
     // Notebook tab that this button navigates to
     private NotebookTab tab;
 
@@ -49,7 +60,7 @@ public class NotebookTabSelectButton : NotebookUIChild
         selectedEvent.AddListener(callback);
 
         // Set the text on the GUI element
-        tabName.text = tab.ToString();
+        tabName.text = TabNames[(int)tab];
 
         if (GameManager.Instance)
         {
