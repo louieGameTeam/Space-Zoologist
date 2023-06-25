@@ -45,7 +45,7 @@ public class Inspector : MonoBehaviour
     private TileData currentlyInspectingCellData;
     private Population currentlyInspectingPopulationData;
     // hover
-    private GameObject currentHoverTarget = null;
+    private Animal currentHoverAnimal = null;
 
     //TODO This does not feels right to be here
     private List<Life> itemsInEnclosedArea = new List<Life>();
@@ -101,10 +101,15 @@ public class Inspector : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1))
             ResetSelection();
+
         if (this.IsInInspectorMode && FindObjectOfType<StoreSection>().SelectedItem == null)
         {
             UpdateMousePositionState();
+            
+            Animal.CastForAnimal(mouseWorldPos, out currentHoverAnimal);
+            
             UpdateHoverSelection();
+            
             if(Input.GetMouseButtonDown(0))
             {
                 if(mouseCellData == null)
@@ -148,9 +153,9 @@ public class Inspector : MonoBehaviour
 
         bool somethingSelected = true;
         this.UnHighlightAll();
-        if (mouseCellData.Animal)
+        if (currentHoverAnimal)
         {
-            currentlyInspectingPopulationData = mouseCellData.Animal.transform.parent.GetComponent<Population>();
+            currentlyInspectingPopulationData = currentHoverAnimal.transform.parent.GetComponent<Population>();
             DisplayPopulationText(currentlyInspectingPopulationData);
             selectedPosition = mouseCellPos;
             HighlightPopulation(currentlyInspectingPopulationData.gameObject);
@@ -206,7 +211,7 @@ public class Inspector : MonoBehaviour
 
     private void UpdateHoverSelection()
     {
-        if (mouseCellData != null && (mouseCellData.Animal || mouseCellData.Food || (mouseTileData && mouseTileData.type == TileType.Liquid)))
+        if (mouseCellData != null && (currentHoverAnimal || mouseCellData.Food || (mouseTileData && mouseTileData.type == TileType.Liquid)))
         {
             EventManager.Instance.InvokeEvent(EventType.InspectorHoverTargetChange, mouseTileData);
         }

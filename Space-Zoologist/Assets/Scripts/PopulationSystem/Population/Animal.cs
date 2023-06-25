@@ -130,4 +130,20 @@ public class Animal : MonoBehaviour
     {
         foodTargetSpeciesName = newFoodTargetSpeciesName;
     }
+
+    public static bool CastForAnimal(Vector3 pos, out Animal animal)
+    {
+        var hits = Physics2D.OverlapPointAll(pos);
+
+        foreach (var hit in hits)
+        {
+            if (hit)
+            {
+                animal = hit.GetComponent<Animal>();
+                return animal != null;
+            }
+        }
+        animal = null;
+        return false;
+    }
 }

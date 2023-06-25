@@ -299,11 +299,11 @@ public class MoveObject : MonoBehaviour
         this.gridSystem.UpdateAnimalCellGrid();
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3Int pos = this.gridSystem.WorldToCell(worldPos);
-        return SelectGameObjectAtGridPosition(pos);
+        return SelectGameObjectAtGridPosition(worldPos, pos);
     }
 
     // Find what the mouse clicked on
-    private GameObject SelectGameObjectAtGridPosition(Vector3Int pos)
+    private GameObject SelectGameObjectAtGridPosition(Vector3 rawPos, Vector3Int pos)
     {
         TileData tileData = gridSystem.GetTileData(pos);
         GameObject toMove = null;
@@ -311,12 +311,13 @@ public class MoveObject : MonoBehaviour
         {
             return null;
         }
-
-        if (tileData.Animal)
+        
+        // Cast for animal
+        if (Animal.CastForAnimal(rawPos, out Animal selectedAnimal))
         {
-            toMove = tileData.Animal;
+            toMove = selectedAnimal.gameObject;
             movingItemType = ItemType.ANIMAL;
-            tempItem = toMove.GetComponent<Animal>().PopulationInfo.Species.ID.Data.ShopItem;
+            tempItem = selectedAnimal.PopulationInfo.Species.ID.Data.ShopItem;
         }
         else if (tileData.Food)
         {
