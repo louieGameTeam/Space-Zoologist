@@ -258,6 +258,8 @@ public class StoreSection : MonoBehaviour
 
     protected virtual void HandleAudio()
     {
+        if (selectedItem == null) 
+            return;
         if (selectedItem.AudioClips.Count == 0)
         {
             Debug.Log("Selected item " + selectedItem.ItemName + " has no audio sources!");

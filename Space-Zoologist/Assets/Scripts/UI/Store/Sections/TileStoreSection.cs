@@ -123,9 +123,9 @@ public class TileStoreSection : StoreSection
     /// </summary>
     public override void OnItemSelectionCanceled()
     {
-        //Debug.Log("Tile placement canceled");
+        // Cancelling is a mess so cancelling just means finish placement
+        FinishPlacing();
         base.OnItemSelectionCanceled();
-        //CancelPlacing();
     }
 
     public override void Update()
