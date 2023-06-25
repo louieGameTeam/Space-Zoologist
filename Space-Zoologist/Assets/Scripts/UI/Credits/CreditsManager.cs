@@ -25,7 +25,7 @@ public class CreditsManager : MonoBehaviour
     /// <summary>
     /// Constant modifier to scroll speed to make it reasonable, simplifies the range of values ScrollSpeedMultiplier can take
     /// </summary>
-    private const int SCROLL_SPEED_CONSTANT = 50;
+    private const int SCROLL_SPEED_CONSTANT = 30;
 
 
 #region Private Fields
@@ -37,6 +37,10 @@ public class CreditsManager : MonoBehaviour
     [SerializeField] private TextAsset EmployeeList = null;
     [SerializeField] private CanvasGroup CreditsCanvasGroup = null;
     [SerializeField] private TMP_Text CreditsContent = null;
+    
+    [SerializeField] private GameObject ExitButton;
+    [SerializeField] private GameObject GameCompleteContent;
+    [SerializeField] private LevelID GameCompleteLevel;
 
     [SerializeField] private Canvas CanvasReference = null;
 
@@ -48,8 +52,10 @@ public class CreditsManager : MonoBehaviour
 
     [Range(1f, 10f)]
     [SerializeField] private float ScrollSpeedMultiplier = 1f;
+    [SerializeField] private float ClickHoldSpeedMultiplier;
+    [SerializeField] private RectTransform StopPosition;
+    [SerializeField] private float StartPosOffset;
 
-    private Vector3 CreditsTargetEndPosition = Vector3.zero;
     private bool IsScrolling = false;
 
     /// <summary>
@@ -75,6 +81,7 @@ public class CreditsManager : MonoBehaviour
     }; 
 #endregion
 
+private static bool PlayCreditsOnAwake;
 
 #region Monobehaviour Callbacks
     private void Awake()
@@ -85,22 +92,58 @@ public class CreditsManager : MonoBehaviour
         }
 
         SetupCreditsContent();
+
+        SaveData.OnQualifyForLevel += HandleLevelQualify;
+
+        if (PlayCreditsOnAwake)
+        {
+            PlayCreditsOnAwake = false;
+            StartCredits();
+        }
     }
 
     private void LateUpdate()
     {
-        if (IsScrolling && CreditsContent.rectTransform.position.y < CreditsTargetEndPosition.y)
+        if (IsScrolling && StopPosition.position.y < 0)
         {
-            CreditsContent.rectTransform.Translate(0, Time.deltaTime * SCROLL_SPEED_CONSTANT * ScrollSpeedMultiplier, 0);
+            float clickMultiplier = 1f;
+            
+            // Scroll faster when clicked
+            if (Input.GetButton("Fire1"))
+            {
+                clickMultiplier = ClickHoldSpeedMultiplier;
+            }
+            
+            CreditsContent.rectTransform.Translate(0, Time.deltaTime * SCROLL_SPEED_CONSTANT * ScrollSpeedMultiplier * clickMultiplier, 0);
+            if (StopPosition.position.y < 0)
+            {
+                ExitButton.SetActive(true);
+            }
         }
     }
-#endregion
+
+    private void OnDestroy()
+    {
+        SaveData.OnQualifyForLevel -= HandleLevelQualify;
+    }
+
+    private void HandleLevelQualify(LevelID levelID)
+    {
+        if (levelID > GameCompleteLevel)
+        {
+            Debug.Log($"{"Playing Credits On Next Load"}");
+            PlayCreditsOnAwake = true;
+        }
+    }
+
+    #endregion
 
 
 #region Private Functions
     /// <summary>
     /// Loads data from EmployeeList into RoleDict
     /// </summary>
+    [ContextMenu("Load Credits (DEBUG)")]
     private void LoadCredits()
     {
         RoleDict = new Dictionary<RolePriority, string>();
@@ -142,6 +185,7 @@ public class CreditsManager : MonoBehaviour
     /// <summary>
     /// Places content parsed from LoadCredits into the CreditsContent text, adding formatting
     /// </summary>
+    [ContextMenu("Setup Credits (DEBUG)")]
     private void SetupCreditsContent()
     {
         string creditsText = "";
@@ -160,14 +204,12 @@ public class CreditsManager : MonoBehaviour
         creditsText = creditsText.TrimEnd();
 
         CreditsContent.text = creditsText;
-
-        // Set the target position for when the CreditsContent has left the top of the canvas
-        CreditsTargetEndPosition = new Vector3(CreditsContent.rectTransform.position.x, CanvasReference.GetComponent<RectTransform>().rect.height);
     }
 
     /// <summary>
     /// Starts the credits panel
     /// </summary>
+     [ContextMenu("Start Credits (DEBUG)")]
     public void StartCredits()
     {
         CreditsCanvasGroup.gameObject.SetActive(true);
@@ -177,11 +219,16 @@ public class CreditsManager : MonoBehaviour
 
         ResetCreditsContentPosition();
         IsScrolling = true;
+        
+        // Only show locked content if player has beaten the game
+        bool gameBeat = SaveData.LatestLevelQualified > GameCompleteLevel;
+        GameCompleteContent.SetActive(gameBeat);
     }
 
     /// <summary>
     /// Stops the credits panel
     /// </summary>
+    [ContextMenu("Stop Credits (DEBUG)")]
     public void StopCredits()
     {
         CreditsCanvasGroup.gameObject.SetActive(false);
@@ -193,7 +240,7 @@ public class CreditsManager : MonoBehaviour
     /// </summary>
     private void ResetCreditsContentPosition()
     {
-        CreditsContent.rectTransform.anchoredPosition = new Vector2(0, -CreditsContent.rectTransform.rect.height);
+        CreditsContent.rectTransform.anchoredPosition = new Vector2(0, -CreditsContent.rectTransform.rect.height - StartPosOffset);
     }
 #endregion
     
