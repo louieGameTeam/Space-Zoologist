@@ -30,7 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7327505423556050831
 MonoBehaviour:
@@ -47,7 +47,14 @@ MonoBehaviour:
   EmployeeList: {fileID: 4900000, guid: 785cbc22089b8d94f8b85b81290c63a8, type: 3}
   CreditsCanvasGroup: {fileID: 0}
   CreditsContent: {fileID: 0}
+  ExitButton: {fileID: 0}
+  LockedContent: {fileID: 0}
+  HiddenContentLevel:
+    levelNumber: 5
+    enclosureNumber: 1
   CanvasReference: {fileID: 0}
   RoleSpacing: 2
-  JobTitleTextSize: 52
-  ScrollSpeedMultiplier: 3.2
+  JobTitleTextSize: 82
+  ScrollSpeedMultiplier: 2
+  ClickHoldSpeedMultiplier: 5.5
+  StopPosition: {fileID: 0}

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
@@ -47,12 +48,15 @@ public class SaveData
     private static SaveData instance;
     #endregion
 
+    public static event Action<LevelID> OnQualifyForLevel;
+
     #region Public Methods
     public static void QualifyForLevel(LevelID level)
     {
         if (level > Instance.latestLevelQualified)
         {
             Instance.latestLevelQualified = level;
+            OnQualifyForLevel?.Invoke(level);
         }
     }
     public static int GetLevelRating(LevelID level)
