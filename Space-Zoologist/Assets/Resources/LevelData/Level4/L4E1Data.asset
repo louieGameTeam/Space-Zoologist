@@ -15,9 +15,10 @@ MonoBehaviour:
   IsSpacer: 0
   Level: {fileID: 11400000, guid: f1d60b2f49f694e60bd60f9542f8db27, type: 2}
   startingBalance: 350
+  WallBreakable: 1
+  NoSelling: 0
   MapWidth: 29
   MapHeight: 29
-  WallBreakable: 1
   LevelObjectiveData: {fileID: 11400000, guid: a83c490379b8941b49666ec1763ae8d1, type: 2}
   foodSources:
   - {fileID: 11400000, guid: 4519d95eb0a9149afaba1c7e635c9b1c, type: 2}
@@ -43,7 +44,7 @@ MonoBehaviour:
   - itemObject: {fileID: 11400000, guid: 6f7adeb8e5b3d4885a77f418109a7422, type: 2}
     initialAmount: 30
   - itemObject: {fileID: 11400000, guid: d3eae864c0aa24b1591464e1e01489b6, type: 2}
-    initialAmount: 30
+    initialAmount: 20
   - itemObject: {fileID: 11400000, guid: 611d10484ac544bc9812f39f3b1630ce, type: 2}
     initialAmount: 20
   - itemObject: {fileID: 11400000, guid: 4b0218db5c67e1547b689ec07fc95d3b, type: 2}
@@ -69,7 +70,7 @@ MonoBehaviour:
   - itemObject: {fileID: 11400000, guid: 5665c25118cf14624a035396f611f47d, type: 2}
     initialAmount: 0
   - itemObject: {fileID: 11400000, guid: e1a86e6fe53b24ba18f84e5efc86a5a8, type: 2}
-    initialAmount: 20
+    initialAmount: 30
   levelMusic: {fileID: 8300000, guid: 8a7af28f9a2724141bd9ebaf4d611dea, type: 3}
   startingPositions:
   - {x: 5, y: 20, z: 0}
