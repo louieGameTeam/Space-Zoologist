@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75df8cbea201a4d7c8d2497760779228, type: 3}
   m_Name: L2E4Data
   m_EditorClassIdentifier: 
+  IsSpacer: 0
   Level: {fileID: 11400000, guid: b8d19b14689235d42a5432217aa48e99, type: 2}
   startingBalance: 500
+  WallBreakable: 1
+  NoSelling: 0
   MapWidth: 29
   MapHeight: 29
-  WallBreakable: 1
   LevelObjectiveData: {fileID: 11400000, guid: 2a168e3451e51445bac9a9693b51c952, type: 2}
   foodSources:
   - {fileID: 11400000, guid: 4519d95eb0a9149afaba1c7e635c9b1c, type: 2}
@@ -66,7 +68,7 @@ MonoBehaviour:
   - {x: 1, y: 1, z: 0}
   startingConversation: {fileID: 6053714866163234130, guid: 91e49bda200a9974ebd2e7a31f26c2fb,
     type: 3}
-  defaultConversation: {fileID: 674947355878461197, guid: 3124ca85bbd1c476498793667738a9e7,
+  defaultConversation: {fileID: 674947355878461197, guid: 7ad7e2256b45c94469bfbe31ef229ecb,
     type: 3}
   ending:
     isQuiz: 1
