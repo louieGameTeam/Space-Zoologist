@@ -106,11 +106,9 @@ public class TileStoreSection : StoreSection
     public override void HandleCursor () {
         base.HandleCursor ();
 
-        if (!UIBlockerSettings.OperationIsAvailable ("Build")) {
-            return;
-        }
+        bool operationUnobstructed = UIBlockerSettings.OperationIsAvailable("Build");
         //print ("Place tiles...");
-        if (Input.GetMouseButtonDown (0) && !isPlacing) {
+        if (Input.GetMouseButtonDown (0) && !isPlacing && operationUnobstructed) {
             this.StartPlacing ();
         }
         if (Input.GetMouseButtonUp (0) && isPlacing) {
@@ -123,9 +121,15 @@ public class TileStoreSection : StoreSection
     /// </summary>
     public override void OnItemSelectionCanceled()
     {
-        // Cancelling is a mess so cancelling just means finish placement
-        FinishPlacing();
         base.OnItemSelectionCanceled();
+    }
+
+    // For tile placement undoing the preview changes is tricky so just finish placement instead of cancelling
+    protected override void OnManualCancel()
+    {
+        if(isPlacing)
+            FinishPlacing();
+        OnItemSelectionCanceled();
     }
 
     public override void Update()
