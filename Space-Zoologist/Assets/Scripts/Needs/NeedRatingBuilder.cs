@@ -129,11 +129,11 @@ public static class NeedRatingBuilder
         NeedAvailabilityItem[] friendItems = availability.FindFriendItems();
         if (friendNeeds.Length > 0)
         {
-            int totalFriendsNeededMin = 0;
-            int totalFriendsNeededBonus = 0;
+            float totalFriendsNeededMin = 0;
+            float totalFriendsNeededBonus = 0;
 
-            int totalFriendsAvailableBounded = 0;
-            int totalFriendsAvailableExtra = 0;
+            float totalFriendsAvailableBounded = 0;
+            float totalFriendsAvailableExtra = 0;
 
             bool individualSpeciesSatisfied = true;
             
@@ -142,8 +142,8 @@ public static class NeedRatingBuilder
                 NeedAvailabilityItem applicableItem = Array
                     .Find(friendItems, item => item.ID == need.ID);
 
-                int speciesFriendNeededMin = need.SpeciesFriendNeedCount.x * populationCount;
-                int speciesFriendNeededMax = need.SpeciesFriendNeedCount.y * populationCount;
+                float speciesFriendNeededMin = need.SpeciesFriendNeedCount.x * populationCount;
+                float speciesFriendNeededMax = need.SpeciesFriendNeedCount.y * populationCount;
                 
                 totalFriendsNeededMin += speciesFriendNeededMin;
                 totalFriendsNeededBonus += Mathf.Max(0,speciesFriendNeededMax - speciesFriendNeededMin);
