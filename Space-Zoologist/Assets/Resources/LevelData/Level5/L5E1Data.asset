@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsSpacer: 0
   Level: {fileID: 11400000, guid: d72a3541030409d468e0ac6f4e9f733e, type: 2}
-  startingBalance: 750
+  startingBalance: 800
+  WallBreakable: 1
+  NoSelling: 0
   MapWidth: 125
   MapHeight: 29
-  WallBreakable: 1
   LevelObjectiveData: {fileID: 11400000, guid: e26fef93362b94c49badcc98ea98c699, type: 2}
   foodSources:
   - {fileID: 11400000, guid: 4519d95eb0a9149afaba1c7e635c9b1c, type: 2}
@@ -65,11 +66,11 @@ MonoBehaviour:
   - itemObject: {fileID: 11400000, guid: aed977f8bd1866647ae7b98411756bc2, type: 2}
     initialAmount: 20
   - itemObject: {fileID: 11400000, guid: fd00688ee441b4cb1930667c735bec85, type: 2}
-    initialAmount: 5
+    initialAmount: 10
   - itemObject: {fileID: 11400000, guid: 17d6d76531dd84fe88d78dc938212a3a, type: 2}
     initialAmount: 10
   - itemObject: {fileID: 11400000, guid: 011aebdeac608401ea2bece03b01dd8c, type: 2}
-    initialAmount: 5
+    initialAmount: 8
   - itemObject: {fileID: 11400000, guid: 9d1b9acb9c2f440bf87aa51faebebb92, type: 2}
     initialAmount: 10
   - itemObject: {fileID: 11400000, guid: 3792eb18c264b412cb677e4d563f2df8, type: 2}
