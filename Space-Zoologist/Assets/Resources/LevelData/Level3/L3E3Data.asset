@@ -15,9 +15,10 @@ MonoBehaviour:
   IsSpacer: 0
   Level: {fileID: 11400000, guid: c4d64f12f648f9844aa4335303109da0, type: 2}
   startingBalance: 600
+  WallBreakable: 1
+  NoSelling: 0
   MapWidth: 29
   MapHeight: 29
-  WallBreakable: 1
   LevelObjectiveData: {fileID: 11400000, guid: b853f30439aaf457092f4688f2473a5b, type: 2}
   foodSources:
   - {fileID: 11400000, guid: 4519d95eb0a9149afaba1c7e635c9b1c, type: 2}
@@ -73,7 +74,7 @@ MonoBehaviour:
   - {x: 20, y: 15, z: 0}
   startingConversation: {fileID: 492502004931850185, guid: e5577b125cb94cc498841df7471134ca,
     type: 3}
-  defaultConversation: {fileID: 674947355878461197, guid: 3124ca85bbd1c476498793667738a9e7,
+  defaultConversation: {fileID: 674947355878461197, guid: 6002c19a274838242b87c3f328f09bbe,
     type: 3}
   ending:
     isQuiz: 1
