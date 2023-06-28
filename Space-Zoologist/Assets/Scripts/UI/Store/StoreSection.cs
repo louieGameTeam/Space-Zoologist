@@ -221,12 +221,24 @@ public class StoreSection : MonoBehaviour
         return true;
     }
 
-    public virtual void HandleCursor () {
-        if (Input.GetMouseButtonDown (1) || 
-            (Input.GetMouseButtonDown (0) && (!this.CanBuy (this.selectedItem) || !UIBlockerSettings.OperationIsAvailable ("Build")))) {
+    public virtual void HandleCursor ()
+    {
+        bool canBuy = this.CanBuy(this.selectedItem);
+        bool operationUnobstructed = UIBlockerSettings.OperationIsAvailable("Build");
+        if (Input.GetMouseButtonDown (0) && (!canBuy || !operationUnobstructed)) {
             OnItemSelectionCanceled ();
             return;
         }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            OnManualCancel();
+        }
+    }
+
+    protected virtual void OnManualCancel()
+    {
+        OnItemSelectionCanceled();
     }
 
     /// <summary>
