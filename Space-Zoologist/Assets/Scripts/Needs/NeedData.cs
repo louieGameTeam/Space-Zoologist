@@ -29,7 +29,7 @@ public class NeedData
     #region Public Properties
     public bool Needed => needed;
     public SpeciesNeedType SpeciesNeedType => speciesNeedType;
-    public Vector2Int SpeciesFriendNeedCount => speciesFriendNeedCount;
+    public Vector2 SpeciesFriendNeedCount => speciesFriendNeedCount;
     public bool UseAsTerrainNeed => useAsTerrainNeed;
     public bool TraversableOnly => traversableOnly;
     public FoodNeedType FoodNeedType => foodNeedType;
@@ -51,7 +51,7 @@ public class NeedData
     
     [SerializeField]
     [Tooltip("How much of this animal this species needs, if it is a friend need")]
-    private Vector2Int speciesFriendNeedCount;
+    private Vector2 speciesFriendNeedCount;
     
     [SerializeField]
     [Tooltip("If true, then this water need should be treated as terrain " +
