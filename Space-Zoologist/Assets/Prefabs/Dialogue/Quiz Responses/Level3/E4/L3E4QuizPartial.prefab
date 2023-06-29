@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2183898873226651449
+--- !u!1 &848018635908003695
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,60 +8,58 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1763480104524117215}
-  - component: {fileID: 3475025234489852325}
+  - component: {fileID: 1666162499727703867}
+  - component: {fileID: 1490480151776893422}
   m_Layer: 0
-  m_Name: Level2E1QuizFail
+  m_Name: L3E4QuizPartial
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1763480104524117215
+--- !u!4 &1666162499727703867
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2183898873226651449}
+  m_GameObject: {fileID: 848018635908003695}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7289483491255700298}
+  - {fileID: 1398020052037860393}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3475025234489852325
+--- !u!114 &1490480151776893422
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2183898873226651449}
+  m_GameObject: {fileID: 848018635908003695}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 83189876d4d389f43b7dd2e925aa112e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentIDCounter: 3
-  json: '{"Options":[],"SpeechNodes":[{"EditorInfo":{"isRoot":true,"xPos":306,"yPos":20},"ID":1,"TMPFontGUID":null,"Text":"Interesting.
-    I believe you are in need of some remedial labor. Please pay more attention to
-    species needs next time.","parentUIDs":[],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":"Neutral","IconGUID":null,"Name":"Juno","OptionUIDs":[],"SpeechUID":2,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":305,"yPos":124},"ID":2,"TMPFontGUID":null,"Text":"Still,
-    you did meet this enclosure''s objectives, so we''ll move on to the next one.
-    It may behoove you to use your notebook this time.","parentUIDs":[1,1],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":"Neutral","IconGUID":null,"Name":"Juno","OptionUIDs":[],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false}]}'
+  CurrentIDCounter: 5
+  json: '{"Options":[],"SpeechNodes":[{"EditorInfo":{"isRoot":true,"xPos":306,"yPos":21},"ID":1,"TMPFontGUID":null,"Text":"That''s
+    pretty good! A couple answers are a little off, but good enough!","parentUIDs":[],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":"Neutral","IconGUID":null,"Name":"Barry","OptionUIDs":[],"SpeechUID":4,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false},{"EditorInfo":{"isRoot":false,"xPos":-1358.8,"yPos":23746.8},"ID":4,"TMPFontGUID":null,"Text":"And
+    still, great job! On to the next sector!","parentUIDs":[1,1],"AdvanceDialogueAutomatically":false,"AudioGUID":null,"AutoAdvanceShouldDisplayOption":false,"Expression":"Happy","IconGUID":null,"Name":"Barry","OptionUIDs":[],"SpeechUID":-1,"TimeUntilAdvance":0,"Volume":0,"enableNotebookUI":false}]}'
   saveVersion: 103
   DefaultName: 
   DefaultSprite: {fileID: 0}
   DefaultFont: {fileID: 0}
   NodeSerializedDataList:
-  - {fileID: 7538312245774617487}
-  - {fileID: 563102179166555623}
+  - {fileID: 1059371210100667305}
+  - {fileID: 5009264439315528017}
   Event:
     m_PersistentCalls:
       m_Calls: []
---- !u!1 &5216115913674901160
+--- !u!1 &8975517945923358303
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -69,9 +67,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7289483491255700298}
-  - component: {fileID: 7538312245774617487}
-  - component: {fileID: 563102179166555623}
+  - component: {fileID: 1398020052037860393}
+  - component: {fileID: 1059371210100667305}
+  - component: {fileID: 5009264439315528017}
   m_Layer: 0
   m_Name: ConversationEventInfo
   m_TagString: Untagged
@@ -79,28 +77,28 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7289483491255700298
+--- !u!4 &1398020052037860393
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5216115913674901160}
+  m_GameObject: {fileID: 8975517945923358303}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1763480104524117215}
+  m_Father: {fileID: 1666162499727703867}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7538312245774617487
+--- !u!114 &1059371210100667305
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5216115913674901160}
+  m_GameObject: {fileID: 8975517945923358303}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
@@ -111,24 +109,24 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
-  Icon: {fileID: 21300000, guid: fabf7af1c8cb79f45a1449c35f52a4a9, type: 3}
+  Icon: {fileID: 21300000, guid: ba7da11aff8543047b3d19b7d629c282, type: 3}
   Audio: {fileID: 0}
---- !u!114 &563102179166555623
+--- !u!114 &5009264439315528017
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5216115913674901160}
+  m_GameObject: {fileID: 8975517945923358303}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NodeID: 2
+  NodeID: 4
   Event:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
-  Icon: {fileID: 21300000, guid: fabf7af1c8cb79f45a1449c35f52a4a9, type: 3}
+  Icon: {fileID: 21300000, guid: 7fac99a4f5be5c4468602b59af8ac592, type: 3}
   Audio: {fileID: 0}
