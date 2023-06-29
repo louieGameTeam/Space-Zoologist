@@ -47,17 +47,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   template: {fileID: 11400000, guid: a9a949196b3f1dc4087e97f2fda1e998, type: 2}
-  npcIcon: {fileID: 21300000, guid: fabf7af1c8cb79f45a1449c35f52a4a9, type: 3}
-  npcName: Juno
+  npcIcon: {fileID: 21300000, guid: ba7da11aff8543047b3d19b7d629c282, type: 3}
+  npcName: Barry
   npcTextFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
   quizOptionFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
-  openingConversation: {fileID: 4793458904101554438}
+  openingConversation: {fileID: 1490480151776893422, guid: 669c7eb01cce0e94cbd99b0fa85134b1,
+    type: 3}
   endOfQuizText: And that's it. Give me a moment to look over your answers.
   response:
     responses:
-    - {fileID: 6766782708905769475}
-    - {fileID: 3199122565178260120}
-    - {fileID: 7306603929769084122}
+    - {fileID: 1490480151776893422, guid: 39eab27aafefa9844bceb023ff246dca, type: 3}
+    - {fileID: 1490480151776893422, guid: d8ca5d2d570374246b5848494af7b57a, type: 3}
+    - {fileID: 1490480151776893422, guid: 0b52f04369ff8de46922ece7f3391238, type: 3}
   requizOnFail: 0
   onConversationEnded:
     m_PersistentCalls:
@@ -193,18 +194,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 5302066377226665593}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7306603929769084122 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3238929020816931491, guid: b3e88a9767034654f94f9294182976a4,
-    type: 3}
-  m_PrefabInstance: {fileID: 5302066377226665593}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83189876d4d389f43b7dd2e925aa112e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &6758771025991530411
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -296,18 +285,6 @@ PrefabInstance:
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 012544bc776949f40976ed08e654afec, type: 3}
---- !u!114 &3199122565178260120 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8191602925442665779, guid: 012544bc776949f40976ed08e654afec,
-    type: 3}
-  m_PrefabInstance: {fileID: 6758771025991530411}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83189876d4d389f43b7dd2e925aa112e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &8338970515834162952 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3346741806018410659, guid: 012544bc776949f40976ed08e654afec,
@@ -410,18 +387,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 7423197198878723680}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4793458904101554438 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2702643545176491878, guid: 28dfb739dd72e4743b29752e0490b374,
-    type: 3}
-  m_PrefabInstance: {fileID: 7423197198878723680}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83189876d4d389f43b7dd2e925aa112e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &7913303999399082918
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -514,18 +479,6 @@ PrefabInstance:
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 84cd2d84f87a02e4ebbe80f22cb97e49, type: 3}
---- !u!114 &6766782708905769475 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3475025234489852325, guid: 84cd2d84f87a02e4ebbe80f22cb97e49,
-    type: 3}
-  m_PrefabInstance: {fileID: 7913303999399082918}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83189876d4d389f43b7dd2e925aa112e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &8478193150848716665 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1763480104524117215, guid: 84cd2d84f87a02e4ebbe80f22cb97e49,
