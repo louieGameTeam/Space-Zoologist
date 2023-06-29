@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83189876d4d389f43b7dd2e925aa112e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentIDCounter: 76
+  CurrentIDCounter: 79
   json: "{\"Options\":[{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-4725.8,\"yPos\":29837.8},\"ID\":59,\"TMPFontGUID\":null,\"Text\":\"Who,
     me?\",\"parentUIDs\":[58,58],\"SpeechUID\":60},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-4387.8,\"yPos\":29833.8},\"ID\":61,\"TMPFontGUID\":null,\"Text\":\"You
     sure did, didn't you.\",\"parentUIDs\":[58,58],\"SpeechUID\":62},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-4754.8,\"yPos\":31129.8},\"ID\":70,\"TMPFontGUID\":null,\"Text\":\"Definitely!\",\"parentUIDs\":[69,69],\"SpeechUID\":71},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-4397.8,\"yPos\":31124.8},\"ID\":72,\"TMPFontGUID\":null,\"Text\":\"Well
@@ -70,12 +70,18 @@ MonoBehaviour:
     course we can!\",\"parentUIDs\":[67,67],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Happy\",\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":69,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-4567.8,\"yPos\":31007.8},\"ID\":69,\"TMPFontGUID\":null,\"Text\":\"You're
     gonna stick around for a while, ain't you?\",\"parentUIDs\":[68,68],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Happy\",\"IconGUID\":null,\"Name\":\"Barry\",\"OptionUIDs\":[70,72],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-4768.8,\"yPos\":31235.8},\"ID\":71,\"TMPFontGUID\":null,\"Text\":\"Awesome!
     There'll be more planets to save in the future, I'm sure. We'll be relying on
-    your help when there are!\",\"parentUIDs\":[70,70],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Happy\",\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-4408.8,\"yPos\":31229.8},\"ID\":73,\"TMPFontGUID\":null,\"Text\":\"I
+    your help when there are!\",\"parentUIDs\":[70,70],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Happy\",\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":76,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-4408.8,\"yPos\":31229.8},\"ID\":73,\"TMPFontGUID\":null,\"Text\":\"I
     knew we should have tried to bribe you with cake\u2026\",\"parentUIDs\":[72,72],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Sad\",\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":74,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-4399.8,\"yPos\":31365.8},\"ID\":74,\"TMPFontGUID\":null,\"Text\":\"I
     don't think that's the issue, Dr. Star. I believe they simply wish to go their
-    own way, and I'm sure they'll thrive when they do.\",\"parentUIDs\":[73,73],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Sad\",\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":75,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-4405.8,\"yPos\":31520.8},\"ID\":75,\"TMPFontGUID\":null,\"Text\":\"Yeah,
+    own way, and I'm sure they'll thrive when they do.\",\"parentUIDs\":[73,73],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Sad\",\"IconGUID\":null,\"Name\":\"Juno\",\"OptionUIDs\":[],\"SpeechUID\":75,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-4402.8,\"yPos\":31512.8},\"ID\":75,\"TMPFontGUID\":null,\"Text\":\"Yeah,
     of course they will. Don't forget about us, though! We'll make sure to remember
-    you, so stop by if you ever get a chance.\",\"parentUIDs\":[74,74],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Happy\",\"IconGUID\":null,\"Name\":\"Barry\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false}]}"
+    you, so stop by if you ever get a chance.\",\"parentUIDs\":[74,74],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Happy\",\"IconGUID\":null,\"Name\":\"Barry\",\"OptionUIDs\":[],\"SpeechUID\":76,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-5272.8,\"yPos\":34778.8},\"ID\":76,\"TMPFontGUID\":null,\"Text\":\"And
+    no matter what, you clearly know all about engineering enclosures, researching
+    animals and working together with your team members in order to make great new
+    discoveries to help better the lives of others.\",\"parentUIDs\":[71,75],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Happy\",\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":77,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-5278.8,\"yPos\":34956.8},\"ID\":77,\"TMPFontGUID\":null,\"Text\":\"So,
+    I think it's about time we stop referring to you as newbie and start addressing
+    you as who you really are...\",\"parentUIDs\":[76],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":78,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":-5278.8,\"yPos\":35116.8},\"ID\":78,\"TMPFontGUID\":null,\"Text\":\"...an
+    official xenobiology engineer!\",\"parentUIDs\":[77],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Happy\",\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false}]}"
   saveVersion: 103
   DefaultName: 
   DefaultSprite: {fileID: 0}
@@ -114,6 +120,9 @@ MonoBehaviour:
   - {fileID: 7501409801269569112}
   - {fileID: 5454851509038319321}
   - {fileID: 6375126107504524955}
+  - {fileID: 4095049268116002631}
+  - {fileID: 4452913082284525080}
+  - {fileID: 668420904058942981}
   Event:
     m_PersistentCalls:
       m_Calls: []
@@ -159,6 +168,9 @@ GameObject:
   - component: {fileID: 7501409801269569112}
   - component: {fileID: 5454851509038319321}
   - component: {fileID: 6375126107504524955}
+  - component: {fileID: 4095049268116002631}
+  - component: {fileID: 4452913082284525080}
+  - component: {fileID: 668420904058942981}
   m_Layer: 0
   m_Name: ConversationEventInfo
   m_TagString: Untagged
@@ -807,4 +819,61 @@ MonoBehaviour:
       m_Calls: []
   TMPFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
   Icon: {fileID: 0}
+  Audio: {fileID: 0}
+--- !u!114 &4095049268116002631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 76
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
+  Icon: {fileID: 21300000, guid: b01f055a5a8c42041a3a17161e277de6, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &4452913082284525080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 77
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
+  Icon: {fileID: 21300000, guid: 8c883f4201b912f4881839e372a91750, type: 3}
+  Audio: {fileID: 0}
+--- !u!114 &668420904058942981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975517945923358303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NodeID: 78
+  Event:
+    m_PersistentCalls:
+      m_Calls: []
+  TMPFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
+  Icon: {fileID: 21300000, guid: b01f055a5a8c42041a3a17161e277de6, type: 3}
   Audio: {fileID: 0}
