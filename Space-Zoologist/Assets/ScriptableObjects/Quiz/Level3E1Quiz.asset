@@ -47,8 +47,8 @@ MonoBehaviour:
       weight: 0
     - label: The strot population will decrease.
       weight: 1
-  - question: "Barry saw that the Strot's food need was not satisfied at all, so
-      he placed more of the food source that was already present. What do you think
+  - question: "Juno saw that the Strot's food need was not satisfied at all, so she
+      placed more of the food source that was already present. What do you think
       about this choice?\r"
     category:
       item:
@@ -56,13 +56,13 @@ MonoBehaviour:
         index: 3
       need: 3
     options:
-    - label: He should have checked his research to see what food the Strots like
+    - label: She should have checked his research to see what food the Strots like
         before editing the enclosure.
       weight: 2
-    - label: What he did was correct.
+    - label: What she did was correct.
       weight: 0
-    - label: 'He should have assumed the food source present needed more water, and
-        should have placed more water tiles. '
+    - label: 'She should have assumed the food source present needed more water,
+        and should have placed more water tiles. '
       weight: 0
   randomQuestionPool:
     questionsToPick: 0

@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5153103254236372963}
   - component: {fileID: 3130082835263568420}
-  - component: {fileID: 9139060428408562379}
   m_Layer: 0
   m_Name: ConversationEventInfo
   m_TagString: Untagged
@@ -50,26 +49,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TMPFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
-  Icon: {fileID: 21300000, guid: bd6ba6916b4a41f4eadb84d5a2eb6205, type: 3}
-  Audio: {fileID: 0}
---- !u!114 &9139060428408562379
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2491121380635684562}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00abedce3cdbbba46bf2d86c9518c9f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NodeID: 1
-  Event:
-    m_PersistentCalls:
-      m_Calls: []
-  TMPFont: {fileID: 11400000, guid: 7f1022f530b45b148a3cd1b1d5da6994, type: 2}
-  Icon: {fileID: 21300000, guid: b01f055a5a8c42041a3a17161e277de6, type: 3}
+  Icon: {fileID: 21300000, guid: 8c883f4201b912f4881839e372a91750, type: 3}
   Audio: {fileID: 0}
 --- !u!1 &7072219010467261227
 GameObject:
@@ -118,20 +98,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentIDCounter: 2
   json: "{\"Options\":[],\"SpeechNodes\":[{\"EditorInfo\":{\"isRoot\":true,\"xPos\":306,\"yPos\":21},\"ID\":0,\"TMPFontGUID\":null,\"Text\":\"Well\u2026
-    Looks like you got the most important bits right, but you still have a bit more
-    to learn. Pay close attention to the terrain preferences of the Zeigs next time!
-    \",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Sad\",\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false},{\"EditorInfo\":{\"isRoot\":false,\"xPos\":312,\"yPos\":145},\"ID\":1,\"TMPFontGUID\":null,\"Text\":\"Don't
-    get down about it, though! Live and learn, I always say. Now let's get on to
-    the next enclosure!\",\"parentUIDs\":[0,0],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Happy\",\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false}]}"
+    Looks like you got the most of the questions right. Not perfect, but it'll do.
+    Let's head to the next sector!\",\"parentUIDs\":[],\"AdvanceDialogueAutomatically\":false,\"AudioGUID\":null,\"AutoAdvanceShouldDisplayOption\":false,\"Expression\":\"Neutral\",\"IconGUID\":null,\"Name\":\"Star\",\"OptionUIDs\":[],\"SpeechUID\":-1,\"TimeUntilAdvance\":0,\"Volume\":0,\"enableNotebookUI\":false}]}"
   saveVersion: 103
   DefaultName: Star
   DefaultSprite: {fileID: 21300000, guid: 3a0ac100c076d429ca5155c3417f17d2, type: 3}
   DefaultFont: {fileID: 0}
   NodeSerializedDataList:
-  - {fileID: 0}
-  - {fileID: 0}
   - {fileID: 3130082835263568420}
-  - {fileID: 9139060428408562379}
   Event:
     m_PersistentCalls:
       m_Calls: []
