@@ -135,9 +135,11 @@ public class QuizConversation : MonoBehaviour
                 // Set the quiz on the reports data to the quiz that we just finished
                 GameManager.Instance.NotebookUI.Data.Reports.SetQuiz(LevelID.Current(), currentQuiz);
 
-                // Generate the quiz trace to be sent to the backend
+                // Generate the quiz trace to be sent to the backend, and send it
+                Debug.Log("Generating quiz trace...");
                 QuizTrace quizTrace = new QuizTrace(LevelID.Current(), currentQuiz);
-                QuizTraceManager.TrySubmitQuizTrace(quizTrace);
+                Debug.Log(quizTrace);
+                StartCoroutine(QuizTraceManager.TrySubmitQuizTrace(quizTrace));
 
                 // Invoke the quiz conversation ended event when the response is over
                 currentResponse.OnConversationEnded(() => onConversationEnded.Invoke(CurrentQuiz.Grade));

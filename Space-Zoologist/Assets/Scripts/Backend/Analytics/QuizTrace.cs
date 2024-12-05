@@ -48,13 +48,15 @@ public class QuizTrace
 public class QuizTraceManager : MonoBehaviour
 {
     [SerializeField] private static string prodQuizTraceEndpoint = "https://spacezoologist.herokuapp.com/traces/quiztrace/submit"; 
-    [SerializeField] private static string devQuizTraceEndpoint = "https://127.0.0.1:13756/traces/quiztrace/submit";
+    [SerializeField] private static string devQuizTraceEndpoint = "https://127.0.0.1:443/traces/quiztrace/submit";
 
     public static IEnumerator TrySubmitQuizTrace(QuizTrace quizTrace)
     {
         string json = JsonUtility.ToJson(quizTrace);
 
         var request = new UnityWebRequest(devQuizTraceEndpoint, "POST");
+        CustomCertificateHandler  certHandler = new CustomCertificateHandler();
+        request.certificateHandler = certHandler;
         byte[] bodyRaw = Encoding.UTF8.GetBytes(json);
         request.uploadHandler = (UploadHandler) new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = (DownloadHandler) new DownloadHandlerBuffer();

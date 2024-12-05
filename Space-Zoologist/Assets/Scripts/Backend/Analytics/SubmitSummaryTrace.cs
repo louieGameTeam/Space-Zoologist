@@ -7,11 +7,13 @@ using System.Text;
 public class SubmitSummaryTrace : MonoBehaviour
 {
     [SerializeField] private static string prodSummarytraceEndpoint = "https://spacezoologist.herokuapp.com/traces/summarytrace/submit"; 
-    [SerializeField] private static string devSummarytraceEndpoint = "https://127.0.0.1:13756/traces/summarytrace/submit";
+    [SerializeField] private static string devSummarytraceEndpoint = "https://127.0.0.1:443/traces/summarytrace/submit";
 
     public static IEnumerator TrySubmitSummaryTrace(string json)
     {
-        var request = new UnityWebRequest(prodSummarytraceEndpoint, "POST");
+        var request = new UnityWebRequest(devSummarytraceEndpoint, "POST");
+        CustomCertificateHandler  certHandler = new CustomCertificateHandler();
+        request.certificateHandler = certHandler;
         byte[] bodyRaw = Encoding.UTF8.GetBytes(json);
         request.uploadHandler = (UploadHandler) new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = (DownloadHandler) new DownloadHandlerBuffer();
