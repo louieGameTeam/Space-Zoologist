@@ -17,6 +17,8 @@ public class QuizTrace
     [SerializeField] private int totalScore;
     [SerializeField] private int importantCategoriesScore;
     [SerializeField] private int unimportantCategoriesScore;
+    [SerializeField] private string[] correctQuestionsText;
+    [SerializeField] private string[] incorrectQuestionsText;
 
     public QuizTrace()
     {
@@ -29,6 +31,8 @@ public class QuizTrace
         this.totalScore = 0;
         this.importantCategoriesScore = 0;
         this.unimportantCategoriesScore = 0;
+        this.correctQuestionsText = new string[0];
+        this.incorrectQuestionsText = new string[0];
     }
 
     public QuizTrace(LevelID levelID, QuizInstance quizInstance)
@@ -42,6 +46,8 @@ public class QuizTrace
         this.totalScore = quizInstance.ItemizedScore.TotalScore;
         this.importantCategoriesScore = quizInstance.ScoreInImportantCategories;
         this.unimportantCategoriesScore = quizInstance.ScoreInUnimportantCategories;
+        this.correctQuestionsText = quizInstance.CorrectQuestionsText.ToArray();
+        this.incorrectQuestionsText = quizInstance.IncorrectQuestionsText.ToArray();
     }
 }
 
