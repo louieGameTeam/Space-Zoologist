@@ -4,7 +4,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
 
-// An ad-hoc class meant to extract results from operations performed by code in the Quiz infrastructure. Much of this is centralizing and simplifying what is found in QuizInstance.cs (e.g. transforming into primitive data types so that it can be easily used by the backend/viewer).
+// An class meant to extract results from operations performed by code in the Quiz infrastructure. Much of this is centralizing and simplifying what is found in QuizInstance.cs (e.g. transforming into primitive data types so that it can be easily used by the backend/viewer).
 [System.Serializable]
 public class QuizTrace
 {
@@ -60,7 +60,7 @@ public class QuizTraceManager : MonoBehaviour
     {
         string json = JsonUtility.ToJson(quizTrace);
 
-        var request = new UnityWebRequest(devQuizTraceEndpoint, "POST");
+        var request = new UnityWebRequest(prodQuizTraceEndpoint, "POST");
         CustomCertificateHandler  certHandler = new CustomCertificateHandler();
         request.certificateHandler = certHandler;
         byte[] bodyRaw = Encoding.UTF8.GetBytes(json);

@@ -13,7 +13,7 @@ public class GetSummaryTrace : MonoBehaviour
     {
         WWWForm form = new WWWForm();
         form.AddField("playerID", playerID);
-        using (UnityWebRequest request = UnityWebRequest.Post(devSummarytraceEndpoint, form))
+        using (UnityWebRequest request = UnityWebRequest.Post(prodSummarytraceEndpoint, form))
         {
             CustomCertificateHandler  certHandler = new CustomCertificateHandler();
             request.certificateHandler = certHandler;
