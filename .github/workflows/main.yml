@@ -28,7 +28,7 @@ jobs:
           buildsPath: Build
           targetPlatform: WebGL
       - name: 'Upload Build Artifact'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with: 
           name: build-artifact
           path: 'Build/WebGL/WebGL'
@@ -37,7 +37,7 @@ jobs:
     needs: Auto_Build
     steps:
       - name: 'Download Build Artifact'
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with: 
           name: build-artifact
           path: 'Build/'
