@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // A data class containing information about a given set from a level.
+// NOTE: I am not sure set traces are being meaningfully used anymore, but I am leaving this code here in case it needs to be revisited at some point in the future.
 [System.Serializable]
 public class SetTrace
 {

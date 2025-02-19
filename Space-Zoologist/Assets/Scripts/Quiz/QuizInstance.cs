@@ -16,6 +16,8 @@ public class QuizInstance
     public ItemizedQuizScore ItemizedScore => ComputeItemizedScore(runtimeTemplate, answers);
     public int ScoreInImportantCategories => ComputeScoreInImportantCategories(runtimeTemplate, answers);
     public int ScoreInUnimportantCategories => ComputeScoreInUnimportantCategories(runtimeTemplate, answers);
+    public List<string> CorrectQuestionsText => ComputeCorrectQuestions(runtimeTemplate, answers);
+    public List<string> IncorrectQuestionsText => ComputeIncorrectQuestions(runtimeTemplate, answers);
     #endregion
 
     #region Private Editor Fields
@@ -151,6 +153,60 @@ public class QuizInstance
         }
 
         return itemizedScore;
+    }
+
+    public static List<string> ComputeCorrectQuestions(QuizRuntimeTemplate runtimeTemplate, int[] answers)
+    {
+        Debug.Log("ComputeCorrectQuestions");
+        List<string> correctQuestions = new List<string>();
+
+        for (int i = 0; i < runtimeTemplate.Questions.Length; i++)
+        {
+            // Get the current question and answer
+            QuizQuestion question = runtimeTemplate.Questions[i];
+            int answer = answers[i];
+
+            // If the answer is within range of the options 
+            // and the weight is > 0 then add the question to the list
+            if (answer >= 0 && answer < question.Options.Length)
+            {
+                QuizOption option = question.Options[answer];
+                if (option.Weight > 0)
+                {
+                    correctQuestions.Add(question.Question);
+                    Debug.Log("Correct Question: " + question.Question);
+                }
+            }
+        }
+
+        return correctQuestions;
+    }
+
+    public static List<string> ComputeIncorrectQuestions(QuizRuntimeTemplate runtimeTemplate, int[] answers)
+    {
+        Debug.Log("ComputeIncorrectQuestions");
+        List<string> incorrectQuestions = new List<string>();
+
+        for (int i = 0; i < runtimeTemplate.Questions.Length; i++)
+        {
+            // Get the current question and answer
+            QuizQuestion question = runtimeTemplate.Questions[i];
+            int answer = answers[i];
+
+            // If the answer is within range of the options 
+            // and the weight is <= 0 then add the question to the list
+            if (answer >= 0 && answer < question.Options.Length)
+            {
+                QuizOption option = question.Options[answer];
+                if (option.Weight <= 0)
+                {
+                    incorrectQuestions.Add(question.Question);
+                    Debug.Log("Incorrect Question: " + question.Question);
+                }
+            }
+        }
+
+        return incorrectQuestions;
     }
     #endregion
 }

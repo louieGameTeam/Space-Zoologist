@@ -7,7 +7,7 @@ using System.Text;
 public class GetSummaryTrace : MonoBehaviour
 {
     [SerializeField] private static string prodSummarytraceEndpoint = "https://spacezoologist.herokuapp.com/traces/summarytrace/get"; 
-    [SerializeField] private static string devSummarytraceEndpoint = "https://127.0.0.1:13756/traces/summarytrace/get";
+    [SerializeField] private static string devSummarytraceEndpoint = "https://127.0.0.1:443/traces/summarytrace/get";
 
     public static IEnumerator TryGetSummaryTrace(string playerID, System.Action<SummaryTraceResponse> callback)
     {
@@ -15,6 +15,8 @@ public class GetSummaryTrace : MonoBehaviour
         form.AddField("playerID", playerID);
         using (UnityWebRequest request = UnityWebRequest.Post(prodSummarytraceEndpoint, form))
         {
+            CustomCertificateHandler  certHandler = new CustomCertificateHandler();
+            request.certificateHandler = certHandler;
             var handler = request.SendWebRequest();
 
             float startTime = 0.0f;

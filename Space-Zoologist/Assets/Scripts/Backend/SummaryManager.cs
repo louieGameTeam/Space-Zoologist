@@ -11,6 +11,7 @@ public class SummaryManager : MonoBehaviour
     #region Private Fields
     // Initialize the instance of this SummaryManager to null.
     private static SummaryManager instance = null;
+    public static SummaryManager Instance => instance;
     // Initialize the current SummaryTrace object.
     private SummaryTrace currentSummaryTrace = null;
     // Initialize current level, set, and set trace.
